@@ -1,2 +1,2 @@
-# Projet-6-M1
+# Projet-Licore
 Projet de Master 1  : sujet 6
