@@ -49,7 +49,7 @@ INSERT INTO `CategorieCompetence` (`idCategorie`, `nomCategorie`) VALUES
 
 CREATE TABLE IF NOT EXISTS `Competence` (
   `idCompetence` int(11) NOT NULL AUTO_INCREMENT,
-  `nomComptence` varchar(250) NOT NULL,
+  `nomCompetence` varchar(250) NOT NULL,
   `pereCompetence` int(11) DEFAULT NULL,
   `idCategorie` int(11) NOT NULL,
   `idMention` int(11) DEFAULT NULL,
