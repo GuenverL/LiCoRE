@@ -1,11 +1,11 @@
 <div class="panel panel-default">
     <div class="panel-heading">Compétences à valider</div>
     <div class="panel-body">
-        <div class="panel-group">
+        <div class="panel-group" id="liste_competences">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <a class="btn-block" role="button" data-toggle=collapse href="#collapseOne" aria-controls="collapseOne" aria-expanded="false">
+                        <a class="btn-block" role="button" data-parent="#liste_competences" data-toggle=collapse href="#collapseOne" aria-controls="collapseOne" aria-expanded="false">
                             Compétence 1
                             <div class="progress">
                                 <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%"><span class="sr-only">20% Complete</span></div>
@@ -24,7 +24,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <a class="btn-block" role="button" data-toggle=collapse href="#collapseTwo" aria-controls="collapseTwo" aria-expanded="false">
+                        <a class="btn-block" role="button" data-parent="#liste_competences" data-toggle=collapse href="#collapseTwo" aria-controls="collapseTwo" aria-expanded="false">
                             Compétence 2
                             <div class="progress">
                                 <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"><span class="sr-only">100% Complete</span></div>
