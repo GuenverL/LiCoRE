@@ -7,16 +7,22 @@
         <link href="./css/style.css" rel="stylesheet" />
     </head>
 
+    <?php include("./views/navbar_top.php"); ?>
+
     <body>
 
         <div class="container" style="margin-top:30px;">
             <div class="row">
                 <div class="col-md-4">
-                    <?php include("./views/arbre_competences.php"); ?>
+                    <?php include("./views/liste_competences.php"); ?>
                 </div>
 
                 <div class="col-md-4">
                     <?php include("./views/competences_a_valider.php"); ?>
+                </div>
+
+                <div class="col-md-4">
+                    <?php include("./views/arbre_competences.php"); ?>
                 </div>
             </div>
         </div>
@@ -26,4 +32,6 @@
         <script src="./js/treeview.js"></script>
 
     </body>
+
+    <?php include("./views/footer.php"); ?>
 </html>
