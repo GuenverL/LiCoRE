@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `Competence` (
 -- Contenu de la table `Competence`
 --
 
-INSERT INTO `Competence` (`idCompetence`, `nomComptence`, `pereCompetence`, `idCategorie`, `idMention`) VALUES
+INSERT INTO `Competence` (`idCompetence`, `nomCompetence`, `pereCompetence`, `idCategorie`, `idMention`) VALUES
 (1, 'Situer son rôle et sa mission au sein d''une organisation pour s''adapter et prendre des initiatives', NULL, 2, NULL),
 (2, 'Identifier le processus de production, de diffusion et de valorisation des savoirs', NULL, 2, NULL),
 (3, 'Respecter les principes d’éthique, de déontologie et de responsabilité environnementale', NULL, 2, NULL),
