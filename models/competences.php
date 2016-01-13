@@ -1,5 +1,7 @@
 <?php
 
+include("connexion_sql.php");
+
 function competencePreprofessionnelles(){
 	$competences = array();
 	$query = "Select nomCompetence Where idCategorie = 2";
