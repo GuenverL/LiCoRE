@@ -35,7 +35,7 @@ function getNomsMentions(){
 		$mentions[] = $row[0];
 	}
 
-	return $mentions;
+	return $mentions
 }
 
 ?>
