@@ -7,19 +7,23 @@
         <ul class="treeview">
             <li><a href="#">Liste des compétences</a>
                 <ul>
-                    <li><a href="#">Disciplinaires</a>
-                        <ul>
-                            <?php
-                            foreach($mentions as $mention) {
+                    <?php
+                    foreach($categories as $categorie) {
+                        echo '<li><a href="#">';
+                        echo $categorie.nom;
+                        echo '</a>';
+                        if(!empty($categorie.mentions)) {
+                            echo '<ul>';
+                            foreach($categorie.mentions as $mention) {
                                 echo '<li><a href="#">';
                                 echo $mention;
                                 echo '</a></li>';
                             }
-                            ?>
-                        </ul>
-                    </li>
-                    <li><a href="#">Préprofessionnelles</a></li>
-                    <li><a href="#">Transversales et linguistiques</a></li>
+                            echo '</ul>';
+                        }
+                        echo '</li>';
+                    }
+                    ?>
                 </ul>
             </li>
         </ul>
