@@ -26,6 +26,19 @@ function getCompetencesDisciplinaires($id){
 	return $competences;
 }
 
+function getCompetencesTransversalesEtLinguistiques(){
+	$competences = array();
+	$query = "Select nomCompetence Where idCategorie = 3";
+	$result = mysql_query($query);
+
+	while($row = mysql_fetch_array($result)){
+		$competences[] = $row[0];
+	}
+
+	return $competences;
+}
+
+
 function getNomsMentions(){
 	$mentions = array();
 	$query = "Select nomMention From mention";
