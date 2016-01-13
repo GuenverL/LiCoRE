@@ -1,6 +1,6 @@
 <?php
 
-include("connexion_sql.php");
+//include("connexion_sql.php");
 
 function getCompetencesPreprofessionnelles(){
 	$competences = array();
@@ -39,13 +39,17 @@ function getCompetencesTransversalesEtLinguistiques(){
 }
 
 
-function getNomsMentions(){
+function getNomsMentions($bdd){
 	$mentions = array();
 	$query = "Select nomMention From mention";
-	$result = mysql_query($query);
+	//$result = mysqli_query($query);
 
-	while($row = mysql_fetch_array($result)){
-		$mentions[] = $row[0];
+	//while($row = mysql_fetch_array($result)){
+		//$mentions[] = $row[0];
+	//}
+
+	foreach($bdd->query($query) as $row){
+		$mentions[] = $row['nomMention'];
 	}
 
 	return $mentions;

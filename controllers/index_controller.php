@@ -2,7 +2,7 @@
 
 include_once(DOC_ROOT_PATH . '/models/competences.php');
 
-//$mentions = getNomsMentions();
+$mentions = getNomsMentions($bdd);
 
 // On affiche la vue
 
