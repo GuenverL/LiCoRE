@@ -2,7 +2,7 @@
 
 include("connexion_sql.php");
 
-function competencePreprofessionnelles(){
+function competencesPreprofessionnelles(){
 	$competences = array();
 	$query = "Select nomCompetence Where idCategorie = 2";
 	$result = mysql_result($query);
@@ -11,7 +11,7 @@ function competencePreprofessionnelles(){
 		$ompetences[] = $row[0];
 	}
 
-	return $competences
+	return $competences;
 }
 
 function competencesDisciplinaires($id){
@@ -23,7 +23,7 @@ function competencesDisciplinaires($id){
 		$ompetences[] = $row[0];
 	}
 
-	return $competences
+	return $competences;
 }
 
 ?>
