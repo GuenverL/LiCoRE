@@ -2,28 +2,40 @@
 
 include("connexion_sql.php");
 
-function competencesPreprofessionnelles(){
+function getCompetencesPreprofessionnelles(){
 	$competences = array();
 	$query = "Select nomCompetence Where idCategorie = 2";
-	$result = mysql_result($query);
+	$result = mysql_query($query);
 
 	while($row = mysql_fetch_array($result)){
-		$ompetences[] = $row[0];
+		$competences[] = $row[0];
 	}
 
 	return $competences;
 }
 
-function competencesDisciplinaires($id){
+function getCompetencesDisciplinaires($id){
 	$competences = array();
 	$query = "Select nomCompetence Where idCategorie = 1 and idMention = '$id' ";
-	$result = mysql_result($query);
+	$result = mysql_query($query);
 
 	while($row = mysql_fetch_array($result)){
-		$ompetences[] = $row[0];
+		$competences[] = $row[0];
 	}
 
 	return $competences;
+}
+
+function getNomsMentions(){
+	$mentions = array();
+	$query = "Select nomMention From mention";
+	$result = mysql_query($query);
+
+	while($row = mysql_fetch_array($result)){
+		$mentions[] = $row[0];
+	}
+
+	return $mentions;
 }
 
 ?>
