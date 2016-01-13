@@ -1,7 +1,5 @@
 <?php
 
-//include("connexion_sql.php");
-
 function getCompetencesPreprofessionnelles(){
 	$competences = array();
 	$query = "Select nomCompetence Where idCategorie = 2";
@@ -39,7 +37,8 @@ function getCompetencesTransversalesEtLinguistiques(){
 }
 
 
-function getNomsMentions($bdd){
+function getNomsMentions(){
+    global $bdd;
 	$mentions = array();
 	$query = "Select nomMention From mention";
 	//$result = mysqli_query($query);
