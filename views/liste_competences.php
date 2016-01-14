@@ -3,6 +3,7 @@
         Liste des compétences
     </div>
     <div class="panel-body">
+        <?php var_dump($categories); ?>
 
         <ul class="treeview">
             <li><a href="#">Liste des compétences</a>
@@ -10,13 +11,13 @@
                     <?php
                     foreach($categories as $categorie) {
                         echo '<li><a href="#">';
-                        echo $categorie.nom;
+                        echo ucfirst($categorie["nom"]);
                         echo '</a>';
-                        if(!empty($categorie.mentions)) {
+                        if(!empty($categorie["mentions"])) {
                             echo '<ul>';
-                            foreach($categorie.mentions as $mention) {
+                            foreach($categorie["mentions"] as $mention) {
                                 echo '<li><a href="#">';
-                                echo $mention;
+                                echo ucfirst($mention);
                                 echo '</a></li>';
                             }
                             echo '</ul>';
