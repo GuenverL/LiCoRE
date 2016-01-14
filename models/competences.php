@@ -61,7 +61,7 @@ function getCategoriesEtNomsMentions(){
 		$categories[] = $categorie;
 	}
 
-	return $categories
+	return $categories;
 }
 
 ?>
