@@ -44,7 +44,7 @@ function getCategoriesEtNomsMentions(){
 
 
 	foreach($bdd->query($query) as $row){
-		$query2 = "Select idMention, nomMention From mention NATURAL JOIN competence Where mention.idCategorie = '$row[idCategorie]'";
+		$query2 = "Select idMention, nomMention From mention NATURAL JOIN competence Where mention.idCategorie = '$row['idCategorie']'";
 		$mentions = array();
 
 		if(!empty($bdd->query($query2))){
