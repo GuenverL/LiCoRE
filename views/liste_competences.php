@@ -3,8 +3,6 @@
         Liste des compétences
     </div>
     <div class="panel-body">
-        <?php var_dump($categories); ?>
-
         <ul class="treeview">
             <li><a href="#">Liste des compétences</a>
                 <ul>
