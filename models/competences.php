@@ -37,16 +37,31 @@ function getCompetencesTransversalesEtLinguistiques(){
 }
 
 
-function getNomsMentions(){
+function getCategoriesEtNomsMentions(){
     global $bdd;
-	$mentions = array();
-	$query = "Select nomMention From mention";
+    $categories = array();
+	$query = "Select idCategorie, nomCategorie From categoriecompetence";
+
 
 	foreach($bdd->query($query) as $row){
-		$mentions[] = $row['nomMention'];
+		$query2 = "Select idMention, nomMention From mention NATURAL JOIN competence Where mention.idCategorie = '$row[idCategorie]'";
+		$mentions = array();
+
+		if(!empty($bdd->query($query2))){
+			foreach($bdd->query($query2) as $row2){
+				$mentions[] = $row2['nomMention'];
+			}
+		}
+
+		$categorie = array(
+				'nom' => $row['nomCategorie'],
+				'mentions' => $mentions
+		);
+
+		$categories[] = $categorie;
 	}
 
-	return $mentions;
+	return $categories;
 }
 
 ?>
