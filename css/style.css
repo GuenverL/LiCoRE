@@ -98,10 +98,32 @@ div.treeview ul:first-child:before {
     background-color: #81c0c4;
 }
 
+body,
+html {
+	height: 100%;
+}
+
 body {
     padding-top: 30px;
+    background-color: #dbdce1;
+}
+
+/* Wrapper du contenu pour mettre toujours le footer en bas de la fenetre */
+#wrap-content {
+  min-height: 100%;
+  height: auto;
+  /* Indentation negative correspondant a la hauteur du footer + padding-top du body */
+  margin: 0 auto -130px;
+  /* Padding bottom de la taille du footer */
+  padding: 0 0 100px;
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center;
 }
 
 footer {
+    height: 100px;
     background-color: #dedde3;
 }
