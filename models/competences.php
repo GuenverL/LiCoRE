@@ -37,31 +37,44 @@ function getCompetencesTransversalesEtLinguistiques(){
 }
 
 
-function getCategoriesEtNomsMentions(){
+function getCategories(){
     global $bdd;
     $categories = array();
-	$query = "Select idCategorie, nomCategorie From categoriecompetence";
+	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence is NULL";
 
+	if(!empty($bdd->query($query)){
+		foreach($bdd->query($query) as $row){
 
-	foreach($bdd->query($query) as $row){
-		$query2 = "Select distinct(nomMention) From mention NATURAL JOIN competence Where idCategorie = " . $row['idCategorie'];
-		$mentions = array();
+			$categorie = array(
+				'id' => $row['idCategorie'],
+				'nom' => $row['nomCompetence'],
+				'sousCategories' => getSousCategories($row['idCategorie'])
+			);
 
-		if(!empty($bdd->query($query2))){
-			foreach($bdd->query($query2) as $row2){
-				$mentions[] = $row2['nomMention'];
-			}
+			$categories[] = $categorie;
 		}
 
-		$categorie = array(
-				'nom' => $row['nomCategorie'],
-				'mentions' => $mentions
-		);
+	return $categories;
+}
 
-		$categories[] = $categorie;
+function getSousCategories($idPere){
+	global $bdd;
+	$query = "Select idCompetence, nomCompetence Fom competence Where idPereCompetence = " . $idPere . " and idCompetence in (Select distinct(idPereCompetence) From competence)";
+	$sousCategories = array();
+
+	if(!empty($bdd->query($query)){
+		foreach($bdd->query($query) as $row){
+			$categorie = array(
+				'id' => $row['idCategorie'],
+				'nom' => $row['nomCompetence'],
+				'sousCategories' => getSousCategories($row['idCategorie'])
+			);
+
+			$sousCategories[] = $categorie;
+		}
 	}
 
-	return $categories;
+	return $sousCategories;
 }
 
 ?>
