@@ -37,7 +37,7 @@ function getCompetencesTransversalesEtLinguistiques(){
 }
 
 
-function getCategories(){
+function getCompetences(){
     global $bdd;
     $categories = array();
 	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence is NULL";
