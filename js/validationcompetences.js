@@ -1,8 +1,7 @@
 // JavaScript Document
 
-function validation(){
-    alert('deb');
-    var comp = document.getElementById("progress1");
+function validation(button){
+    var comp  = document.getElementById("progress1");
     comp.style.width="50%";
-    alert('fin');
+    button.style.background="#5cb85c";
 }
