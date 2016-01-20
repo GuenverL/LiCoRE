@@ -39,43 +39,52 @@ function getCompetencesTransversalesEtLinguistiques(){
 
 function getCompetences(){
     global $bdd;
-    $categories = array();
+    $competences = array();
 	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence is NULL";
 
 	if(!empty($bdd->query($query))){
 		foreach($bdd->query($query) as $row){
+			$sousCompetences = getSousCompetences($row['idCompetence']);
+			if(empty($sousCompetences)){
+				$sousCompetences = NULL;
+			}
 
-			$categorie = array(
+			$competence = array(
 				'id' => $row['idCompetence'],
 				'nom' => $row['nomCompetence'],
-				'sousCategories' => getSousCategories($row['idCompetence'])
+				'sousCompetences' => $sousCompetences
 			);
 
-			$categories[] = $categorie;
+			$competences[] = $competence;
 		}
 	}
 
-	return $categories;
+	return $competences;
 }
 
-function getSousCategories($idPere){
+function getSousCompetences($idPere){
 	global $bdd;
 	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere . " and idCompetence in (Select distinct(idPereCompetence) From competence)";
-	$sousCategories = array();
+	$sousCompetences = array();
 
 	if(!empty($bdd->query($query))){
 		foreach($bdd->query($query) as $row){
-			$categorie = array(
+			$sousCompetence = getSousCompetences($row['idCompetence']);
+			if(empty($sousCompetence)){
+				$sousCompetences = NULL;
+			}
+
+			$competences = array(
 				'id' => $row['idCompetence'],
 				'nom' => $row['nomCompetence'],
-				'sousCategories' => getSousCategories($row['idCompetence'])
+				'sousCategories' => $sousCompetence
 			);
 
-			$sousCategories[] = $categorie;
+			$sousCompetences[] = $competences;
 		}
 	}
 
-	return $sousCategories;
+	return $sousCompetences;
 }
 
 ?>
