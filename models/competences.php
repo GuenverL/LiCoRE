@@ -42,32 +42,33 @@ function getCompetences(){
     $categories = array();
 	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence is NULL";
 
-	if(!empty($bdd->query($query)){
+	if(!empty($bdd->query($query))){
 		foreach($bdd->query($query) as $row){
 
 			$categorie = array(
-				'id' => $row['idCategorie'],
+				'id' => $row['idCompetence'],
 				'nom' => $row['nomCompetence'],
-				'sousCategories' => getSousCategories($row['idCategorie'])
+				'sousCategories' => getSousCategories($row['idCompetence'])
 			);
 
 			$categories[] = $categorie;
 		}
+	}
 
 	return $categories;
 }
 
 function getSousCategories($idPere){
 	global $bdd;
-	$query = "Select idCompetence, nomCompetence Fom competence Where idPereCompetence = " . $idPere . " and idCompetence in (Select distinct(idPereCompetence) From competence)";
+	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere . " and idCompetence in (Select distinct(idPereCompetence) From competence)";
 	$sousCategories = array();
 
-	if(!empty($bdd->query($query)){
+	if(!empty($bdd->query($query))){
 		foreach($bdd->query($query) as $row){
 			$categorie = array(
-				'id' => $row['idCategorie'],
+				'id' => $row['idCompetence'],
 				'nom' => $row['nomCompetence'],
-				'sousCategories' => getSousCategories($row['idCategorie'])
+				'sousCategories' => getSousCategories($row['idCompetence'])
 			);
 
 			$sousCategories[] = $categorie;
