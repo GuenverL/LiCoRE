@@ -37,54 +37,100 @@ function getCompetencesTransversalesEtLinguistiques(){
 }
 
 
-function getCompetences(){
+function getCompetencesOld(){
     global $bdd;
-    $competences = array();
+    $categories = array();
 	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence is NULL";
 
 	if(!empty($bdd->query($query))){
 		foreach($bdd->query($query) as $row){
-			$sousCompetences = getSousCompetences($row['idCompetence']);
-			if(empty($sousCompetences)){
-				$sousCompetences = NULL;
-			}
 
-			$competence = array(
+			$categorie = array(
 				'id' => $row['idCompetence'],
 				'nom' => $row['nomCompetence'],
-				'sousCompetences' => $sousCompetences
+				'sousCategories' => getSousCategories($row['idCompetence'])
 			);
 
-			$competences[] = $competence;
+			$categories[] = $categorie;
 		}
 	}
 
-	return $competences;
+	return $categories;
 }
 
-function getSousCompetences($idPere){
+function afficherArbreCompetences($parent, $niveau, $array) {
+    $html = "";
+    $niveau_precedent = 0;
+
+    if (!$niveau && !$niveau_precedent) {
+        $html .= "\n<ul>\n";
+    }
+
+    foreach ($array AS $noeud) {
+        if ($parent == $noeud['idPereCompetence']) {
+            if ($niveau_precedent < $niveau) {
+                $html .= "\n<ul>\n";
+            }
+            $html .= "<li><a href=\"#\">" . $noeud['nomCompetence'] . "</a>";
+            $niveau_precedent = $niveau;
+            $html .= afficherArbreCompetences($noeud['idCompetence'], ($niveau + 1), $array);
+        }
+    }
+
+    if (($niveau_precedent == $niveau) && ($niveau_precedent != 0)) {
+        $html .= "</ul>\n</li>\n";
+    }
+    else if ($niveau_precedent == $niveau) {
+        $html .= "</ul>\n";
+    }
+    else {
+        $html .= "</li>\n";
+    }
+
+    return $html;
+}
+
+function getCompetences(){
+    global $bdd;
+    $competences = array();
+    $query = "Select idCompetence, idPereCompetence, nomCompetence From competence ORDER BY nomCompetence ASC";
+
+    if(!empty($bdd->query($query))){
+        foreach($bdd->query($query) as $row){
+
+            if(!empty(getSousCategories($row['idCompetence']))) {
+                $competence = array(
+                'idCompetence' => $row['idCompetence'],
+                'idPereCompetence' => $row['idPereCompetence'],
+                'nomCompetence' => $row['nomCompetence']
+                );
+
+                $competences[] = $competence;
+            }
+        }
+    }
+
+    return $competences;
+}
+
+function getSousCategories($idPere){
 	global $bdd;
 	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere . " and idCompetence in (Select distinct(idPereCompetence) From competence)";
-	$sousCompetences = array();
+	$sousCategories = array();
 
 	if(!empty($bdd->query($query))){
 		foreach($bdd->query($query) as $row){
-			$sousCompetence = getSousCompetences($row['idCompetence']);
-			if(empty($sousCompetence)){
-				$sousCompetences = NULL;
-			}
-
-			$competences = array(
+			$categorie = array(
 				'id' => $row['idCompetence'],
 				'nom' => $row['nomCompetence'],
-				'sousCategories' => $sousCompetence
+				'sousCategories' => getSousCategories($row['idCompetence'])
 			);
 
-			$sousCompetences[] = $competences;
+			$sousCategories[] = $categorie;
 		}
 	}
 
-	return $sousCompetences;
+	return $sousCategories;
 }
 
 ?>

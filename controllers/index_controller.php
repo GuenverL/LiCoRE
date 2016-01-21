@@ -2,7 +2,7 @@
 
 include_once(DOC_ROOT_PATH . '/models/competences.php');
 
-$categories = getCategoriesEtNomsMentions();
+$competences = getCompetences();
 
 // On affiche la vue
 

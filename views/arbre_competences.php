@@ -7,9 +7,8 @@
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="arbre_competences_headingOne">
                 <h3 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#arbre_competences" href="#arbre_competences_collapseOne" aria-expanded="true" aria-controls="arbre_competences_collapseOne">
-                    Compétences disciplinaires
-                </a>
+                    <a role="button" data-toggle="collapse" data-parent="#arbre_competences" href="#arbre_competences_collapseOne" aria-expanded="false" aria-controls="arbre_competences_collapseOne">
+                    Compétences disciplinaires</a>
                 </h3>
             </div>
             <div id="arbre_competences_collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
@@ -37,9 +36,9 @@
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="arbre_competences_headingTwo">
                 <h3 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#arbre_competences" href="#arbre_competences_collapseTwo" aria-expanded="true" aria-controls="arbre_competences_collapseTwo">
-                Compétences préprofessionnelles
-            </a></h3>
+                    <a role="button" data-toggle="collapse" data-parent="#arbre_competences" href="#arbre_competences_collapseTwo" aria-expanded="false" aria-controls="arbre_competences_collapseTwo">
+                    Compétences préprofessionnelles</a>
+                </h3>
             </div>
             <div id="arbre_competences_collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <table class="table table-bordered table-hover table-condensed">
@@ -66,9 +65,9 @@
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="arbre_competences_headingThree">
                 <h3 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#arbre_competences" href="#arbre_competences_collapseThree" aria-expanded="true" aria-controls="arbre_competences_collapseThree">
-                Compétences transversales et linguistiques
-            </a></h3>
+                    <a role="button" data-toggle="collapse" data-parent="#arbre_competences" href="#arbre_competences_collapseThree" aria-expanded="false" aria-controls="arbre_competences_collapseThree">
+                    Compétences transversales et linguistiques</a>
+                </h3>
             </div>
             <div id="arbre_competences_collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <table class="table table-bordered table-hover table-condensed">
