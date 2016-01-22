@@ -66,12 +66,16 @@ function afficherArbreCompetences($parent, $niveau, $array) {
         $html .= "\n<ul>\n";
     }
 
-    foreach ($array AS $noeud) {
+     foreach ($array AS $noeud) {
         if ($parent == $noeud['idPereCompetence']) {
             if ($niveau_precedent < $niveau) {
                 $html .= "\n<ul>\n";
+                $html .= "<li onclick=\"afficherCompetence(" . $noeud['idCompetence'] . ")\">";  
             }
-            $html .= "<li onclick=\"afficherCompetences(" . $noeud['idCompetence'] . ")\"><a href=\"#\">" . $noeud['nomCompetence'] . "</a>";
+            else {
+            	$html .= "<li>";
+            }
+            $html .= "<a href=\"#\">" . $noeud['nomCompetence'] . "</a>";
             $niveau_precedent = $niveau;
             $html .= afficherArbreCompetences($noeud['idCompetence'], ($niveau + 1), $array);
         }
