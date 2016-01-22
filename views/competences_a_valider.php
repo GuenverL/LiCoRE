@@ -3,10 +3,7 @@
     </div>
     <div class="panel-body">
         <div class="list-group">
-            <div class="list-group-item btn" onclick="validation(this)">
-                <label >                                sous-compétence 1-1
-                </label>
-            </div>
+            <?php echo afficherCompetencesAValider() ?>
             <div class="list-group-item btn" onclick="validation(this)">
                 <label >                                sous-compétence 1-2
                 </label>
@@ -22,3 +19,12 @@
         </div>
     </div>
 </div>
+<?php
+function afficherCompetencesAValider() {
+    $html = "";
+    $html .= "<div class=\"list-group-item btn\" onclick=\"validation(this)\">\n";
+    $html .= "<label >sous-compétence\n";
+    $html .= "</label>\n";
+    $html .= "</div>\n";
+    return $html;
+}?>
