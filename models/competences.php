@@ -71,7 +71,7 @@ function afficherArbreCompetences($parent, $niveau, $array) {
             if ($niveau_precedent < $niveau) {
                 $html .= "\n<ul>\n";
             }
-            $html .= "<li><a href=\"#\">" . $noeud['nomCompetence'] . "</a>";
+            $html .= "<li onclick=\"afficherCompetences(" . $noeud['idCompetence'] . ")\"><a href=\"#\">" . $noeud['nomCompetence'] . "</a>";
             $niveau_precedent = $niveau;
             $html .= afficherArbreCompetences($noeud['idCompetence'], ($niveau + 1), $array);
         }
@@ -98,7 +98,7 @@ function getCompetences(){
     if(!empty($bdd->query($query))){
         foreach($bdd->query($query) as $row){
 
-            if(!empty(getSousCategories($row['idCompetence']))) {
+            if(!empty(getSousCompetences($row['idCompetence']))) {
                 $competence = array(
                 'idCompetence' => $row['idCompetence'],
                 'idPereCompetence' => $row['idPereCompetence'],
@@ -113,24 +113,24 @@ function getCompetences(){
     return $competences;
 }
 
-function getSousCategories($idPere){
+function getSousCompetences($idPere){
 	global $bdd;
-	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere . " and idCompetence in (Select distinct(idPereCompetence) From competence)";
-	$sousCategories = array();
+	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere;
+	$sousCompetences = array();
 
 	if(!empty($bdd->query($query))){
 		foreach($bdd->query($query) as $row){
 			$categorie = array(
 				'id' => $row['idCompetence'],
 				'nom' => $row['nomCompetence'],
-				'sousCategories' => getSousCategories($row['idCompetence'])
+				'sousCompetences' => getSousCompetences($row['idCompetence'])
 			);
 
-			$sousCategories[] = $categorie;
+			$sousCompetences[] = $categorie;
 		}
 	}
 
-	return $sousCategories;
+	return $sousCompetences;
 }
 
 ?>
