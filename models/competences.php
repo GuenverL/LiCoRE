@@ -70,7 +70,7 @@ function afficherArbreCompetences($parent, $niveau, $array) {
         if ($parent == $noeud['idPereCompetence']) {
             if ($niveau_precedent < $niveau) {
                 $html .= "\n<ul>\n";
-                $html .= "<li onclick=\"afficherCompetence(" . $noeud['idCompetence'] . ")\">";  
+                $html .= "<li onclick=\"afficherCompetence(" . $noeud['idCompetence'] . ")\">";
             }
             else {
             	$html .= "<li>";
