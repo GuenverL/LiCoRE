@@ -101,12 +101,12 @@ function getCompetences(){
 
     if(!empty($bdd->query($query))){
         foreach($bdd->query($query) as $row){
-
-            if(!empty(getSousCompetences($row['idCompetence']))) {
+			if(!empty(getSousCompetences($row['idCompetence']))){
                 $competence = array(
-                'idCompetence' => $row['idCompetence'],
-                'idPereCompetence' => $row['idPereCompetence'],
-                'nomCompetence' => $row['nomCompetence']
+                	'idCompetence' => $row['idCompetence'],
+                	'idPereCompetence' => $row['idPereCompetence'],
+                	'nomCompetence' => $row['nomCompetence'],
+                	'feuille' => sontDesFeuillesLesFils($row['idCompetence'])
                 );
 
                 $competences[] = $competence;
@@ -115,6 +115,19 @@ function getCompetences(){
     }
 
     return $competences;
+}
+
+function sontDesFeuillesLesFils($idPere){
+	global $bdd;
+	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere;
+
+	foreach($bdd->query($query) as $row){
+		if(!empty(getSousCompetences($row['idCompetence']))){
+        	return false;
+        }
+	}
+
+	return true;
 }
 
 function getSousCompetences($idPere){
@@ -136,5 +149,31 @@ function getSousCompetences($idPere){
 
 	return $sousCompetences;
 }
+
+/*function getCompetencesFeuille($idPere){
+	global $bdd;
+	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere;
+	$competencesFeuille = array();
+	$idUtilisateur = $_SESSION['id'];
+
+	if(!empty($bdd->query($query))){
+		foreach($bdd->query($query) as $row){
+			$valide = false;
+			$query2 = "Select idCompetence From validation Where idUtilisateur = " . $idUtilisateur . " and idCompetence = " . $row['idCompetence'];
+			if(!empty($bdd->query($query))){
+
+			}
+			$categorie = array(
+				'id' => $row['idCompetence'],
+				'nom' => $row['nomCompetence'],
+				'sousCompetences' => getSousCompetences($row['idCompetence'])
+			);
+
+			$competencesFeuille[] = $categorie;
+		}
+	}
+
+	return $sousCompetences;
+}*/
 
 ?>
