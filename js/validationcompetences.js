@@ -1,7 +1,13 @@
 function validation(button,id) {
-    button.style.background = "#5cb85c";
-    //<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+    if(button.className == "list-group-item"){
+        button.style.background = "#5cb85c";
+        button.className += " validated"
+    }else{
+        button.style.background = "#ffffff";
+        button.className = "list-group-item"
+    }
 }
+
 
 function afficherCompetence(id) {
     $.getJSON('api/competences.php', {
