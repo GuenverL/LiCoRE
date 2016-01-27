@@ -4,7 +4,7 @@ function validation(button,id) {
     span=document.getElementById(id)
 
     if(button.className == "list-group-item"){
-        button.style.background = "#5cb85c";
+        button.style.background = "#d9ffd9";
         button.className += " validated"
         span.className="glyphicon glyphicon-remove"
 
