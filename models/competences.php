@@ -97,8 +97,9 @@ function sontToutesValidesLesCompetences($idPere){
 function estUneFeuille($idCompetence){
 	global $bdd;
 	$query = "Select * From competence Where idPereCompetence = " . $idCompetence;
+	$req = $bdd->query($query);
 
-	if(empty($bdd->query($query))){
+	if(!$req->fetch()){
 		return true;
 	}
 
@@ -113,9 +114,11 @@ function estCompetenceValide($idCompetence){
     else {
         $idUtilisateur = 0;
     }
-	$query = "Select idCompetence From validation Where idUtilisateur = " . $idUtilisateur . " and idCompetence = " . $idCompetence;
 
-	if(!empty($bdd->query($query))){
+	$query = "Select idCompetence From validation Where idUtilisateur = " . $idUtilisateur . " and idCompetence = " . $idCompetence;
+	$req = $bdd->query($query);
+
+	if($req->fetch()){
 		return true;
 	}
 
