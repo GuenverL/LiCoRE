@@ -20,25 +20,30 @@ function afficherCompetence(lien,id) {
 
     if(lienPrecedent != null) {
         lienPrecedent.style.color = "#336699";
-        lienPrecedent = lien;
     }
     lienPrecedent = lien;
     lien.style.color = "#e5512b";
-    
     $.getJSON('api/competences.php', {
             type: 'sousCompetences',
             idPere: id
         },
         function(competences) {
             $("#panel-body-competences").empty();
-            $("#panel-body-competences").append('nomCompetence : <div id="competences-a-valider" class="list-group"></div>');
+            $("#panel-body-competences").append(lien.children[0].innerHTML+' : <div id="competences-a-valider" class="list-group"></div>');
             for (competence of competences) {
-
-                $("#competences-a-valider").append('<div class="list-group-item" onclick="validation(this,' + competence.id + ')">'+
-                    '<div class="media"><div class="media-body">' +
-                        competence.nom +
-                    '</div><div class="media-right media-middle"><span id="idComp'+competence.id+'" class="glyphicon glyphicon-ok" aria-hidden="true"></span></div></div>' +
-                '</div>');
+                if(competence.valide == true){
+                    $("#competences-a-valider").append('<div class="list-group-item validated" onclick="validation(this,' + competence.id + ')" style="background-color: #d9ffd9">'+
+                        '<div class="media"><div class="media-body">' +
+                            competence.nom +
+                        '</div><div class="media-right media-middle"><span id="idComp'+competence.id+'" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div></div>' +
+                    '</div>');
+                }else{
+                    $("#competences-a-valider").append('<div class="list-group-item" onclick="validation(this,' + competence.id + ')">'+
+                        '<div class="media"><div class="media-body">' +
+                            competence.nom +
+                        '</div><div class="media-right media-middle"><span id="idComp'+competence.id+'" class="glyphicon glyphicon-ok" aria-hidden="true"></span></div></div>' +
+                    '</div>');
+                }
             }
         }).fail( function(competences, textStatus, error) {
             console.error("getJSON failed, status: " + textStatus + ", error: "+error)
