@@ -13,12 +13,20 @@ function afficherArbreCompetences($parent, $niveau, $array) {
             if ($niveau_precedent < $niveau) {
                 $html .= "\n<ul>\n";
             }
-            if ($noeud['feuille']) {
-                $html .= '<li onclick="afficherCompetence(this,' . $noeud['idCompetence'] . ')">';
+
+            if ($noeud['valide']) {
+                $html .= '<li class="text-validated"';
             }
             else {
-                $html .= "<li>";
+                $html .= "<li";
             }
+            if ($noeud['feuille']) {
+                $html .= ' onclick="afficherCompetence(this,' . $noeud['idCompetence'] . ')">';
+            }
+            else {
+                $html .= ">";
+            }
+
             $html .= '<a href="#">' . $noeud['nomCompetence'] . '</a>';
             $niveau_precedent = $niveau;
             $html .= afficherArbreCompetences($noeud['idCompetence'], ($niveau + 1), $array);
@@ -122,7 +130,7 @@ function estCompetenceValide($idCompetence){
 	if($req->fetch()){
 		return true;
 	}
-
+    
 	return false;
 }
 
