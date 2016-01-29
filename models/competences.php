@@ -50,7 +50,8 @@ function getCompetences(){
                 	'idCompetence' => $row['idCompetence'],
                 	'idPereCompetence' => $row['idPereCompetence'],
                 	'nomCompetence' => $row['nomCompetence'],
-                	'feuille' => sontDesFeuillesLesFils($row['idCompetence'])
+                	'feuille' => sontDesFeuillesLesFils($row['idCompetence']),
+                	'valide' => sontToutesValidesLesCompetences($row['idCompetence'])
                 );
 
                 $competences[] = $competence;
