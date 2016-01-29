@@ -107,6 +107,7 @@ function estUneFeuille($idCompetence){
 
 function estCompetenceValide($idCompetence){
 	global $bdd;
+	$idUtilisateur = $_SESSION['idUtilisateur'];
 	$query = "Select idCompetence From validation Where idUtilisateur = " . $idUtilisateur . " and idCompetence = " . $idCompetence;
 
 	if(!empty($bdd->query($query))){
@@ -140,7 +141,6 @@ function getCompetencesFeuille($idPere){
 	global $bdd;
 	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere;
 	$competencesFeuille = array();
-	$idUtilisateur = $_SESSION['id'];
 
 	if(!empty($bdd->query($query))){
 		foreach($bdd->query($query) as $row){
