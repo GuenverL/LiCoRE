@@ -1,63 +1,5 @@
 <?php
 
-function getCompetencesPreprofessionnelles(){
-	global $bdd;
-	$competences = array();
-	$query = "Select nomCompetence Where idCategorie = 2";
-
-	foreach($bdd->query($query) as $row){
-		$competences[] = $row['nomCompetence'];
-	}
-
-	return $competences;
-}
-
-function getCompetencesDisciplinaires($id){
-	global $bdd;
-	$competences = array();
-	$query = "Select nomCompetence Where idCategorie = 1 and idMention = '$id' ";
-
-	foreach($bdd->query($query) as $row){
-		$competences[] = $row['nomCompetence'];
-	}
-
-	return $competences;
-}
-
-function getCompetencesTransversalesEtLinguistiques(){
-	global $bdd;
-	$competences = array();
-	$query = "Select nomCompetence Where idCategorie = 3";
-
-	foreach($bdd->query($query) as $row){
-		$competences[] = $row['nomCompetence'];
-	}
-
-	return $competences;
-}
-
-
-function getCompetencesOld(){
-    global $bdd;
-    $categories = array();
-	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence is NULL";
-
-	if(!empty($bdd->query($query))){
-		foreach($bdd->query($query) as $row){
-
-			$categorie = array(
-				'id' => $row['idCompetence'],
-				'nom' => $row['nomCompetence'],
-				'sousCategories' => getSousCategories($row['idCompetence'])
-			);
-
-			$categories[] = $categorie;
-		}
-	}
-
-	return $categories;
-}
-
 function afficherArbreCompetences($parent, $niveau, $array) {
     $html = "";
     $niveau_precedent = 0;
@@ -132,6 +74,48 @@ function sontDesFeuillesLesFils($idPere){
 	return true;
 }
 
+function sontToutesValidesLesCompetences($idPere){
+	global $bdd;
+	$query = "Select idCompetence From competence Where idPereCompetence = " . $idPere;
+
+	foreach($bdd->query($query) as $row){
+		if(estUnefeuille($row['idCompetence'])){
+			if(!estCompetenceValide($row['idCompetence'])){
+				return false;
+			}
+		}
+		else{
+			if(!sontToutesValidesLesCompetences($row['idCompetence'])){
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
+function estUneFeuille($idCompetence){
+	global $bdd;
+	$query = "Select * From competence Where idPereCompetence = " . $idCompetence;
+
+	if(empty($bdd->query($query))){
+		return true;
+	}
+
+	return false;
+}
+
+function estCompetenceValide($idCompetence){
+	global $bdd;
+	$query = "Select idCompetence From validation Where idUtilisateur = " . $idUtilisateur . " and idCompetence = " . $idCompetence;
+
+	if(!empty($bdd->query($query))){
+		return true;
+	}
+
+	return false;
+}
+
 function getSousCompetences($idPere){
 	global $bdd;
 	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere;
@@ -152,7 +136,7 @@ function getSousCompetences($idPere){
 	return $sousCompetences;
 }
 
-/*function getCompetencesFeuille($idPere){
+function getCompetencesFeuille($idPere){
 	global $bdd;
 	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere;
 	$competencesFeuille = array();
@@ -160,22 +144,17 @@ function getSousCompetences($idPere){
 
 	if(!empty($bdd->query($query))){
 		foreach($bdd->query($query) as $row){
-			$valide = false;
-			$query2 = "Select idCompetence From validation Where idUtilisateur = " . $idUtilisateur . " and idCompetence = " . $row['idCompetence'];
-			if(!empty($bdd->query($query))){
-
-			}
-			$categorie = array(
+			$competence = array(
 				'id' => $row['idCompetence'],
 				'nom' => $row['nomCompetence'],
-				'sousCompetences' => getSousCompetences($row['idCompetence'])
+				'valide' => estCompetenceValide($row['idCompetence'])
 			);
 
-			$competencesFeuille[] = $categorie;
+			$competencesFeuille[] = $competence;
 		}
 	}
 
-	return $sousCompetences;
-}*/
+	return $competencesFeuille;
+}
 
 ?>
