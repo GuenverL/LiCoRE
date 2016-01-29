@@ -11,7 +11,7 @@ $type = $_GET["type"];
 switch ($type) {
     case 'sousCompetences':
         $idPere = $_GET["idPere"];
-        $json = getSousCompetencesApi($idPere);
+        $json = getCompetencesFeuilleApi($idPere);
         break;
 
     default:
@@ -19,8 +19,8 @@ switch ($type) {
         break;
 }
 
-function getSousCompetencesApi($idPere) {
-    return json_encode(getSousCompetences($idPere));
+function getCompetencesFeuilleApi($idPere) {
+    return json_encode(getCompetencesFeuille($idPere));
 }
 
 function erreur($message) {
