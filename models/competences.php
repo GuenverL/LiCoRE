@@ -15,7 +15,7 @@ function afficherArbreCompetences($parent, $niveau, $array) {
             }
 
             if ($noeud['valide']) {
-                $html .= '<li class="text-validated"';
+                $html .= '<li class="text-validated-dark"';
             }
             else {
                 $html .= "<li";
@@ -130,7 +130,7 @@ function estCompetenceValide($idCompetence){
 	if($req->fetch()){
 		return true;
 	}
-    
+    return true;
 	return false;
 }
 

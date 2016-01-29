@@ -148,6 +148,10 @@ footer {
     color: rgb(217, 255, 217);
 }
 
+.text-validated-dark {
+    color: rgb(130, 153, 130);
+}
+
 .text-default {
     color: rgb(51, 102, 153);
 }

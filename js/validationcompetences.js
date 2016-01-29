@@ -19,10 +19,11 @@ var lienPrecedent = null;
 function afficherCompetence(lien,id) {
 
     if(lienPrecedent != null) {
-        lienPrecedent.style.color = "#336699";
+        lienPrecedent.className = "text-default";
     }
     lienPrecedent = lien;
-    lien.style.color = "#e5512b";
+    lienPrecedent.className = "text-selected";
+
     $.getJSON('api/competences.php', {
             type: 'sousCompetences',
             idPere: id
