@@ -15,7 +15,16 @@ function validation(button,id) {
     }
 }
 
-function afficherCompetence(id) {
+var lienPrecedent = null;
+function afficherCompetence(lien,id) {
+
+    if(lienPrecedent != null) {
+        lienPrecedent.style.color = "#336699";
+        lienPrecedent = lien;
+    }
+    lienPrecedent = lien;
+    lien.style.color = "#e5512b";
+    
     $.getJSON('api/competences.php', {
             type: 'sousCompetences',
             idPere: id

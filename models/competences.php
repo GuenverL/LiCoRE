@@ -14,12 +14,12 @@ function afficherArbreCompetences($parent, $niveau, $array) {
                 $html .= "\n<ul>\n";
             }
             if ($noeud['feuille']) {
-                $html .= "<li onclick=\"afficherCompetence(" . $noeud['idCompetence'] . ")\">";
+                $html .= '<li onclick="afficherCompetence(this,' . $noeud['idCompetence'] . ')">';
             }
             else {
                 $html .= "<li>";
             }
-            $html .= "<a href=\"#\">" . $noeud['nomCompetence'] . "</a>";
+            $html .= '<a href="#">' . $noeud['nomCompetence'] . '</a>';
             $niveau_precedent = $niveau;
             $html .= afficherArbreCompetences($noeud['idCompetence'], ($niveau + 1), $array);
         }
