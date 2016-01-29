@@ -108,29 +108,25 @@ function estUneFeuille($idCompetence){
 	$query = "Select * From competence Where idPereCompetence = " . $idCompetence;
 	$req = $bdd->query($query);
 
-	if(!$req->fetch()){
-		return true;
+	if($req->fetch()){
+		return false;
 	}
 
-	return false;
+	return true;
 }
 
 function estCompetenceValide($idCompetence){
 	global $bdd;
-    if (isset($_SESSION['idUtilisateur'])) {
-        $idUtilisateur = $_SESSION['idUtilisateur'];
-    }
-    else {
-        $idUtilisateur = 0;
-    }
-
+   
+    $idUtilisateur = 0;
+    
 	$query = "Select idCompetence From validation Where idUtilisateur = " . $idUtilisateur . " and idCompetence = " . $idCompetence;
 	$req = $bdd->query($query);
 
 	if($req->fetch()){
 		return true;
 	}
-    return true;
+ 
 	return false;
 }
 
