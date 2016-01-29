@@ -107,7 +107,12 @@ function estUneFeuille($idCompetence){
 
 function estCompetenceValide($idCompetence){
 	global $bdd;
-	$idUtilisateur = $_SESSION['idUtilisateur'];
+    if (isset($_SESSION['idUtilisateur'])) {
+        $idUtilisateur = $_SESSION['idUtilisateur'];
+    }
+    else {
+        $idUtilisateur = 0;
+    }
 	$query = "Select idCompetence From validation Where idUtilisateur = " . $idUtilisateur . " and idCompetence = " . $idCompetence;
 
 	if(!empty($bdd->query($query))){

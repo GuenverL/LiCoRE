@@ -30,6 +30,7 @@ function afficherCompetence(id) {
                     '</div><div class="media-right media-middle"><span id="idComp'+competence.id+'" class="glyphicon glyphicon-ok" aria-hidden="true"><span></div></div>' +
                 '</div>');
             }
-        }
-    );
+        }).fail( function(competences, textStatus, error) {
+            console.error("getJSON failed, status: " + textStatus + ", error: "+error)
+        });
 }
