@@ -8,9 +8,9 @@ function accueil() {
   require(DOC_ROOT_PATH . '/views/index.php');
 }
 
-// Affiche l'accueil du site
-function ajouterCompetence() {
-  require(DOC_ROOT_PATH . '/views/tableau-de-bord/ajouter-competence.php');
+// Permet d'ajouter une competence
+function gestionCompetences() {
+  require(DOC_ROOT_PATH . '/views/tableau-de-bord/gestion-competences.php');
 }
 
 // Affiche une erreur

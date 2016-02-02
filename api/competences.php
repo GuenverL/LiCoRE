@@ -13,14 +13,7 @@ switch ($type) {
         $idPere = $_GET["idPere"];
         $json = getCompetencesFeuilleApi($idPere);
         break;
-    case 'validation':
-    	$idCompetence = $_GET["idCompetence"];
-    	$json = validerCompetenceApi($idCompetence);
-    	break;
-    case 'invalidation':
-    	$idCompetence = $_GET["idCompetence"];
-    	$json = invaliderCompetenceApi($idCompetence);
-    	break;
+
     default:
         $json = erreur("Il faut renseigner le type");
         break;
@@ -28,14 +21,6 @@ switch ($type) {
 
 function getCompetencesFeuilleApi($idPere) {
     return json_encode(getCompetencesFeuille($idPere));
-}
-
-function validerCompetenceApi($idCompetence){
-	return json_encode(validerCompetence($idCompetence));
-}
-
-function invaliderCompetenceApi($idCompetence){
-	return json_encode(invaliderCompetence($idCompetence));
 }
 
 function erreur($message) {

@@ -9,8 +9,8 @@ require(DOC_ROOT_PATH . '/controllers/main-controller.php');
 
 try {
   if (isset($_GET['action'])) {
-    if ($_GET['action'] == 'ajouter-competence') {
-        ajouterCompetence();
+    if ($_GET['action'] == 'gestion-competences') {
+        gestionCompetences();
     }
     else {
         throw new Exception("Action non valide");
