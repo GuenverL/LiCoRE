@@ -1,34 +1,17 @@
-<!DOCTYPE html>
-<html>
-    <?php include("./views/layout/head.php"); ?>
+<?php $titre = 'Accueil'; ?>
 
-    <body>
-        <div id="wrap-content">
+<?php ob_start(); ?>
+    <div class="col-md-4">
+        <?php include(DOC_ROOT_PATH . '/views/liste-competences.php'); ?>
+    </div>
 
-            <?php include("./views/layout/navbar-top.php"); ?>
+    <div class="col-md-4">
+        <?php include(DOC_ROOT_PATH . '/views/competences_a_valider.php'); ?>
+    </div>
 
-            <div class="container" style="margin-top:30px;">
-                <div class="row">
-                    <div class="col-md-4">
-                        <?php include("./views/liste-competences.php"); ?>
-                    </div>
+    <div class="col-md-4">
+        <?php include(DOC_ROOT_PATH . '/views/arbre-competences.php'); ?>
+    </div>
+<?php $contenu = ob_get_clean(); ?>
 
-                    <div class="col-md-4">
-                        <?php include("./views/competences_a_valider.php"); ?>
-                    </div>
-
-                    <div class="col-md-4">
-                        <?php include("./views/arbre-competences.php"); ?>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <?php include("./views/layout/footer.php"); ?>
-
-        <?php include("./views/layout/scripts.php"); ?>
-
-    </body>
-
-</html>
+<?php require(DOC_ROOT_PATH . '/views/layout/main.php'); ?>

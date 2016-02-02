@@ -18,7 +18,7 @@
                     Tableau de bord <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Ajouter une compétence</a></li>
+                    <li><a href="<?= "index.php?action=ajouter-competence" ?>">Ajouter une compétence</a></li>
                     <li><a href="#">Modifier une compétence</a></li>
                     <li><a href="#">Supprimer une compétence</a></li>
                 </ul>
