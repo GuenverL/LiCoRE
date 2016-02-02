@@ -117,7 +117,6 @@ function estUneFeuille($idCompetence){
 
 function estCompetenceValide($idCompetence){
 	global $bdd;
-   
     $idUtilisateur = 0;
     
 	$query = "Select idCompetence From validation Where idUtilisateur = " . $idUtilisateur . " and idCompetence = " . $idCompetence;
@@ -168,6 +167,26 @@ function getCompetencesFeuille($idPere){
 	}
 
 	return $competencesFeuille;
+}
+
+function validerCompetence($idCompetence){
+	global $bdd;
+	$idUtilisateur = 0;
+
+	$queryInsert = $bdd->prepare("Insert into validation (idUtilisateur, idCompetence) Values (:idUtilisateur, :idCompetence)");
+	$queryInsert->bindParam(':idUtilisateur', $idUtilisateur);
+	$queryInsert->bindParam(':idCompetence', $idCompetence);
+	$queryInsert->execute();
+}
+
+function invaliderCompetence($idCompetence){
+	global $bdd;
+	$idUtilisateur = 0;
+
+	$queryDelete = $bdd->prepare("Delete From validation Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence");
+	$queryDelete->bindParam(':idUtilisateur', $idUtilisateur);
+	$queryDelete->bindParam(':idCompetence', $idCompetence);
+	$queryDelete->execute();
 }
 
 ?>
