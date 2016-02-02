@@ -32,7 +32,6 @@ function invaliderCompetence(id){
 
 var lienPrecedent = null;
 function afficherCompetence(lien,id){
-
     if(lienPrecedent != null){
         lienPrecedent.className = "text-default";
     }

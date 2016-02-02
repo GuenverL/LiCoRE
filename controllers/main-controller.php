@@ -5,6 +5,7 @@ require(DOC_ROOT_PATH . '/models/competences.php');
 // Affiche l'accueil du site
 function accueil() {
   $competences = getCompetences();
+  $competencesValidees = getCompetencesValides();
   require(DOC_ROOT_PATH . '/views/index.php');
 }
 

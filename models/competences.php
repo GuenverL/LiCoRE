@@ -14,13 +14,14 @@ function afficherArbreCompetences($parent, $niveau, $array) {
                 $html .= "\n<ul>\n";
             }
 
-            if ($noeud['valide']) {
-                $html .= '<li class="text-validated-dark"';
+            if(isset($noeud['valide']) && $noeud['valide']){
+            	$html .= '<li class="text-validated-dark"';
             }
-            else {
+            else{
                 $html .= "<li";
             }
-            if ($noeud['feuille']) {
+
+            if (isset($noeud['feuille']) && $noeud['feuille']){
                 $html .= ' onclick="afficherCompetence(this,' . $noeud['idCompetence'] . ')">';
             }
             else {
@@ -53,7 +54,7 @@ function getCompetences(){
 
     if(!empty($bdd->query($query))){
         foreach($bdd->query($query) as $row){
-			if(!empty(getSousCompetences($row['idCompetence']))){
+			if(!estUneFeuille($row['idCompetence'])){
                 $competence = array(
                 	'idCompetence' => $row['idCompetence'],
                 	'idPereCompetence' => $row['idPereCompetence'],
@@ -151,7 +152,7 @@ function getSousCompetences($idPere){
 
 function getCompetencesFeuille($idPere){
 	global $bdd;
-	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere;
+	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere . " ORDER BY nomCompetence ASC";
 	$competencesFeuille = array();
 
 	if(!empty($bdd->query($query))){
@@ -187,6 +188,48 @@ function invaliderCompetence($idCompetence){
 	$queryDelete->bindParam(':idUtilisateur', $idUtilisateur);
 	$queryDelete->bindParam(':idCompetence', $idCompetence);
 	$queryDelete->execute();
+}
+
+function auMoinsUneCompetenceEstValide($idPere){
+	global $bdd;
+	$query = "Select idCompetence From competence Where idPereCompetence = " . $idPere;
+
+	foreach($bdd->query($query) as $row){
+		if(estUnefeuille($row['idCompetence'])){
+			if(estCompetenceValide($row['idCompetence'])){
+				return true;
+			}
+		}
+		else{
+			if(auMoinsUneCompetenceEstValide($row['idCompetence'])){
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+function getCompetencesValides(){
+	global $bdd;
+    $competencesValides = array();
+    $query = "Select idCompetence, idPereCompetence, nomCompetence From competence ORDER BY nomCompetence ASC";
+
+    if(!empty($bdd->query($query))){
+        foreach($bdd->query($query) as $row){
+			if((estUneFeuille($row['idCompetence']) && estCompetenceValide($row['idCompetence'])) || (auMoinsUneCompetenceEstValide($row['idCompetence']))){
+                $competence = array(
+                	'idCompetence' => $row['idCompetence'],
+                	'idPereCompetence' => $row['idPereCompetence'],
+                	'nomCompetence' => $row['nomCompetence']
+                );
+
+                $competencesValides[] = $competence;
+            }
+        }
+    }
+
+    return $competencesValides;
 }
 
 ?>
