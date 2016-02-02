@@ -5,8 +5,11 @@
 
     <div class="panel-body">
         <?php
-            if(isset($competencesValidees)) {
+            if(!empty($competencesValidees)) {
+                echo '<ul class="treeview">
+                    <li><a href="#">Liste des compétences validées</a>';
                 echo afficherArbreCompetences(0,0,$competencesValidees);
+                echo '</li></ul>';
             }
             else {
                 echo '<p>Aucunes compétences validées</p>';
