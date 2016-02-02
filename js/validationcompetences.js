@@ -1,5 +1,4 @@
 
-
 function validation(button,id) {
     idCompetence="idComp"+id
     span=document.getElementById(idCompetence)

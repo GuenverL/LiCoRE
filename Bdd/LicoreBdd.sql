@@ -89,8 +89,8 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 
 CREATE TABLE IF NOT EXISTS `validation` (
   `idUtilisateur` int(11) NOT NULL,
-  `IdCompetence` int(11) NOT NULL,
-  PRIMARY KEY (`IdCompetence`,`idUtilisateur`)
+  `idCompetence` int(11) NOT NULL,
+  PRIMARY KEY (`idCompetence`,`idUtilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
