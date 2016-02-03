@@ -232,4 +232,13 @@ function getCompetencesValides(){
     return $competencesValides;
 }
 
+function modifierCompetence($idCompetence, $nouveauNom){
+	global $bdd;
+
+	$queryUpdate = $bdd->prepare("Update competence Set nomCompetence = :nouveauNom Where idCompetence = :idCompetence");
+	$queryUpdate->bindParam(':nouveauNom', $nouveauNom);
+	$queryUpdate->bindParam(':idCompetence', $idCompetence);
+	$queryUpdate->execute();
+}
+
 ?>
