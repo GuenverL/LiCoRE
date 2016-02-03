@@ -21,6 +21,11 @@ switch ($type) {
     	$idCompetence = $_GET["idCompetence"];
     	$json = invaliderCompetenceApi($idCompetence);
     	break;
+    case 'ajouterCompetence':
+        $idPere = $_GET["idPere"];
+        $nomCompetence = $_GET["nomCompetence"];
+        ajouterCompetence($idPere, $nomCompetence);
+        break;
     case 'modifierCompetence':
         $idCompetence = $_GET["idCompetence"];
         $nomCompetence = $_GET["nomCompetence"];
