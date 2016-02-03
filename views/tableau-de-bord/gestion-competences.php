@@ -18,7 +18,9 @@ function afficherArbreGestionCompetences($parent, $niveau, $array) {
 
             $html .= '<li><a href="#">' . $noeud['nomCompetence'] . '</a>';
 
-            $html .= ' <span data-toggle="modal" data-target="#modifierCompetenceModal" data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>';
+            $html .= ' <span data-toggle="modal" data-target="#ajouterCompetenceModal" data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-plus cursor-pointer" aria-hidden="true"></span>';
+
+            $html .= ' <span data-toggle="modal" data-target="#modifierCompetenceModal" data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-pencil cursor-pointer" aria-hidden="true"></span>';
 
             $niveau_precedent = $niveau;
             $html .= afficherArbreGestionCompetences($noeud['idCompetence'], ($niveau + 1), $array);

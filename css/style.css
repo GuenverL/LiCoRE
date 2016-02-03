@@ -129,7 +129,7 @@ footer {
     background-color: #dedde3;
 }
 
-#competences-a-valider {
+.cursor-pointer {
   -webkit-user-select: none;
   -khtml-user-drag: none;
   -khtml-user-select: none;
