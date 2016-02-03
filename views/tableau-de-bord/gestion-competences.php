@@ -1,7 +1,5 @@
 <?php
 
-
-
 function afficherArbreGestionCompetences($parent, $niveau, $array) {
     $html = "";
     $niveau_precedent = 0;
@@ -52,9 +50,11 @@ function afficherArbreGestionCompetences($parent, $niveau, $array) {
 <?php ob_start(); ?>
     <div class="col-md-12">
         <div class="panel panel-default">
+
             <div class="panel-heading">
                 Gestion des compétences
             </div>
+
             <div class="panel-body">
                 <ul class="treeview">
                     <li><a href="#">Liste des compétences</a>
@@ -62,6 +62,7 @@ function afficherArbreGestionCompetences($parent, $niveau, $array) {
                     </li>
                 </ul>
             </div>
+            
         </div>
     </div>
 <?php $contenu = ob_get_clean(); ?>

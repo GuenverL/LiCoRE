@@ -76,7 +76,7 @@ function sontDesFeuillesLesFils($idPere){
 	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere;
 
 	foreach($bdd->query($query) as $row){
-		if(!empty(getSousCompetences($row['idCompetence']))){
+		if(!estUneFeuille($row['idCompetence'])){
         	return false;
         }
 	}
@@ -248,6 +248,26 @@ function ajouterCompetence($idPere, $nomCompetence){
 	$queryInsert->bindParam(':nomCompetence', $nomCompetence);
 	$queryInsert->bindParam(':idPereCompetence', $idPere);
 	$queryInsert->execute();
+}
+
+function getToutesLesCompetences(){
+	global $bdd;
+    $competences = array();
+    $query = "Select idCompetence, idPereCompetence, nomCompetence From competence ORDER BY nomCompetence ASC";
+
+    if(!empty($bdd->query($query))){
+        foreach($bdd->query($query) as $row){
+            $competence = array(
+                'idCompetence' => $row['idCompetence'],
+                'idPereCompetence' => $row['idPereCompetence'],
+                'nomCompetence' => $row['nomCompetence']
+            );
+
+            $competences[] = $competence;
+        }
+    }
+
+    return $competences;
 }
 
 ?>
