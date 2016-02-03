@@ -266,6 +266,8 @@ function getToutesLesCompetences(){
             $competences[] = $competence;
         }
     }
+
+    return $competences;
 }
 
 ?>
