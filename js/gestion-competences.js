@@ -11,7 +11,7 @@ $('#ajouterCompetenceModal').on('show.bs.modal', function (event) {
         $.getJSON('api/competences.php', {
             type: 'ajouterCompetence',
             idPere: idPere,
-            nomCompetence: document.getElementById('nomCompetence').value
+            nomCompetence: modal.find('.modal-body #nomCompetence').val()
         });
     });
 })
@@ -30,7 +30,7 @@ $('#modifierCompetenceModal').on('show.bs.modal', function (event) {
         $.getJSON('api/competences.php', {
             type: 'modifierCompetence',
             idCompetence: idCompetence,
-            nomCompetence: document.getElementById('nomCompetence').value
+            nomCompetence: modal.find('.modal-body #nomCompetence').val()
         });
     });
 })

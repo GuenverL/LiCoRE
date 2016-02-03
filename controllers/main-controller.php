@@ -9,9 +9,9 @@ function accueil() {
     require(DOC_ROOT_PATH . '/views/index.php');
 }
 
-// Permet d'ajouter une competence
+// Permet de gerer les competences
 function gestionCompetences() {
-    $competences = getCompetences();
+    $competences = getToutesLesCompetences();
     require(DOC_ROOT_PATH . '/views/tableau-de-bord/gestion-competences.php');
 }
 
