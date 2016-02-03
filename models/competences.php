@@ -241,4 +241,13 @@ function modifierCompetence($idCompetence, $nouveauNom){
 	$queryUpdate->execute();
 }
 
+function ajouterCompetence($idPere, $nomCompetence){
+	global $bdd;
+
+	$queryInsert = $bdd->prepare("Insert into competence (nomCompetence, idPereCompetence) Values (:nomCompetence, :idPereCompetence)");
+	$queryInsert->bindParam(':nomCompetence', $nomCompetence);
+	$queryInsert->bindParam(':idPereCompetence', $idPere);
+	$queryInsert->execute();
+}
+
 ?>
