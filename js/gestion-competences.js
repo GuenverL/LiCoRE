@@ -5,6 +5,14 @@ $('#modifierCompetenceModal').on('show.bs.modal', function (event) {
 
     var modal = $(this)
     modal.find('.modal-title').text('Modifier la compétence "' + nomCompetence + '"')
-    modal.find('.modal-body input').val(idCompetence)
-    modal.find('.modal-body input').val(nomCompetence)
+    modal.find('.modal-body #idCompetence').val(idCompetence)
+    modal.find('.modal-body #nomCompetence').val(nomCompetence)
+
+    $("button#submit").click(function() {
+        $.getJSON('api/competences.php', {
+            type: 'modifierCompetence',
+            idCompetence: idCompetence,
+            nomCompetence: nomCompetence
+        });
+    });
 })

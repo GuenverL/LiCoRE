@@ -21,6 +21,11 @@ switch ($type) {
     	$idCompetence = $_GET["idCompetence"];
     	$json = invaliderCompetenceApi($idCompetence);
     	break;
+    case 'modifierCompetence':
+        $idCompetence = $_GET["idCompetence"];
+        $nomCompetence = $_GET["nomCompetence"];
+        modifierCompetence($idCompetence, $nomCompetence);
+        break;
     default:
         $json = erreurApi("Il faut renseigner le type");
         break;
