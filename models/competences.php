@@ -270,4 +270,20 @@ function getToutesLesCompetences(){
     return $competences;
 }
 
+function supprimerCompetence($idCompetence){
+	global $bdd;
+
+	if(!estUneFeuille($idCompetence)){
+		$query = "Select idCompetence From competence Where idPereCompetence = " . $idCompetence;
+
+		foreach($bdd->query($query) as $row){
+			supprimerCompetence($row['idCompetence']);
+		}
+	}
+
+	$queryDelete = $bdd->prepare("Delete From competence Where idCompetence = :idCompetence");
+	$queryDelete->bindParam(':idCompetence', $idCompetence);
+	$queryDelete->execute();
+}
+
 ?>
