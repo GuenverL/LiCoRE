@@ -5,10 +5,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Annuler"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="supprimerCompetenceModalLabel">Suppression d'une compétence</h4>
             </div>
-            <div class="modal-body">
-            <h1>ATTENTION !</h1>
-            <h2>La suppression de cette compétence entrainera la suppression de toutes ses sous-catégories et compétences </h2>
-            <h2>Voulez-vous vraiment continuer et supprimer cette compétence ?</h2>
+            <div id="modal-suppr" class="modal-body">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
