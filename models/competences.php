@@ -275,7 +275,8 @@ function getToutesLesCompetences(){
             $competence = array(
                 'idCompetence' => $row['idCompetence'],
                 'idPereCompetence' => $row['idPereCompetence'],
-                'nomCompetence' => $row['nomCompetence']
+                'nomCompetence' => $row['nomCompetence'],
+                'feuille' => estUneFeuille($row['idCompetence'])
             );
 
             $competences[] = $competence;
