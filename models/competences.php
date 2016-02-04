@@ -22,10 +22,10 @@ function afficherArbreCompetences($parent, $niveau, $array) {
             }
 
             if (isset($noeud['feuille']) && $noeud['feuille']){
-                $html .= '<a onclick="afficherCompetence(this,' . $noeud['idCompetence'] . ')" href="#">' . $noeud['nomCompetence'] . '</a></li>';
+                $html .= '<a onclick="afficherCompetence(this,' . $noeud['idCompetence'] . ')" href="#">' . $noeud['nomCompetence'] . '</a>';
             }
             else {
-                $html .= '<a href="#">' . $noeud['nomCompetence'] . '</a></li>';
+                $html .= '<a href="#">' . $noeud['nomCompetence'] . '</a>';
             }
 
             
