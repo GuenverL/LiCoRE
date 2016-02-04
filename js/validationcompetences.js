@@ -32,11 +32,12 @@ function invaliderCompetence(id){
 
 var lienPrecedent = null;
 function afficherCompetence(lien,id){
+console.log(lien)
     if(lienPrecedent != null){
-        lienPrecedent.className = "text-default";
+        lienPrecedent.style.color = "rgb(51, 102, 153)";
     }
     lienPrecedent = lien;
-    lienPrecedent.className = "text-selected";
+    lienPrecedent.style.color = "rgb(229, 81, 43)";
 
     $.getJSON('api/competences.php',{
             type: 'sousCompetences',
@@ -44,7 +45,7 @@ function afficherCompetence(lien,id){
         },
         function(competences){
             $("#panel-body-competences").empty();
-            $("#panel-body-competences").append('<div class="list-group-item" style="background-color: #81c0c4">'+lien.children[0].innerHTML+'</div> <div id="competences-a-valider" class="list-group"></div>');
+            $("#panel-body-competences").append('<div class="list-group-item" style="background-color: #81c0c4">'+lien.innerHTML+'</div> <div id="competences-a-valider" class="list-group"></div>');
             for (competence of competences){
                 if(competence.valide == true){
                     $("#competences-a-valider").append('<div class="list-group-item validated cursor-pointer" onclick="validation(this,' + competence.id + ')" style="background-color: #d9ffd9">'+
