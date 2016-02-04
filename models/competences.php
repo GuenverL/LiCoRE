@@ -59,7 +59,7 @@ function getCompetences(){
                 	'idCompetence' => $row['idCompetence'],
                 	'idPereCompetence' => $row['idPereCompetence'],
                 	'nomCompetence' => $row['nomCompetence'],
-                	'feuille' => sontDesFeuillesLesFils($row['idCompetence']),
+                	'feuille' => auMoinsUneFeuilleDansLesFils($row['idCompetence']),
                 	'valide' => sontToutesValidesLesCompetences($row['idCompetence'])
                 );
 
@@ -82,6 +82,19 @@ function sontDesFeuillesLesFils($idPere){
 	}
 
 	return true;
+}
+
+function auMoinsUneFeuilleDansLesFils($idPere){
+	global $bdd;
+	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere;
+
+	foreach($bdd->query($query) as $row){
+		if(estUneFeuille($row['idCompetence'])){
+        		return true;
+        	}
+	}
+
+	return false;
 }
 
 function sontToutesValidesLesCompetences($idPere){
@@ -157,13 +170,15 @@ function getCompetencesFeuille($idPere){
 
 	if(!empty($bdd->query($query))){
 		foreach($bdd->query($query) as $row){
-			$competence = array(
-				'id' => $row['idCompetence'],
-				'nom' => $row['nomCompetence'],
-				'valide' => estCompetenceValide($row['idCompetence'])
-			);
+			if(estUneFeuille($row['idCompetence'])){
+				$competence = array(
+					'id' => $row['idCompetence'],
+					'nom' => $row['nomCompetence'],
+					'valide' => estCompetenceValide($row['idCompetence'])
+				);
 
-			$competencesFeuille[] = $competence;
+				$competencesFeuille[] = $competence;
+			}
 		}
 	}
 
