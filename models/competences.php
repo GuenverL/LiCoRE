@@ -185,9 +185,8 @@ function getCompetencesFeuille($idPere){
 	return $competencesFeuille;
 }
 
-function validerCompetence($idCompetence){
+function validerCompetence($idCompetence, $idUtilisateur = 0){
 	global $bdd;
-	$idUtilisateur = 0;
 
 	$queryInsert = $bdd->prepare("Insert into validation (idUtilisateur, idCompetence) Values (:idUtilisateur, :idCompetence)");
 	$queryInsert->bindParam(':idUtilisateur', $idUtilisateur);
@@ -195,9 +194,8 @@ function validerCompetence($idCompetence){
 	$queryInsert->execute();
 }
 
-function invaliderCompetence($idCompetence){
+function invaliderCompetence($idCompetence, $idUtilisateur = 0){
 	global $bdd;
-	$idUtilisateur = 0;
 
 	$queryDelete = $bdd->prepare("Delete From validation Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence");
 	$queryDelete->bindParam(':idUtilisateur', $idUtilisateur);
@@ -300,6 +298,26 @@ function supprimerCompetence($idCompetence){
 	$queryDelete = $bdd->prepare("Delete From competence Where idCompetence = :idCompetence");
 	$queryDelete->bindParam(':idCompetence', $idCompetence);
 	$queryDelete->execute();
+}
+
+function getUtilisateurs(){
+	global $bdd;
+	$utilisateurs = array();
+	$query = "Select idUtilisateur, nom, prenom From utilisateur";
+
+	if(count($bdd->query($query))>0){
+        foreach($bdd->query($query) as $row){
+            $utilisateur = array(
+                'idUtilisateur' => $row['idUtilisateur'],
+                'prenom' => $row['prenom'],
+                'nom' => $row['nom']
+            );
+
+            $utilisateurs[] = $utilisateur;
+        }
+    }
+
+    return $utilisateurs;
 }
 
 ?>

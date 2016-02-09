@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 20 Janvier 2016 à 16:55
+-- Généré le :  Mar 09 Février 2016 à 14:48
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `competence` (
   `nomCompetence` varchar(250) NOT NULL,
   `idPereCompetence` int(11) DEFAULT NULL,
   PRIMARY KEY (`idCompetence`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
 
 --
 -- Contenu de la table `competence`
@@ -45,12 +45,6 @@ INSERT INTO `competence` (`idCompetence`, `nomCompetence`, `idPereCompetence`) V
 (5, 'Identifier et situer les champs professionnels potentiellement en relation avec les acquis de la mention ainsi que les parcours possibles pour y accéder', 28),
 (6, 'Caractériser et valoriser son identité, ses compétences et son projet professionnel en fonction d’un contexte', 28),
 (7, 'Se mettre en recul d’une situation, s’auto évaluer et se remettre en question pour apprendre', 28),
-(8, 'Utiliser les outils numériques de référence et les règles de sécurité informatique pour acquérir, traiter, produire et diffuser de l’information ainsi que pour collaborer en interne et en externe', 29),
-(9, 'Identifier et sélectionner diverses ressources spécialisées pour documenter un sujet', 29),
-(10, 'Analyser et synthétiser des données en vue de leur exploitation', 29),
-(11, 'Développer une argumentation avec esprit critique', 29),
-(12, 'Se servir aisément des différents registres d’expression écrite et orale de la langue française', 29),
-(13, 'Se servir aisément de la compréhension et de l’expression écrites et orales dans au moins une langue vivante étrangère', 29),
 (14, 'Identifier le rôle et le champ d’application des sciences pour l’ingénieur dans tous les\r\nsecteurs : milieux naturels, milieux industriels, transports, environnements urbains, etc', 26),
 (15, 'Valider un modèle par comparaison de ses prévisions aux résultats expérimentaux et apprécier ses limites de validité', 26),
 (16, 'Identifier les principales familles de matériaux et leurs propriétés', 26),
@@ -65,8 +59,7 @@ INSERT INTO `competence` (`idCompetence`, `nomCompetence`, `idPereCompetence`) V
 (25, 'Histoire', 27),
 (26, 'Sciences pour l''ingénieur\r\n', 27),
 (27, 'Disciplinaires', NULL),
-(28, 'Préprofessionnelles', NULL),
-(29, 'Transversales et linguistiques', NULL);
+(28, 'Préprofessionnelles', NULL);
 
 -- --------------------------------------------------------
 
@@ -77,9 +70,18 @@ INSERT INTO `competence` (`idCompetence`, `nomCompetence`, `idPereCompetence`) V
 CREATE TABLE IF NOT EXISTS `utilisateur` (
   `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT,
   `pseudo` varchar(250) NOT NULL,
+  `prenom` varchar(250) NOT NULL,
+  `nom` varchar(250) NOT NULL,
   `mdp` varchar(250) NOT NULL,
   PRIMARY KEY (`idUtilisateur`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`idUtilisateur`, `pseudo`, `prenom`, `nom`, `mdp`) VALUES
+(1, 'UtilisateurTest', 'Jean', 'Didier', 'test');
 
 -- --------------------------------------------------------
 
@@ -92,6 +94,26 @@ CREATE TABLE IF NOT EXISTS `validation` (
   `idCompetence` int(11) NOT NULL,
   PRIMARY KEY (`idCompetence`,`idUtilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `validation`
+--
+
+INSERT INTO `validation` (`idUtilisateur`, `idCompetence`) VALUES
+(0, 4),
+(0, 8),
+(0, 10),
+(0, 11),
+(0, 13),
+(1, 13),
+(0, 14),
+(0, 16),
+(0, 17),
+(0, 18),
+(0, 19),
+(0, 20),
+(0, 21),
+(0, 22);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
