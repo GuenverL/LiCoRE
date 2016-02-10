@@ -141,9 +141,8 @@ function estUneFeuille($idCompetence){
 	return true;
 }
 
-function estCompetenceValide($idCompetence){
+function estCompetenceValide($idCompetence, $idUtilisateur = 0){
 	global $bdd;
-    $idUtilisateur = 0;
 
 	$query = "Select idCompetence From validation Where idUtilisateur = " . $idUtilisateur . " and idCompetence = " . $idCompetence;
 	$req = $bdd->query($query);
@@ -312,7 +311,7 @@ function supprimerCompetence($idCompetence){
 	$queryDelete->execute();
 }
 
-function getUtilisateurs(){
+function getUtilisateursCompetence($idCompetence) {
 	global $bdd;
 	$utilisateurs = array();
 	$query = "Select idUtilisateur, nom, prenom From utilisateur";
@@ -322,7 +321,8 @@ function getUtilisateurs(){
             $utilisateur = array(
                 'idUtilisateur' => $row['idUtilisateur'],
                 'prenom' => $row['prenom'],
-                'nom' => $row['nom']
+                'nom' => $row['nom'],
+                'valide' => estCompetenceValide($idCompetence, $row['idUtilisateur'])
             );
 
             $utilisateurs[] = $utilisateur;
