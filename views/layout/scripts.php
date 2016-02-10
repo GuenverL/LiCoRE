@@ -4,3 +4,4 @@
 <script src="./js/treeview.js"></script>
 <script src="./js/validationcompetences.js"></script>
 <script src="./js/gestion-competences.js"></script>
+<script src="./js/export-competences.js"></script>
