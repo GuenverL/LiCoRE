@@ -15,6 +15,13 @@ function gestionCompetences() {
     require(DOC_ROOT_PATH . '/views/tableau-de-bord/gestion-competences.php');
 }
 
+// Permet de valider des competences pour un tuteur
+function validerCompetencesUtilisateurs() {
+    $competences = getToutesLesCompetences();
+    $utilisateurs = getUtilisateurs();
+    require(DOC_ROOT_PATH . '/views/tableau-de-bord/valider-competences-utilisateurs.php');
+}
+
 // Affiche une erreur
 function erreur($msgErreur) {
     require(DOC_ROOT_PATH . '/views/erreur.php');

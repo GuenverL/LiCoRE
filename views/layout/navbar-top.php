@@ -11,6 +11,10 @@
             <a class="navbar-brand" href="index.php">Projet Licore</a>
         </div>
 
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="index.php">Accueil</a></li>
+        </ul>
+
         <div class="navbar-right">
 
             <div class="btn-group">
@@ -19,6 +23,7 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li><a href="index.php?action=gestion-competences">Gestion des compétences</a></li>
+                    <li><a href="index.php?action=valider-competences-utilisateurs">Valider des compétences</a></li>
                 </ul>
             </div>
 

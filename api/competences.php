@@ -1,5 +1,5 @@
 <?php
-/* XXX */
+
 define('DOC_ROOT_PATH', $_SERVER['DOCUMENT_ROOT'].'/'.'Projet_Licore');
 include_once(DOC_ROOT_PATH . '/models/competences.php');
 include_once(DOC_ROOT_PATH . '/models/connexion_sql.php');
@@ -15,12 +15,22 @@ switch ($type) {
         break;
     case 'validation':
     	$idCompetence = $_GET["idCompetence"];
-    	$json = validerCompetenceApi($idCompetence);
+    	validerCompetence($idCompetence);
     	break;
     case 'invalidation':
     	$idCompetence = $_GET["idCompetence"];
-    	$json = invaliderCompetenceApi($idCompetence);
+    	invaliderCompetence($idCompetence);
     	break;
+    case 'validationCompetencesUtilisateurs':
+        $idCompetence = $_GET["idCompetence"];
+        $idUtilisateur = $_GET["idUtilisateur"];
+        validerCompetence($idCompetence,$idUtilisateur);
+        break;
+    case 'invalidationCompetencesUtilisateurs':
+        $idCompetence = $_GET["idCompetence"];
+        $idUtilisateur = $_GET["idUtilisateur"];
+        invaliderCompetence($idCompetence,$idUtilisateur);
+        break;
     case 'ajouterCompetence':
         $idPere = $_GET["idPere"];
         $nomCompetence = $_GET["nomCompetence"];
@@ -43,14 +53,6 @@ switch ($type) {
 
 function getCompetencesFeuilleApi($idPere) {
     return json_encode(getCompetencesFeuille($idPere));
-}
-
-function validerCompetenceApi($idCompetence){
-	return json_encode(validerCompetence($idCompetence));
-}
-
-function invaliderCompetenceApi($idCompetence){
-	return json_encode(invaliderCompetence($idCompetence));
 }
 
 function erreurApi($message) {
