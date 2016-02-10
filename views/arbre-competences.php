@@ -17,7 +17,7 @@
             if(!empty($competencesValidees)) {
                 echo '<ul id="arbre" class="treeview">
                     <li><a href="#">Liste des compétences validées</a>';
-                echo afficherArbreCompetences(0,0,$competencesValidees);
+                echo afficherArbreCompetences(0,0,$competencesValidees,'afficherCompetences');
                 echo '</li></ul>';
             }
             else {

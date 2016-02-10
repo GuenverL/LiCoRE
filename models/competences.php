@@ -1,6 +1,6 @@
 <?php
 
-function afficherArbreCompetences($parent, $niveau, $array) {
+function afficherArbreCompetences($parent, $niveau, $array, $typeAffichage) {
     $html = "";
     $niveau_precedent = 0;
 
@@ -14,23 +14,35 @@ function afficherArbreCompetences($parent, $niveau, $array) {
                 $html .= "\n<ul>\n";
             }
 
-            if(isset($noeud['valide']) && $noeud['valide']){
-            	$html .= '<li class="text-validated-dark">';
-            }
-            else{
-                $html .= "<li>";
-            }
-
-            if (isset($noeud['feuille']) && $noeud['feuille']){
-                $html .= '<a onclick="afficherCompetence(this,' . $noeud['idCompetence'] . ')" href="#">' . $noeud['nomCompetence'] . '</a>';
+            if($typeAffichage == 'gestionCompetences') {
+                $html .= '<li><a href="#">' . $noeud['nomCompetence'] . '</a>';
+                $html .= ' <span data-toggle="modal" data-target="#ajouterCompetenceModal" data-id-pere="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-plus cursor-pointer" aria-hidden="true"></span>';
+                $html .= ' <span data-toggle="modal" data-target="#modifierCompetenceModal" data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-pencil cursor-pointer" aria-hidden="true"></span>';
+                $html .= ' <span data-toggle="modal" data-target="#supprimerCompetenceModal" data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" data-feuille="' . $noeud['feuille'] . '" class="glyphicon glyphicon-remove cursor-pointer" aria-hidden="true"></span>';
             }
             else {
-                $html .= '<a href="#">' . $noeud['nomCompetence'] . '</a>';
+                if(isset($noeud['valide']) && $noeud['valide']){
+                	$html .= '<li class="text-validated-dark">';
+                }
+                else{
+                    $html .= "<li>";
+                }
+
+                if (isset($noeud['feuille']) && $noeud['feuille']){
+                    if($typeAffichage == 'validerCompetencesUtilisateurs') {
+                        $html .= '<a onclick="afficherUtilisateursCompetence(this,' . $noeud['idCompetence'] . ')" href="#">' . $noeud['nomCompetence'] . '</a>';
+                    }
+                    else {
+                        $html .= '<a onclick="afficherCompetence(this,' . $noeud['idCompetence'] . ')" href="#">' . $noeud['nomCompetence'] . '</a>';
+                    }
+                }
+                else {
+                    $html .= '<a href="#">' . $noeud['nomCompetence'] . '</a>';
+                }
             }
 
-            
             $niveau_precedent = $niveau;
-            $html .= afficherArbreCompetences($noeud['idCompetence'], ($niveau + 1), $array);
+            $html .= afficherArbreCompetences($noeud['idCompetence'], ($niveau + 1), $array, $typeAffichage);
         }
     }
 
@@ -129,17 +141,16 @@ function estUneFeuille($idCompetence){
 	return true;
 }
 
-function estCompetenceValide($idCompetence){
+function estCompetenceValide($idCompetence, $idUtilisateur = 0){
 	global $bdd;
-    $idUtilisateur = 0;
-    
+
 	$query = "Select idCompetence From validation Where idUtilisateur = " . $idUtilisateur . " and idCompetence = " . $idCompetence;
 	$req = $bdd->query($query);
 
 	if($req->fetch()){
 		return true;
 	}
- 
+
 	return false;
 }
 
@@ -300,7 +311,7 @@ function supprimerCompetence($idCompetence){
 	$queryDelete->execute();
 }
 
-function getUtilisateurs(){
+function getUtilisateursCompetence($idCompetence) {
 	global $bdd;
 	$utilisateurs = array();
 	$query = "Select idUtilisateur, nom, prenom From utilisateur";
@@ -310,7 +321,8 @@ function getUtilisateurs(){
             $utilisateur = array(
                 'idUtilisateur' => $row['idUtilisateur'],
                 'prenom' => $row['prenom'],
-                'nom' => $row['nom']
+                'nom' => $row['nom'],
+                'valide' => estCompetenceValide($idCompetence, $row['idUtilisateur'])
             );
 
             $utilisateurs[] = $utilisateur;
