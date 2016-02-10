@@ -36,6 +36,9 @@ switch ($type) {
         $nomCompetence = $_GET["nomCompetence"];
         supprimerCompetence($idCompetence, $nomCompetence);
         break;
+    case 'arbreCompetences':
+        $json = getCompetencesValidesApi();
+        break;
     default:
         $json = erreurApi("Il faut renseigner le type");
         break;
@@ -43,6 +46,10 @@ switch ($type) {
 
 function getCompetencesFeuilleApi($idPere) {
     return json_encode(getCompetencesFeuille($idPere));
+}
+
+function getCompetencesValidesApi(){
+	return json_encode(getCompetencesValides());
 }
 
 function validerCompetenceApi($idCompetence){
