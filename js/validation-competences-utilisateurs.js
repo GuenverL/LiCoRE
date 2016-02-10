@@ -42,7 +42,8 @@ function afficherUtilisateursCompetence(lien,idCompetence){
     lienPrecedent.style.color = "rgb(229, 81, 43)";
 
     $.getJSON('api/competences.php',{
-            type: 'getUtilisateurs'
+            type: 'getUtilisateursCompetence',
+            idCompetence: idCompetence
         },
         function(utilisateurs) {
             $("#panel-body-etudiants").empty();
