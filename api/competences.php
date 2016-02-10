@@ -13,6 +13,9 @@ switch ($type) {
         $idPere = $_GET["idPere"];
         $json = getCompetencesFeuilleApi($idPere);
         break;
+    case 'getUtilisateurs':
+        $json = getUtilisateursApi();
+        break;
     case 'validation':
     	$idCompetence = $_GET["idCompetence"];
     	validerCompetence($idCompetence);
@@ -53,6 +56,10 @@ switch ($type) {
 
 function getCompetencesFeuilleApi($idPere) {
     return json_encode(getCompetencesFeuille($idPere));
+}
+
+function getUtilisateursApi() {
+    return json_encode(getUtilisateurs());
 }
 
 function erreurApi($message) {
