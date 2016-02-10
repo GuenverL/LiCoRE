@@ -18,7 +18,6 @@ function gestionCompetences() {
 // Permet de valider des competences pour un tuteur
 function validerCompetencesUtilisateurs() {
     $competences = getToutesLesCompetences();
-    $utilisateurs = getUtilisateurs();
     require(DOC_ROOT_PATH . '/views/tableau-de-bord/valider-competences-utilisateurs.php');
 }
 
