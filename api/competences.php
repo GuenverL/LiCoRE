@@ -66,13 +66,6 @@ function getCompetencesValidesApi(){
 	return json_encode(getCompetencesValides());
 }
 
-function validerCompetenceApi($idCompetence){
-	return json_encode(validerCompetence($idCompetence));
-}
-
-function invaliderCompetenceApi($idCompetence){
-	return json_encode(invaliderCompetence($idCompetence));
-
 function getUtilisateursCompetenceApi($idCompetence) {
     return json_encode(getUtilisateursCompetence($idCompetence));
 }
