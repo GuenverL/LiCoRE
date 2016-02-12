@@ -62,48 +62,36 @@ function afficherArbreCompetences($parent, $niveau, $array, $typeAffichage) {
 function getCompetences(){
     global $bdd;
     $competences = array();
-    $query = "Select idCompetence, idPereCompetence, nomCompetence From competence ORDER BY nomCompetence ASC";
+    $querySelect = $bdd->prepare("Select idCompetence, idPereCompetence, nomCompetence From competence ORDER BY nomCompetence ASC");
+	$querySelect->execute();
 
-    if(count($bdd->query($query))>0){
-        foreach($bdd->query($query) as $row){
-			if(!estUneFeuille($row['idCompetence'])){
-                $competence = array(
-                	'idCompetence' => $row['idCompetence'],
-                	'idPereCompetence' => $row['idPereCompetence'],
-                	'nomCompetence' => $row['nomCompetence'],
-                	'feuille' => auMoinsUneFeuilleDansLesFils($row['idCompetence']),
-                	'valide' => sontToutesValidesLesCompetences($row['idCompetence'])
-                );
+    while($row = $querySelect->fetch()){
+		if(!estUneFeuille($row['idCompetence'])){
+            $competence = array(
+              	'idCompetence' => $row['idCompetence'],
+                'idPereCompetence' => $row['idPereCompetence'],
+                'nomCompetence' => $row['nomCompetence'],
+                'feuille' => auMoinsUneFeuilleDansLesFils($row['idCompetence']),
+                'valide' => sontToutesValidesLesCompetences($row['idCompetence'])
+            );
 
-                $competences[] = $competence;
-            }
+            $competences[] = $competence;
         }
     }
 
     return $competences;
 }
 
-function sontDesFeuillesLesFils($idPere){
-	global $bdd;
-	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere;
-
-	foreach($bdd->query($query) as $row){
-		if(!estUneFeuille($row['idCompetence'])){
-        	return false;
-        }
-	}
-
-	return true;
-}
-
 function auMoinsUneFeuilleDansLesFils($idPere){
 	global $bdd;
-	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere;
+	$querySelect = $bdd->prepare("Select idCompetence From competence Where idPereCompetence = :idPere");
+	$querySelect->bindParam(':idPere', $idPere, PDO::PARAM_INT);
+	$querySelect->execute();
 
-	foreach($bdd->query($query) as $row){
+	while($row = $querySelect->fetch()){
 		if(estUneFeuille($row['idCompetence'])){
         		return true;
-        	}
+        }
 	}
 
 	return false;
@@ -111,9 +99,11 @@ function auMoinsUneFeuilleDansLesFils($idPere){
 
 function sontToutesValidesLesCompetences($idPere){
 	global $bdd;
-	$query = "Select idCompetence From competence Where idPereCompetence = " . $idPere;
+	$querySelect = $bdd->prepare("Select idCompetence From competence Where idPereCompetence = :idPere");
+	$querySelect->bindParam(':idPere', $idPere, PDO::PARAM_INT);
+	$querySelect->execute();
 
-	foreach($bdd->query($query) as $row){
+	while($row = $querySelect->fetch()){
 		if(estUnefeuille($row['idCompetence'])){
 			if(!estCompetenceValide($row['idCompetence'])){
 				return false;
@@ -131,10 +121,11 @@ function sontToutesValidesLesCompetences($idPere){
 
 function estUneFeuille($idCompetence){
 	global $bdd;
-	$query = "Select * From competence Where idPereCompetence = " . $idCompetence;
-	$req = $bdd->query($query);
+	$querySelect = $bdd->prepare("Select * From competence Where idPereCompetence = :idCompetence");
+	$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+	$querySelect->execute();
 
-	if($req->fetch()){
+	if($querySelect->fetch()){
 		return false;
 	}
 
@@ -143,53 +134,34 @@ function estUneFeuille($idCompetence){
 
 function estCompetenceValide($idCompetence, $idUtilisateur = 0){
 	global $bdd;
+	$querySelect = $bdd->prepare("Select * From validation Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence");
+	$querySelect->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
+	$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+	$querySelect->execute();
 
-	$query = "Select idCompetence From validation Where idUtilisateur = " . $idUtilisateur . " and idCompetence = " . $idCompetence;
-	$req = $bdd->query($query);
-
-	if($req->fetch()){
+	if($querySelect->fetch()){
 		return true;
 	}
 
 	return false;
 }
 
-function getSousCompetences($idPere){
-	global $bdd;
-	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere;
-	$sousCompetences = array();
-
-	if(count($bdd->query($query))>0){
-		foreach($bdd->query($query) as $row){
-			$categorie = array(
-				'id' => $row['idCompetence'],
-				'nom' => $row['nomCompetence'],
-				'sousCompetences' => getSousCompetences($row['idCompetence'])
-			);
-
-			$sousCompetences[] = $categorie;
-		}
-	}
-
-	return $sousCompetences;
-}
-
 function getCompetencesFeuille($idPere){
 	global $bdd;
-	$query = "Select idCompetence, nomCompetence From competence Where idPereCompetence = " . $idPere . " ORDER BY nomCompetence ASC";
+	$querySelect = $bdd->prepare("Select idCompetence, nomCompetence From competence Where idPereCompetence = :idPere ORDER BY nomCompetence ASC");
+	$querySelect->bindParam(':idPere', $idPere, PDO::PARAM_INT);
+	$querySelect->execute();
 	$competencesFeuille = array();
 
-	if(count($bdd->query($query))>0){
-		foreach($bdd->query($query) as $row){
-			if(estUneFeuille($row['idCompetence'])){
-				$competence = array(
-					'id' => $row['idCompetence'],
-					'nom' => $row['nomCompetence'],
-					'valide' => estCompetenceValide($row['idCompetence'])
-				);
+	while($row = $querySelect->fetch()){
+		if(estUneFeuille($row['idCompetence'])){
+			$competence = array(
+				'id' => $row['idCompetence'],
+				'nom' => $row['nomCompetence'],
+				'valide' => estCompetenceValide($row['idCompetence'])
+			);
 
-				$competencesFeuille[] = $competence;
-			}
+			$competencesFeuille[] = $competence;
 		}
 	}
 
@@ -200,8 +172,8 @@ function validerCompetence($idCompetence, $idUtilisateur = 0){
 	global $bdd;
 
 	$queryInsert = $bdd->prepare("Insert into validation (idUtilisateur, idCompetence) Values (:idUtilisateur, :idCompetence)");
-	$queryInsert->bindParam(':idUtilisateur', $idUtilisateur);
-	$queryInsert->bindParam(':idCompetence', $idCompetence);
+	$queryInsert->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
+	$queryInsert->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$queryInsert->execute();
 }
 
@@ -209,16 +181,18 @@ function invaliderCompetence($idCompetence, $idUtilisateur = 0){
 	global $bdd;
 
 	$queryDelete = $bdd->prepare("Delete From validation Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence");
-	$queryDelete->bindParam(':idUtilisateur', $idUtilisateur);
-	$queryDelete->bindParam(':idCompetence', $idCompetence);
+	$queryDelete->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
+	$queryDelete->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$queryDelete->execute();
 }
 
 function auMoinsUneCompetenceEstValide($idPere){
 	global $bdd;
-	$query = "Select idCompetence From competence Where idPereCompetence = " . $idPere;
+	$querySelect = $bdd->prepare("Select idCompetence From competence Where idPereCompetence = :idPere");
+	$querySelect->bindParam(':idPere', $idPere, PDO::PARAM_INT);
+	$querySelect->execute();
 
-	foreach($bdd->query($query) as $row){
+	while($row = $querySelect->fetch()){
 		if(estUnefeuille($row['idCompetence'])){
 			if(estCompetenceValide($row['idCompetence'])){
 				return true;
@@ -237,19 +211,18 @@ function auMoinsUneCompetenceEstValide($idPere){
 function getCompetencesValides(){
 	global $bdd;
     $competencesValides = array();
-    $query = "Select idCompetence, idPereCompetence, nomCompetence From competence ORDER BY nomCompetence ASC";
+    $querySelect = $bdd->prepare("Select idCompetence, idPereCompetence, nomCompetence From competence ORDER BY nomCompetence ASC");
+    $querySelect->execute();
 
-    if(count($bdd->query($query))>0){
-        foreach($bdd->query($query) as $row){
-			if((estUneFeuille($row['idCompetence']) && estCompetenceValide($row['idCompetence'])) || (auMoinsUneCompetenceEstValide($row['idCompetence']))){
-                $competence = array(
-                	'idCompetence' => $row['idCompetence'],
-                	'idPereCompetence' => $row['idPereCompetence'],
-                	'nomCompetence' => $row['nomCompetence']
-                );
+    while($row = $querySelect->fetch()){
+		if((estUneFeuille($row['idCompetence']) && estCompetenceValide($row['idCompetence'])) || (auMoinsUneCompetenceEstValide($row['idCompetence']))){
+            $competence = array(
+                'idCompetence' => $row['idCompetence'],
+                'idPereCompetence' => $row['idPereCompetence'],
+                'nomCompetence' => $row['nomCompetence']
+            );
 
-                $competencesValides[] = $competence;
-            }
+            $competencesValides[] = $competence;
         }
     }
 
@@ -260,8 +233,8 @@ function modifierCompetence($idCompetence, $nouveauNom){
 	global $bdd;
 
 	$queryUpdate = $bdd->prepare("Update competence Set nomCompetence = :nouveauNom Where idCompetence = :idCompetence");
-	$queryUpdate->bindParam(':nouveauNom', $nouveauNom);
-	$queryUpdate->bindParam(':idCompetence', $idCompetence);
+	$queryUpdate->bindParam(':nouveauNom', $nouveauNom, PDO::PARAM_STR);
+	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$queryUpdate->execute();
 }
 
@@ -269,27 +242,26 @@ function ajouterCompetence($idPere, $nomCompetence){
 	global $bdd;
 
 	$queryInsert = $bdd->prepare("Insert into competence (nomCompetence, idPereCompetence) Values (:nomCompetence, :idPereCompetence)");
-	$queryInsert->bindParam(':nomCompetence', $nomCompetence);
-	$queryInsert->bindParam(':idPereCompetence', $idPere);
+	$queryInsert->bindParam(':nomCompetence', $nomCompetence, PDO::PARAM_STR);
+	$queryInsert->bindParam(':idPereCompetence', $idPere, PDO::PARAM_INT);
 	$queryInsert->execute();
 }
 
 function getToutesLesCompetences(){
 	global $bdd;
     $competences = array();
-    $query = "Select idCompetence, idPereCompetence, nomCompetence From competence ORDER BY nomCompetence ASC";
+    $querySelect = $bdd->prepare("Select idCompetence, idPereCompetence, nomCompetence From competence ORDER BY nomCompetence ASC");
+    $querySelect->execute();
 
-    if(count($bdd->query($query))>0){
-        foreach($bdd->query($query) as $row){
-            $competence = array(
-                'idCompetence' => $row['idCompetence'],
-                'idPereCompetence' => $row['idPereCompetence'],
-                'nomCompetence' => $row['nomCompetence'],
-                'feuille' => estUneFeuille($row['idCompetence'])
-            );
+    while($row = $querySelect->fetch()){
+        $competence = array(
+            'idCompetence' => $row['idCompetence'],
+            'idPereCompetence' => $row['idPereCompetence'],
+            'nomCompetence' => $row['nomCompetence'],
+            'feuille' => estUneFeuille($row['idCompetence'])
+        );
 
-            $competences[] = $competence;
-        }
+        $competences[] = $competence;
     }
 
     return $competences;
@@ -299,34 +271,35 @@ function supprimerCompetence($idCompetence){
 	global $bdd;
 
 	if(!estUneFeuille($idCompetence)){
-		$query = "Select idCompetence From competence Where idPereCompetence = " . $idCompetence;
+		$querySelect = $bdd->prepare("Select idCompetence From competence Where idPereCompetence = :idCompetence");
+		$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+		$querySelect->execute();
 
-		foreach($bdd->query($query) as $row){
+		while($row = $querySelect->fetch()){
 			supprimerCompetence($row['idCompetence']);
 		}
 	}
 
 	$queryDelete = $bdd->prepare("Delete From competence Where idCompetence = :idCompetence");
-	$queryDelete->bindParam(':idCompetence', $idCompetence);
+	$queryDelete->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$queryDelete->execute();
 }
 
 function getUtilisateursCompetence($idCompetence) {
 	global $bdd;
 	$utilisateurs = array();
-	$query = "Select idUtilisateur, nom, prenom From utilisateur";
+	$querySelect = $bdd->prepare("Select idUtilisateur, nom, prenom From utilisateur");
+	$querySelect->execute();
 
-	if(count($bdd->query($query))>0){
-        foreach($bdd->query($query) as $row){
-            $utilisateur = array(
-                'idUtilisateur' => $row['idUtilisateur'],
-                'prenom' => $row['prenom'],
-                'nom' => $row['nom'],
-                'valide' => estCompetenceValide($idCompetence, $row['idUtilisateur'])
-            );
+	while($row = $querySelect->fetch()){
+       	$utilisateur = array(
+            'idUtilisateur' => $row['idUtilisateur'],
+            'prenom' => $row['prenom'],
+            'nom' => $row['nom'],
+            'valide' => estCompetenceValide($idCompetence, $row['idUtilisateur'])
+        );
 
-            $utilisateurs[] = $utilisateur;
-        }
+        $utilisateurs[] = $utilisateur;
     }
 
     return $utilisateurs;
