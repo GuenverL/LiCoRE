@@ -15,7 +15,7 @@ if($mysql) {
 }
 else {
     try {
-        $bdd = new PDO('sqlite:'.$_SERVER['DOCUMENT_ROOT'].'/Projet_Licore/Bdd/licorebdd.sqlite');
+        $bdd = new PDO('sqlite:'.$_SERVER['DOCUMENT_ROOT'].'/Projet_Licore-master/Bdd/licorebdd.sqlite');
         $bdd->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // ERRMODE_WARNING | ERRMODE_EXCEPTION | ERRMODE_SILENT
     } catch(Exception $e) {
