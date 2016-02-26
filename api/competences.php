@@ -17,6 +17,7 @@ switch ($type) {
         $idCompetence = $_GET["idCompetence"];
         $json = getUtilisateursCompetenceApi($idCompetence);
         break;
+
     case 'validation':
     	$idCompetence = $_GET["idCompetence"];
     	validerCompetence($idCompetence);
@@ -25,6 +26,7 @@ switch ($type) {
     	$idCompetence = $_GET["idCompetence"];
     	invaliderCompetence($idCompetence);
     	break;
+
     case 'validationCompetencesUtilisateurs':
         $idCompetence = $_GET["idCompetence"];
         $idUtilisateur = $_GET["idUtilisateur"];
@@ -35,10 +37,16 @@ switch ($type) {
         $idUtilisateur = $_GET["idUtilisateur"];
         invaliderCompetence($idCompetence,$idUtilisateur);
         break;
+
     case 'ajouterCompetence':
         $idPere = $_GET["idPere"];
         $nomCompetence = $_GET["nomCompetence"];
         ajouterCompetence($idPere, $nomCompetence);
+        break;
+    case 'ajouterPlusieursCompetences':
+        $idPere = $_GET["idPere"];
+        $nomsCompetences = $_GET["nomsCompetences"];
+        ajouterPlusieursCompetences($idPere, $nomsCompetences);
         break;
     case 'modifierCompetence':
         $idCompetence = $_GET["idCompetence"];
@@ -50,6 +58,7 @@ switch ($type) {
         $nomCompetence = $_GET["nomCompetence"];
         supprimerCompetence($idCompetence, $nomCompetence);
         break;
+
     case 'arbreCompetences':
         $json = getCompetencesValidesApi();
         break;

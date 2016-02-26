@@ -5,13 +5,29 @@ $('#ajouterCompetenceModal').on('show.bs.modal', function (event) {
 
     var modal = $(this)
     modal.find('.modal-title').text('Ajouter une sous compétence à "' + nomCompetence + '"')
-    modal.find('.modal-body #idPere').val(idPere)
 
     $("button#submit").click(function() {
         $.getJSON('api/competences.php', {
             type: 'ajouterCompetence',
             idPere: idPere,
             nomCompetence: modal.find('.modal-body #nomCompetence').val()
+        });
+    });
+})
+
+$('#ajouterPlusieursCompetencesModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var idPere = button.data('id-pere') // Extract info from data-* attributes
+    var nomCompetence = button.data('nom-competence')
+
+    var modal = $(this)
+    modal.find('.modal-title').text('Ajouter des sous compétences à "' + nomCompetence + '"')
+
+    $("button#submit").click(function() {
+        $.getJSON('api/competences.php', {
+            type: 'ajouterPlusieursCompetences',
+            idPere: idPere,
+            nomsCompetences: modal.find('.modal-body #nomsCompetences').val()
         });
     });
 })
@@ -23,7 +39,6 @@ $('#modifierCompetenceModal').on('show.bs.modal', function (event) {
 
     var modal = $(this)
     modal.find('.modal-title').text('Modifier la compétence "' + nomCompetence + '"')
-    modal.find('.modal-body #idCompetence').val(idCompetence)
     modal.find('.modal-body #nomCompetence').val(nomCompetence)
 
     $("button#submit").click(function() {
@@ -42,7 +57,6 @@ $('#supprimerCompetenceModal').on('show.bs.modal', function (event) {
     var feuille = button.data('feuille')
 
     var modal = $(this)
-    modal.find('.modal-body #idCompetence').val(idCompetence)
     modal.find('.modal-body #nomCompetence').val(nomCompetence)
     modal.find('#modal-suppr').empty()
     if(feuille){

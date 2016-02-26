@@ -113,6 +113,9 @@ body {
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
     color: rgb(232, 85, 36);
 }
+.modal-dialog {
+    width: 800px;
+}
 
 /* Wrapper du contenu pour mettre toujours le footer en bas de la fenetre */
 

@@ -8,10 +8,6 @@
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="id-pere" class="control-label">Id pere :</label>
-                        <input type="text" class="form-control" id="idPere" disabled>
-                    </div>
-                    <div class="form-group">
                         <label for="nom-competence" class="control-label">Nom de la nouvelle compétence :</label>
                         <input type="text" class="form-control" id="nomCompetence">
                     </div>

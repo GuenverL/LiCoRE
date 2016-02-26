@@ -1,6 +1,7 @@
 <?php $titre = 'Gestion des compétences'; ?>
 
 <?php require(DOC_ROOT_PATH . '/views/tableau-de-bord/ajouter-competence.php'); ?>
+<?php require(DOC_ROOT_PATH . '/views/tableau-de-bord/ajouter-plusieurs-competences.php'); ?>
 <?php require(DOC_ROOT_PATH . '/views/tableau-de-bord/modifier-competence.php'); ?>
 <?php require(DOC_ROOT_PATH . '/views/tableau-de-bord/supprimer-competence.php'); ?>
 

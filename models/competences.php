@@ -248,6 +248,15 @@ function ajouterCompetence($idPere, $nomCompetence){
 	$queryInsert->execute();
 }
 
+function ajouterPlusieursCompetences($idPere, $nomsCompetences) {
+	global $bdd;
+
+  $tableauCompetences = preg_split("/\r\n|\n|\r/", $nomsCompetences);
+  foreach ($tableauCompetences as $nomCompetence) {
+    ajouterCompetence($idPere, $nomCompetence);
+  }
+}
+
 function getToutesLesCompetences(){
 	global $bdd;
     $competences = array();
