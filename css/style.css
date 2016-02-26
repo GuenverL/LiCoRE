@@ -143,15 +143,15 @@ footer {
   user-select: none;
   cursor: pointer;
 }
-.text-selected {
+.text-selected, .couleur-rouge {
   color: rgb(232, 85, 36);
 }
-.text-validated {
-  color: rgb(182, 192, 0);
-}
-.text-validated-dark {
-  color: rgb(182, 192, 0);
+.text-validated, .couleur-verte {
+  color: rgb(142, 188, 62);
 }
 .text-default {
   color: rgb(34, 68, 238);
+}
+.couleur-jaune {
+  color: rgb(243, 148, 0);
 }
