@@ -4,7 +4,7 @@ function validation(button,id) {
     span=document.getElementById(idCompetence)
 
     if(button.className == "list-group-item cursor-pointer"){
-        button.style.background = "#d9ffd9";
+        button.style.background = "rgb(142, 188, 62)";
         button.className += " validated";
         span.className="glyphicon glyphicon-remove";
         validerCompetence(id);
@@ -34,10 +34,10 @@ var lienPrecedent = null;
 function afficherCompetence(lien,id){
 console.log(lien)
     if(lienPrecedent != null){
-        lienPrecedent.style.color = "rgb(51, 102, 153)";
+        lienPrecedent.style.color = "rgb(34, 68, 238)";
     }
     lienPrecedent = lien;
-    lienPrecedent.style.color = "rgb(229, 81, 43)";
+    lienPrecedent.style.color = "rgb(232, 85, 36)";
 
     $.getJSON('api/competences.php',{
             type: 'sousCompetences',
@@ -45,10 +45,10 @@ console.log(lien)
         },
         function(competences){
             $("#panel-body-competences").empty();
-            $("#panel-body-competences").append('<div class="list-group-item" style="background-color: #81c0c4">'+lien.innerHTML+'</div> <div id="competences-a-valider" class="list-group"></div>');
+            $("#panel-body-competences").append('<div class="list-group-item heading">'+lien.innerHTML+'</div> <div id="competences-a-valider" class="list-group"></div>');
             for (competence of competences){
                 if(competence.valide == true){
-                    $("#competences-a-valider").append('<div class="list-group-item validated cursor-pointer" onclick="validation(this,' + competence.id + ')" style="background-color: #d9ffd9">'+
+                    $("#competences-a-valider").append('<div class="list-group-item validated cursor-pointer" onclick="validation(this,' + competence.id + ')" style="background-color: rgb(142, 188, 62)">'+
                         '<div class="media"><div class="media-body">' +
                             competence.nom +
                         '</div><div class="media-right media-middle"><span id="idComp'+competence.id+'" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div></div>' +

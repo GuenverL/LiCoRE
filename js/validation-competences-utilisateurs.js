@@ -3,7 +3,7 @@ function validationCompetenceUtilisateur(button,idCompetence, idUtilisateur) {
     span=document.getElementById("idUtilisateur" + idUtilisateur);
 
     if(button.className == "list-group-item cursor-pointer") {
-        button.style.background = "#d9ffd9";
+        button.style.background = "rgb(142, 188, 62)";
         button.className += " validated";
         span.className="glyphicon glyphicon-remove";
         validerCompetenceUtilisateur(idCompetence,idUtilisateur);
@@ -36,7 +36,7 @@ var lienPrecedent = null;
 function afficherUtilisateursCompetence(lien,idCompetence){
 
     if(lienPrecedent != null){
-        lienPrecedent.style.color = "rgb(51, 102, 153)";
+        lienPrecedent.style.color = "rgb(34, 68, 238)";
     }
     lienPrecedent = lien;
     lienPrecedent.style.color = "rgb(229, 81, 43)";
@@ -47,12 +47,12 @@ function afficherUtilisateursCompetence(lien,idCompetence){
         },
         function(utilisateurs) {
             $("#panel-body-etudiants").empty();
-            $("#panel-body-etudiants").append('<div class="list-group-item" style="background-color: #81c0c4">'
+            $("#panel-body-etudiants").append('<div class="list-group-item heading">'
             + lien.innerHTML +
             '</div> <div id="utilisateurs-a-valider" class="list-group"></div>');
             for (utilisateur of utilisateurs){
                 if(utilisateur.valide) {
-                    $("#utilisateurs-a-valider").append('<div class="list-group-item validated cursor-pointer" onclick="validationCompetenceUtilisateur(this,' + idCompetence + ',' + utilisateur.idUtilisateur + ')" style="background-color: #d9ffd9">'+
+                    $("#utilisateurs-a-valider").append('<div class="list-group-item validated cursor-pointer" onclick="validationCompetenceUtilisateur(this,' + idCompetence + ',' + utilisateur.idUtilisateur + ')" style="background-color: rgb(142, 188, 62)">'+
                         '<div class="media"><div class="media-body">'
                             + utilisateur.prenom + ' ' + utilisateur.nom +
                         '</div><div class="media-right media-middle"><span id="idUtilisateur'+utilisateur.idUtilisateur+'" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div></div>' +

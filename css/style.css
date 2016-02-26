@@ -1,114 +1,121 @@
 div.panel:first-child {
-    margin-top:20px;
+  margin-top: 20px;
 }
-
 div.treeview {
-    min-width: 100px;
-    min-height: 100px;
-
-    max-height: 256px;
-    overflow:auto;
-
-	padding: 4px;
-
-	margin-bottom: 20px;
-
-	color: #369;
-
-	border: solid 1px;
-	border-radius: 4px;
+  min-width: 100px;
+  min-height: 100px;
+  max-height: 256px;
+  overflow: auto;
+  padding: 4px;
+  margin-bottom: 20px;
+  color: #2244ee;
+  border: solid 1px;
+  border-radius: 4px;
 }
 div.treeview ul:first-child:before {
-    display: none;
+  display: none;
 }
 .treeview, .treeview ul {
-    margin:0;
-    padding:0;
-    list-style:none;
-
-	color: #369;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: #2244ee;
 }
 .treeview ul {
-    margin-left:1em;
-    position:relative
+  margin-left: 1em;
+  position: relative
 }
 .treeview ul ul {
-    margin-left:.5em
+  margin-left: .5em
 }
 .treeview ul:before {
-    content:"";
-    display:block;
-    width:0;
-    position:absolute;
-    top:0;
-    left:0;
-    border-left:1px solid;
-
-    /* creates a more theme-ready standard for the bootstrap themes */
-    bottom:15px;
+  content: "";
+  display: block;
+  width: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-left: 1px solid;
+  /* creates a more theme-ready standard for the bootstrap themes */
+  bottom: 15px;
 }
 .treeview li {
-    margin:0;
-    padding:0 1em;
-    line-height:2em;
-    font-weight:700;
-    position:relative
+  margin: 0;
+  padding: 0 1em;
+  line-height: 2em;
+  font-weight: 700;
+  position: relative
 }
 .treeview ul li:before {
-    content:"";
-    display:block;
-    width:10px;
-    height:0;
-    border-top:1px solid;
-    margin-top:-1px;
-    position:absolute;
-    top:1em;
-    left:0
+  content: "";
+  display: block;
+  width: 10px;
+  height: 0;
+  border-top: 1px solid;
+  margin-top: -1px;
+  position: absolute;
+  top: 1em;
+  left: 0
 }
 .tree-indicator {
-    margin-right:5px;
-
-    cursor:pointer;
+  margin-right: 5px;
+  cursor: pointer;
 }
 .treeview li a {
-    text-decoration: none;
-    color:inherit;
-
-    cursor:pointer;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 .treeview li button, .treeview li button:active, .treeview li button:focus {
-    text-decoration: none;
-    color:inherit;
-    border:none;
-    background:transparent;
-    margin:0px 0px 0px 0px;
-    padding:0px 0px 0px 0px;
-    outline: 0;
+  text-decoration: none;
+  color: inherit;
+  border: none;
+  background: transparent;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  outline: 0;
 }
-
-.navbar-default {
-    background-color: #232934;
-}
-
 .navbar-default .navbar-brand {
-    color: #fefefe;
+  color: #fefefe;
 }
-
-.panel-default > .panel-heading {
-    background-color: #81c0c4;
+.panel-body {
+  background-color: #f5f5f5;
 }
-
-body,
-html {
-	height: 100%;
+.panel-default > .panel-heading  {
+  color: #ffffff;
+  background-color: #846b60;
+  font-variant: small-caps;
 }
-
+.heading {
+  color: #ffffff;
+  background-color: #846b60;
+}
+body, html {
+  height: 100%;
+}
 body {
-    padding-top: 30px;
-    background-color: #dbdce1;
+  padding-top: 30px;
+  background-color: #ffffff;
+}
+.navbar {
+  background-color: #e7e0d2;
+}
+.navbar-inverse {
+  border-color: #e7e0d2;
+}
+.navbar-default .navbar-brand {
+    color: #846b60;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+    color: #ffffff;
+    background-color: rgb(232, 85, 36);
+}
+.navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
+    color: rgb(232, 85, 36);
 }
 
 /* Wrapper du contenu pour mettre toujours le footer en bas de la fenetre */
+
 #wrap-content {
   min-height: 100%;
   height: auto;
@@ -117,18 +124,15 @@ body {
   /* Padding bottom de la taille du footer */
   padding: 0 0 100px;
 }
-
 .vertical-center {
   display: flex;
   align-items: center;
 }
-
 footer {
-    height: 100px;
-    width: 100%;
-    background-color: #dedde3;
+  height: 100px;
+  width: 100%;
+  background-color: #e7e0d2;
 }
-
 .cursor-pointer {
   -webkit-user-select: none;
   -khtml-user-drag: none;
@@ -139,19 +143,15 @@ footer {
   user-select: none;
   cursor: pointer;
 }
-
 .text-selected {
-    color: rgb(229, 81, 43);
+  color: rgb(232, 85, 36);
 }
-
 .text-validated {
-    color: rgb(217, 255, 217);
+  color: rgb(182, 192, 0);
 }
-
 .text-validated-dark {
-    color: rgb(130, 153, 130);
+  color: rgb(182, 192, 0);
 }
-
 .text-default {
-    color: rgb(51, 102, 153);
+  color: rgb(34, 68, 238);
 }
