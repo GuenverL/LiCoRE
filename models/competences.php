@@ -249,8 +249,6 @@ function ajouterCompetence($idPere, $nomCompetence){
 }
 
 function ajouterPlusieursCompetences($idPere, $nomsCompetences) {
-	global $bdd;
-
   $tableauCompetences = preg_split("/\r\n|\n|\r/", $nomsCompetences);
   foreach ($tableauCompetences as $nomCompetence) {
     ajouterCompetence($idPere, $nomCompetence);
