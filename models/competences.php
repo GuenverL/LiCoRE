@@ -16,9 +16,10 @@ function afficherArbreCompetences($parent, $niveau, $array, $typeAffichage) {
 
             if($typeAffichage == 'gestionCompetences') {
                 $html .= '<li><a href="#">' . $noeud['nomCompetence'] . '</a>';
-                $html .= ' <span data-toggle="modal" data-target="#ajouterCompetenceModal" data-id-pere="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-plus cursor-pointer couleur-verte" aria-hidden="true"></span>';
-                $html .= ' <span data-toggle="modal" data-target="#ajouterPlusieursCompetencesModal" data-id-pere="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-th-list cursor-pointer couleur-verte" aria-hidden="true"></span>';
-                $html .= ' <span data-toggle="modal" data-target="#modifierCompetenceModal" data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-pencil cursor-pointer couleur-jaune" aria-hidden="true"></span>'; 
+                $html .= ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="ajouterCompetence" data-id-pere="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-plus cursor-pointer couleur-verte" aria-hidden="true"></span>';
+                $html .= ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="ajouterPlusieursCompetences" data-id-pere="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-th-list cursor-pointer couleur-verte" aria-hidden="true"></span>';
+                $html .= ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="modifierCompetence" data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-pencil cursor-pointer couleur-jaune" aria-hidden="true"></span>';
+                $html .= ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="supprimerCompetence" data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" data-feuille="' . $noeud['feuille'] . '" class="glyphicon glyphicon-remove cursor-pointer couleur-rouge" aria-hidden="true"></span>';
             }
             else {
                 if(isset($noeud['valide']) && $noeud['valide']){
@@ -264,7 +265,7 @@ function ajouterPlusieursCompetences($idPere, $nomsCompetences) {
 function getToutesLesCompetences($mode = 1){
 	global $bdd;
     $competences = array();
-    
+
     if($mode == 1){
     	$querySelect = $bdd->prepare("Select idCompetence, idPereCompetence, nomCompetence From competence Where visible = 1 ORDER BY nomCompetence ASC");
     }
