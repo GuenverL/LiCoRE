@@ -16,8 +16,8 @@ function afficherArbreCompetences($parent, $niveau, $array, $typeAffichage) {
 
             if($typeAffichage == 'gestionCompetences') {
                 $html .= '<li><a href="#">' . $noeud['nomCompetence'] . '</a>';
-                $html .= ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="ajouterCompetence" data-id-pere="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-plus cursor-pointer couleur-verte" aria-hidden="true"></span>';
-                $html .= ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="ajouterPlusieursCompetences" data-id-pere="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-th-list cursor-pointer couleur-verte" aria-hidden="true"></span>';
+                $html .= ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="ajouterCompetence" data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-plus cursor-pointer couleur-verte" aria-hidden="true"></span>';
+                $html .= ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="ajouterPlusieursCompetences" data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-th-list cursor-pointer couleur-verte" aria-hidden="true"></span>';
                 $html .= ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="modifierCompetence" data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" class="glyphicon glyphicon-pencil cursor-pointer couleur-jaune" aria-hidden="true"></span>';
                 $html .= ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="supprimerCompetence" data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" data-feuille="' . $noeud['feuille'] . '" class="glyphicon glyphicon-remove cursor-pointer couleur-rouge" aria-hidden="true"></span>';
             }
@@ -249,9 +249,11 @@ function modifierCompetence($idCompetence, $nouveauNom){
 function ajouterCompetence($idPere, $nomCompetence){
 	global $bdd;
 
-	$queryInsert = $bdd->prepare("Insert into competence (nomCompetence, idPereCompetence) Values (:nomCompetence, :idPereCompetence)");
+  $visible = 1;
+	$queryInsert = $bdd->prepare("Insert into competence (nomCompetence, idPereCompetence, visible) Values (:nomCompetence, :idPereCompetence, :visible)");
 	$queryInsert->bindParam(':nomCompetence', $nomCompetence, PDO::PARAM_STR);
 	$queryInsert->bindParam(':idPereCompetence', $idPere, PDO::PARAM_INT);
+  $queryInsert->bindParam(':visible', $visible, PDO::PARAM_BOOL);
 	$queryInsert->execute();
 }
 

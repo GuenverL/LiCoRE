@@ -39,13 +39,13 @@ switch ($type) {
         break;
 
     case 'ajouterCompetence':
-        $idPere = $_GET["idPere"];
+        $idPere = $_GET["idCompetence"];
         $nomCompetence = $_GET["nomCompetence"];
         ajouterCompetence($idPere, $nomCompetence);
         break;
     case 'ajouterPlusieursCompetences':
-        $idPere = $_GET["idPere"];
-        $nomsCompetences = $_GET["nomsCompetences"];
+        $idPere = $_GET["idCompetence"];
+        $nomsCompetences = $_GET["nomCompetence"];
         ajouterPlusieursCompetences($idPere, $nomsCompetences);
         break;
     case 'modifierCompetence':

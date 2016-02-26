@@ -1,80 +1,83 @@
-$('#ajouterCompetenceModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var idPere = button.data('id-pere') // Extract info from data-* attributes
-    var nomCompetence = button.data('nom-competence')
+$('#gestionCompetencesModal').on('show.bs.modal', function (event) {
+  'use strict';
+  var $buttonSubmit = $('#buttonSubmit');
 
-    var modal = $(this)
-    modal.find('.modal-title').text('Ajouter une sous compétence à "' + nomCompetence + '"')
+  $(this).removeData();
+  $buttonSubmit.off();
 
-    $("button#submit").click(function() {
-        $.getJSON('api/competences.php', {
-            type: 'ajouterCompetence',
-            idPere: idPere,
-            nomCompetence: modal.find('.modal-body #nomCompetence').val()
-        });
-    });
-})
+  var $button = $(event.relatedTarget);
+  var idCompetence = $button.data('id-competence');
+  var nomCompetence = $button.data('nom-competence');
+  var type = $button.data('type');
 
-$('#ajouterPlusieursCompetencesModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var idPere = button.data('id-pere') // Extract info from data-* attributes
-    var nomCompetence = button.data('nom-competence')
+  var $modal = $(this);
 
-    var modal = $(this)
-    modal.find('.modal-title').text('Ajouter des sous compétences à "' + nomCompetence + '"')
+  var updateModal = function (params) {
+    $modal.find('.modal-body #gestionCompetencesModalForm').empty();
+    $modal.find('.modal-title').text(params.title);
+    $modal.find('.modal-body #gestionCompetencesModalForm').append(params.body);
+    $modal.find('.modal-body #label').text(params.label);
+    $modal.find('.modal-body #nomCompetence').val(params.nomCompetence);
+  };
 
-    $("button#submit").click(function() {
-        $.getJSON('api/competences.php', {
-            type: 'ajouterPlusieursCompetences',
-            idPere: idPere,
-            nomsCompetences: modal.find('.modal-body #nomsCompetences').val()
-        });
-    });
-})
+  var paramsModal = {};
 
-$('#modifierCompetenceModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var idCompetence = button.data('id-competence') // Extract info from data-* attributes
-    var nomCompetence = button.data('nom-competence')
+  if (type === 'ajouterCompetence') {
+    paramsModal.title = 'Ajouter une compétence à "' + nomCompetence + '"';
+    paramsModal.body = '<div class="form-group">' +
+      '<label for="nom-competence" class="control-label" id="label"></label>' +
+      '<input type="text" class="form-control" id="nomCompetence">' +
+      '</div>';
+    paramsModal.label = 'Nom de la nouvelle compétence :';
+    paramsModal.nomCompetence = '';
 
-    var modal = $(this)
-    modal.find('.modal-title').text('Modifier la compétence "' + nomCompetence + '"')
-    modal.find('.modal-body #nomCompetence').val(nomCompetence)
+  } else if (type === 'ajouterPlusieursCompetences') {
+    paramsModal.title = 'Ajouter des compétences à "' + nomCompetence + '"';
+    paramsModal.body = '<div class="form-group">' +
+      '<label for="nom-competence" class="control-label" id="label"></label>' +
+      '<textarea rows="20" class="form-control" id="nomCompetence"></textarea>' +
+      '</div>';
+    paramsModal.label = 'Nom des nouvelles compétences (séparée par un retour à la ligne) :';
+    paramsModal.nomCompetence = '';
 
-    $("button#submit").click(function() {
-        $.getJSON('api/competences.php', {
-            type: 'modifierCompetence',
-            idCompetence: idCompetence,
-            nomCompetence: modal.find('.modal-body #nomCompetence').val()
-        });
-    });
-})
+  } else if (type === 'modifierCompetence') {
+    paramsModal.title = 'Modifier la compétence "' + nomCompetence + '"';
+    paramsModal.body = '<div class="form-group">' +
+      '<label for="nom-competence" class="control-label" id="label"></label>' +
+      '<input type="text" class="form-control" id="nomCompetence">' +
+      '</div>';
+    paramsModal.label = 'Nom :';
+    paramsModal.nomCompetence = nomCompetence;
 
-$('#supprimerCompetenceModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var idCompetence = button.data('id-competence') // Extract info from data-* attributes
-    var nomCompetence = button.data('nom-competence')
-    var feuille = button.data('feuille')
+  } else if (type === 'supprimerCompetence') {
+    var feuille = $button.data('feuille');
+    paramsModal.label = '';
+    paramsModal.nomCompetence = nomCompetence;
 
-    var modal = $(this)
-    modal.find('.modal-body #nomCompetence').val(nomCompetence)
-    modal.find('#modal-suppr').empty()
-    if(feuille){
-        modal.find('.modal-title').text('Supprimer la compétence "' + nomCompetence + '"')
-        modal.find('#modal-suppr').append('<h2>ATTENTION !</h2>'+
-        '<h3>Voulez-vous vraiment continuer et supprimer cette compétence ?</h3>')
-    }else{
-        modal.find('.modal-title').text('Supprimer la catégorie "' + nomCompetence + '"')
-        modal.find('#modal-suppr').append('<h2>ATTENTION !</h2>'+
-        '<h3>La suppression de cette catégorie entrainera la suppression de toutes ses sous-catégories et compétences </h3>'+
-        '<h3>Voulez-vous vraiment continuer et supprimer cette catégorie ?</h3>')
+    if (feuille) {
+      paramsModal.title = 'Supprimer la compétence "' + nomCompetence + '"';
+      paramsModal.body = '<h3>ATTENTION !</h3>' +
+        '<p>Voulez-vous vraiment continuer et supprimer cette compétence ?</p>';
+
+    } else {
+      paramsModal.title = 'Supprimer la catégorie "' + nomCompetence + '" et ses sous-compétences';
+      paramsModal.body = '<h3>ATTENTION !</h3>' +
+        '<p>La suppression de cette catégorie entrainera la suppression ' +
+        'de toutes ses sous-catégories et compétences</p>' +
+        '<p>Voulez-vous vraiment continuer et supprimer cette catégorie ?</p>';
     }
+  }
 
-    $("button#submit").click(function() {
-        $.getJSON('api/competences.php', {
-            type: 'supprimerCompetence',
-            idCompetence: idCompetence,
-            nomCompetence: modal.find('.modal-body #nomCompetence').val()
-        });
+  updateModal(paramsModal);
+
+  $buttonSubmit.on('click', function () {
+    $.getJSON('api/competences.php', {
+      type: type,
+      idCompetence: idCompetence,
+      nomCompetence: $modal.find('.modal-body #nomCompetence').val(),
+    }).always(function () {
+      var url = 'index.php?action=gestion-competences';
+      $(location).attr('href', url);
     });
-})
+  });
+});
