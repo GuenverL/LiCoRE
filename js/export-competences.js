@@ -22,7 +22,3 @@ window.onload = function() {
     };
     console.log(arbre)
 };
-
-function exportPDF() {
-    console.log("PDF")
-}

@@ -30,8 +30,8 @@ function invaliderCompetence(id){
         });
 }
 
-var lienPrecedent = null;
 function afficherCompetence(lien,id){
+var lienPrecedent = null;
 console.log(lien)
     if(lienPrecedent != null){
         lienPrecedent.style.color = "rgb(34, 68, 238)";
