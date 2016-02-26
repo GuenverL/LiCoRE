@@ -45,6 +45,12 @@ INSERT INTO `competence` (`idCompetence`, `nomCompetence`, `idPereCompetence`) V
 (5, 'Identifier et situer les champs professionnels potentiellement en relation avec les acquis de la mention ainsi que les parcours possibles pour y accéder', 28),
 (6, 'Caractériser et valoriser son identité, ses compétences et son projet professionnel en fonction d’un contexte', 28),
 (7, 'Se mettre en recul d’une situation, s’auto évaluer et se remettre en question pour apprendre', 28),
+(8, 'Utiliser les outils numériques de référence et les règles de sécurité informatique pour acquérir, traiter, produire et diffuser de l’information ainsi que pour collaborer en interne et en externe', 29),
+(9, 'Identifier et sélectionner diverses ressources spécialisées pour documenter un sujet', 29),
+(10, 'Analyser et synthétiser des données en vue de leur exploitation', 29),
+(11, 'Développer une argumentation avec esprit critique', 29),
+(12, 'Se servir aisément des différents registres d’expression écrite et orale de la langue française', 29),
+(13, 'Se servir aisément de la compréhension et de l’expression écrites et orales dans au moins une langue vivante étrangère', 29),
 (14, 'Identifier le rôle et le champ d’application des sciences pour l’ingénieur dans tous les\r\nsecteurs : milieux naturels, milieux industriels, transports, environnements urbains, etc', 26),
 (15, 'Valider un modèle par comparaison de ses prévisions aux résultats expérimentaux et apprécier ses limites de validité', 26),
 (16, 'Identifier les principales familles de matériaux et leurs propriétés', 26),
@@ -59,7 +65,8 @@ INSERT INTO `competence` (`idCompetence`, `nomCompetence`, `idPereCompetence`) V
 (25, 'Histoire', 27),
 (26, 'Sciences pour l''ingénieur\r\n', 27),
 (27, 'Disciplinaires', NULL),
-(28, 'Préprofessionnelles', NULL);
+(28, 'Préprofessionnelles', NULL),
+(29, 'Transversales et linguistiques', NULL);
 
 -- --------------------------------------------------------
 
