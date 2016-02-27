@@ -56,15 +56,17 @@ $('#gestionCompetencesModal').on('show.bs.modal', function (event) {
 
     if (feuille) {
       paramsModal.title = 'Supprimer la compétence "' + nomCompetence + '"';
-      paramsModal.body = '<h3>ATTENTION !</h3>' +
-        '<p>Voulez-vous vraiment continuer et supprimer cette compétence ?</p>';
+      paramsModal.body = '<div class="alert alert-warning" role="alert">' +
+        '<strong>Attention!</strong>' +
+        '<p>Voulez-vous vraiment continuer et supprimer cette compétence ?</p></div>';
 
     } else {
       paramsModal.title = 'Supprimer la catégorie "' + nomCompetence + '" et ses sous-compétences';
-      paramsModal.body = '<h3>ATTENTION !</h3>' +
+      paramsModal.body = '<div class="alert alert-warning" role="alert">' +
+        '<strong>Attention!</strong>' +
         '<p>La suppression de cette catégorie entrainera la suppression ' +
-        'de toutes ses sous-catégories et compétences</p>' +
-        '<p>Voulez-vous vraiment continuer et supprimer cette catégorie ?</p>';
+        'de toutes ses sous-catégories et compétences.</p>' +
+        '<p>Voulez-vous vraiment continuer et supprimer cette catégorie ?</p></div>';
     }
   }
 

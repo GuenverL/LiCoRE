@@ -1,6 +1,7 @@
 <?php
 
 require(DOC_ROOT_PATH . '/models/competences.php');
+require(DOC_ROOT_PATH . '/views/credits-modal.php');
 
 // Affiche l'accueil du site
 function accueil() {

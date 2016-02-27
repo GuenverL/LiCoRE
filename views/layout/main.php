@@ -9,16 +9,13 @@
     </head>
 
     <body>
-        <div id="wrap-content">
 
-            <?php include(DOC_ROOT_PATH . '/views/layout/navbar-top.php'); ?>
+        <?php include(DOC_ROOT_PATH . '/views/layout/navbar-top.php'); ?>
 
-            <div class="container" style="margin-top:30px;">
-                <div class="row">
-                    <?= $contenu ?>
-                </div>
+        <div class="container">
+            <div class="row">
+                <?= $contenu ?>
             </div>
-
         </div>
 
         <?php include(DOC_ROOT_PATH . '/views/layout/footer.php'); ?>
