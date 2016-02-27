@@ -18,6 +18,15 @@ switch ($type) {
         $json = getUtilisateursCompetenceApi($idCompetence);
         break;
 
+    case 'getCompetencesVisibles':
+        $competences = getCompetencesValides();
+        $json = afficherArbreCompetences(0,0,$competences,'gestionCompetences');
+        break;
+    case 'getToutesLesCompetences':
+        $idCompetence = $_GET["idCompetence"];
+        $json = getUtilisateursCompetenceApi($idCompetence);
+        break;
+
     case 'validation':
     	$idCompetence = $_GET["idCompetence"];
     	validerCompetence($idCompetence);
