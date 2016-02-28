@@ -204,11 +204,11 @@ function ajouterPlusieursCompetences($idPere, $nomsCompetences) {
   }
 }
 
-function getToutesLesCompetences($mode = 1){
+function getToutesLesCompetences($mode){
 	global $bdd;
     $competences = array();
 
-    if($mode == 1){
+    if(strcmp($mode, "visibles") == 0){
     	$querySelect = $bdd->prepare("Select idCompetence, idPereCompetence, nomCompetence From competence Where visible = 1 ORDER BY nomCompetence ASC");
     }
     else{
@@ -218,7 +218,7 @@ function getToutesLesCompetences($mode = 1){
     $querySelect->execute();
 
     while($row = $querySelect->fetch()){
-    	if($mode == 1){
+    	if(strcmp($mode, "visibles") == 0){
         	$competence = array(
             	'idCompetence' => intval($row['idCompetence']),
             	'idPereCompetence' => intval($row['idPereCompetence']),
@@ -313,5 +313,49 @@ function getUtilisateursCompetence($idCompetence) {
     return $utilisateurs;
 }
 
+function auMoinsUneFeuilleEstInvisible($idPere){
+	global $bdd;
+	$querySelect = $bdd->prepare("Select idCompetence, visible From competence Where idPereCompetence = :idPere");
+	$querySelect->bindParam(':idPere', $idPere, PDO::PARAM_INT);
+	$querySelect->execute();
+
+	while($row = $querySelect->fetch()){
+		if(estUnefeuille($row['idCompetence'],2)){
+			if($row['visible'] == 0){
+				return true;
+			}
+		}
+		else{
+			if(($row['visible'] == 0) || (auMoinsUneFeuilleEstInvisible($row['idCompetence']))){
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+function getCompetencesInvisibles(){
+	global $bdd;
+	$competences = array();
+    $querySelect = $bdd->prepare("Select idCompetence, idPereCompetence, nomCompetence, visible From competence ORDER BY nomCompetence ASC");
+	$querySelect->execute();
+
+    while($row = $querySelect->fetch()){
+    	if(($row['visible'] == 0) || (!estUneFeuille($row['idCompetence']) && auMoinsUneFeuilleEstInvisible($row['idCompetence']))){
+    		$competence = array(
+            	'idCompetence' => intval($row['idCompetence']),
+            	'idPereCompetence' => intval($row['idPereCompetence']),
+            	'nomCompetence' => $row['nomCompetence'],
+            	'feuille' => estUnefeuille($row['idCompetence'], 2),
+            	'visible' => $row['visible']
+        	);
+
+        	$competences[] = $competence;
+    	}
+    }
+
+    return $competences;
+}
 
 ?>

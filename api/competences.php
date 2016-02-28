@@ -88,8 +88,8 @@ function getUtilisateursCompetenceApi($idCompetence) {
     return json_encode(getUtilisateursCompetence($idCompetence));
 }
 
-function getCompetencesApi(visibilite){
-	return json_encode(getToutesLesCompetences(visibilite));
+function getCompetencesApi($visibilite){
+	return json_encode(getToutesLesCompetences($visibilite));
 }
 
 function getCompetencesValidesApi(){
