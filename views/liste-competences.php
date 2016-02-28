@@ -4,10 +4,8 @@
     </div>
 
     <div class="panel-body">
-        <ul class="treeview">
-            <li><a href="#">Liste des compétences</a>
-                <?php echo afficherArbreCompetences(0,0,$competences,'afficherCompetences'); ?>
-            </li>
-        </ul>
+      <ul id="arbreListeCompetences" class="treeview">
+        <li id="listeCompetences"></li>
+      </ul>
     </div>
 </div>

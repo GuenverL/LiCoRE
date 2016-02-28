@@ -3,7 +3,7 @@
 window.onload = function() {
     var arbre = '<?xml version = "1.0" encoding="UTF-8" standalone="yes" ?>\n<arbre>\n';
        $.getJSON('api/competences.php',{
-                    type: 'arbreCompetences'
+                    type: 'getCompetencesValides'
                 },
                 function(competences){
                     for(competence of competences){

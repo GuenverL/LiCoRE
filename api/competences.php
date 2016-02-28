@@ -19,12 +19,16 @@ switch ($type) {
         break;
 
     case 'getCompetencesVisibles':
-        $competences = getCompetencesValides();
-        $json = afficherArbreCompetences(0,0,$competences,'gestionCompetences');
+        $competences = getCompetencesVisiblesApi();
+        break;
+    case 'getCompetencesInvisibles':
+        $competences = getCompetencesInvisiblesApi();
+        break;
+    case 'getCompetencesValides':
+        $json = getCompetencesValidesApi();
         break;
     case 'getToutesLesCompetences':
-        $idCompetence = $_GET["idCompetence"];
-        $json = getUtilisateursCompetenceApi($idCompetence);
+        $json = getToutesLesCompetencesApi();
         break;
 
     case 'validation':
@@ -68,9 +72,6 @@ switch ($type) {
         supprimerCompetence($idCompetence, $nomCompetence);
         break;
 
-    case 'arbreCompetences':
-        $json = getCompetencesValidesApi();
-        break;
     default:
         $json = erreurApi("Il faut renseigner le type");
         break;
@@ -80,12 +81,24 @@ function getCompetencesFeuilleApi($idPere) {
     return json_encode(getCompetencesFeuille($idPere));
 }
 
+function getUtilisateursCompetenceApi($idCompetence) {
+    return json_encode(getUtilisateursCompetence($idCompetence));
+}
+
+function getToutesLesCompetencesApi(){
+	return json_encode(getToutesLesCompetences());
+}
+
 function getCompetencesValidesApi(){
 	return json_encode(getCompetencesValides());
 }
 
-function getUtilisateursCompetenceApi($idCompetence) {
-    return json_encode(getUtilisateursCompetence($idCompetence));
+function getCompetencesVisiblesApi(){
+	return json_encode(getCompetencesVisibles());
+}
+
+function getCompetencesInvisiblesApi(){
+	return json_encode(getCompetencesInvisibles());
 }
 
 function erreurApi($message) {

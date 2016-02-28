@@ -10,7 +10,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                <a href="#"><button type="button" class="btn btn-primary" id="buttonSubmit">Sauvegarder</button></a>
+                <a href="#"><button type="button" class="btn btn-primary" id="buttonSubmit" data-dismiss="modal">Sauvegarder</button></a>
             </div>
         </div>
     </div>

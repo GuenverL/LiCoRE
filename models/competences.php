@@ -1,82 +1,6 @@
 <?php
 
-function afficherArbreCompetences($parent, $niveau, $array, $typeAffichage) {
-    $html = "";
-    $niveau_precedent = 0;
-
-    if (!$niveau && !$niveau_precedent) {
-        $html .= "\n<ul>\n";
-    }
-
-     foreach ($array AS $noeud) {
-        if ($parent == $noeud['idPereCompetence']) {
-            if ($niveau_precedent < $niveau) {
-                $html .= "\n<ul>\n";
-            }
-
-            if($typeAffichage == 'gestionCompetences') {
-                $html .= '<li><a href="#">' . $noeud['nomCompetence'] . '</a>';
-
-                $html .= ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="ajouterCompetence"
-                data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '"
-                data-placement="top" title="Ajouter une compétence"
-                class="glyphicon glyphicon-plus cursor-pointer couleur-verte" aria-hidden="true"></span>';
-
-                $html .= ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="ajouterPlusieursCompetences"
-                data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '"
-                data-placement="top" title="Ajouter plusieurs compétences"
-                class="glyphicon glyphicon-th-list cursor-pointer couleur-verte" aria-hidden="true"></span>';
-
-                $html .= ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="modifierCompetence"
-                data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '"
-                data-placement="top" title="Modifier une compétence"
-                class="glyphicon glyphicon-pencil cursor-pointer couleur-jaune" aria-hidden="true"></span>';
-
-                $html .= ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="supprimerCompetence"
-                data-id-competence="' . $noeud['idCompetence'] . '" data-nom-competence="' . $noeud['nomCompetence'] . '" data-feuille="' . $noeud['feuille'] . '"
-                data-placement="top" title="Supprimer une compétence"
-                class="glyphicon glyphicon-remove cursor-pointer couleur-rouge" aria-hidden="true"></span>';
-            }
-            else {
-                if(isset($noeud['valide']) && $noeud['valide']){
-                	$html .= '<li class="text-validated">';
-                }
-                else{
-                    $html .= "<li>";
-                }
-
-                if (isset($noeud['feuille']) && $noeud['feuille']){
-                    if($typeAffichage == 'validerCompetencesUtilisateurs') {
-                        $html .= '<a onclick="afficherUtilisateursCompetence(this,' . $noeud['idCompetence'] . ')" href="#">' . $noeud['nomCompetence'] . '</a>';
-                    }
-                    else {
-                        $html .= '<a onclick="afficherCompetence(this,' . $noeud['idCompetence'] . ')" href="#">' . $noeud['nomCompetence'] . '</a>';
-                    }
-                }
-                else {
-                    $html .= '<a href="#">' . $noeud['nomCompetence'] . '</a>';
-                }
-            }
-
-            $niveau_precedent = $niveau;
-            $html .= afficherArbreCompetences($noeud['idCompetence'], ($niveau + 1), $array, $typeAffichage);
-        }
-    }
-
-    if (($niveau_precedent == $niveau) && ($niveau_precedent != 0)) {
-        $html .= "</ul>\n</li>\n";
-    }
-    else if ($niveau_precedent == $niveau) {
-        $html .= "</ul>\n";
-    }
-    else {
-        $html .= "</li>\n";
-    }
-
-    return $html;
-}
-
-function getCompetences(){
+function getCompetencesVisibles(){
     global $bdd;
     $competences = array();
     $querySelect = $bdd->prepare("Select idCompetence, idPereCompetence, nomCompetence From competence Where visible = 1 ORDER BY nomCompetence ASC");
@@ -85,8 +9,8 @@ function getCompetences(){
     while($row = $querySelect->fetch()){
 		if(!estUneFeuille($row['idCompetence'])){
             $competence = array(
-              	'idCompetence' => $row['idCompetence'],
-                'idPereCompetence' => $row['idPereCompetence'],
+              	'idCompetence' => intval($row['idCompetence']),
+                'idPereCompetence' => intval($row['idPereCompetence']),
                 'nomCompetence' => $row['nomCompetence'],
                 'feuille' => auMoinsUneFeuilleDansLesFils($row['idCompetence']),
                 'valide' => sontToutesValidesLesCompetences($row['idCompetence'])
@@ -241,8 +165,8 @@ function getCompetencesValides(){
     while($row = $querySelect->fetch()){
 		if((estUneFeuille($row['idCompetence']) && estCompetenceValide($row['idCompetence'])) || (auMoinsUneCompetenceEstValide($row['idCompetence']))){
             $competence = array(
-                'idCompetence' => $row['idCompetence'],
-                'idPereCompetence' => $row['idPereCompetence'],
+                'idCompetence' => intval($row['idCompetence']),
+                'idPereCompetence' => intval($row['idPereCompetence']),
                 'nomCompetence' => $row['nomCompetence']
             );
 
@@ -296,15 +220,15 @@ function getToutesLesCompetences($mode = 1){
     while($row = $querySelect->fetch()){
     	if($mode == 1){
         	$competence = array(
-            	'idCompetence' => $row['idCompetence'],
-            	'idPereCompetence' => $row['idPereCompetence'],
+            	'idCompetence' => intval($row['idCompetence']),
+            	'idPereCompetence' => intval($row['idPereCompetence']),
             	'nomCompetence' => $row['nomCompetence'],
             	'feuille' => estUnefeuille($row['idCompetence']),
         	);
         }else{
         	$competence = array(
-            	'idCompetence' => $row['idCompetence'],
-            	'idPereCompetence' => $row['idPereCompetence'],
+            	'idCompetence' => intval($row['idCompetence']),
+            	'idPereCompetence' => intval($row['idPereCompetence']),
             	'nomCompetence' => $row['nomCompetence'],
             	'feuille' => estUnefeuille($row['idCompetence'], 2),
             	'visible' => $row['visible']

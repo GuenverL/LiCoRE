@@ -5,3 +5,5 @@
 <script src="./js/validation-competences-utilisateurs.js"></script>
 <script src="./js/gestion-competences.js"></script>
 <script src="./js/export-competences.js"></script>
+<script src="./js/generer-liste-competences.js"></script>
+<script src="./js/window-on-load.js"></script>

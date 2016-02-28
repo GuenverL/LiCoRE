@@ -11,17 +11,9 @@
                 </ul>
             </div>
     </div>
-    <div class="panel-body">
-        <?php
-            if(!empty($competencesValidees)) {
-                echo '<ul id="arbre" class="treeview">
-                    <li><a href="#">Liste des compétences validées</a>';
-                echo afficherArbreCompetences(0,0,$competencesValidees,'afficherCompetences');
-                echo '</li></ul>';
-            }
-            else {
-                echo '<p>Aucunes compétences validées</p>';
-            }
-        ?>
+
+    <div id="panel-body-competences-validees" class="panel-body">
+      <ul id="arbreListeCompetencesValidees" class="treeview"></ul>
     </div>
+
 </div>

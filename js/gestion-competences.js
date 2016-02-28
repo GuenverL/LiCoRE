@@ -1,3 +1,6 @@
+var $buttonSelectionne = $('#buttonToutesCompetences');
+var typeAffichageCompetences = 'getToutesLesCompetences';
+
 $('#gestionCompetencesModal').on('show.bs.modal', function (event) {
   'use strict';
   var $buttonSubmit = $('#buttonSubmit');
@@ -78,8 +81,61 @@ $('#gestionCompetencesModal').on('show.bs.modal', function (event) {
       idCompetence: idCompetence,
       nomCompetence: $modal.find('.modal-body #nomCompetence').val(),
     }).always(function () {
-      var url = 'index.php?action=gestion-competences';
-      $(location).attr('href', url);
+      $('#arbreGestionCompetences').empty();
+      $.getJSON('api/competences.php', {
+        type: typeAffichageCompetences,
+      }).always(function (competences) {
+        if (competences.responseText !== '') {
+          $('#arbreGestionCompetences').append('<li id="listeCompetences"><a href="#">Liste des compétences</a>');
+          $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'gestionCompetences'));
+          majArbre('#arbreGestionCompetences');
+          $('[data-toggle="modal"]').tooltip();
+        }
+      });
     });
   });
+});
+
+function majButtons(nouveauBouton) {
+  'use strict';
+
+  $buttonSelectionne.removeClass('active');
+  nouveauBouton.addClass('active');
+  $buttonSelectionne = nouveauBouton;
+}
+
+function majArbreGestionCompetences(button, type) {
+  'use strict';
+
+  var $button = $(button);
+  typeAffichageCompetences = type;
+  if ($buttonSelectionne.selector !== $button.selector) {
+    majButtons($button);
+    $('#arbreGestionCompetences').empty();
+    $.getJSON('api/competences.php', {
+      type: typeAffichageCompetences,
+    }).always(function (competences) {
+      if (competences.responseText !== '') {
+        $('#arbreGestionCompetences').append('<li id="listeCompetences"><a href="#">Liste des compétences</a>');
+        $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'gestionCompetences'));
+        majArbre('#arbreGestionCompetences');
+        $('[data-toggle="modal"]').tooltip();
+      }
+    });
+  }
+}
+
+$('#buttonToutesCompetences').on('click', function () {
+  'use strict';
+  majArbreGestionCompetences('#buttonToutesCompetences', 'getToutesLesCompetences');
+});
+
+$('#buttonCompetencesVisibles').on('click', function () {
+  'use strict';
+  majArbreGestionCompetences('#buttonCompetencesVisibles', 'getCompetencesVisibles');
+});
+
+$('#buttonCompetencesInvisibles').on('click', function () {
+  'use strict';
+  majArbreGestionCompetences('#buttonCompetencesInvisibles', 'getCompetencesInvisibles');
 });

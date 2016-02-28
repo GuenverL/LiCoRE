@@ -53,9 +53,9 @@ $.fn.extend({
  *	The following snippet of code automatically converst
  *	any '.treeview' DOM elements into a treeview component.
  */
-$(window).on('load', function () {
+/*$(window).on('load', function () {
 	$('.treeview').each(function () {
 		var tree = $(this);
 		tree.treeview();
 	})
-})
+})*/

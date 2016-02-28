@@ -11,11 +11,14 @@
             </div>
 
             <div class="panel-body">
-                <ul class="treeview">
-                    <li><a href="#">Liste des compétences</a>
-                        <?php echo afficherArbreCompetences(0,0,$competences,'gestionCompetences'); ?>
-                    </li>
-                </ul>
+              <div class="btn-group" role="group" aria-label="...">
+                <button type="button" id="buttonToutesCompetences" class="btn btn-default btn-gestion-competences active">Toutes les compétences</button>
+                <button type="button" id="buttonCompetencesVisibles" class="btn btn-default btn-gestion-competences">Compétences visibles</button>
+                <button type="button" id="buttonCompetencesInvisibles" class="btn btn-default btn-gestion-competences">Compétences invisibles</button>
+              </div>
+              <br/>
+
+              <ul id="arbreGestionCompetences" class="treeview"></ul>
             </div>
 
         </div>
@@ -23,9 +26,3 @@
 <?php $contenu = ob_get_clean(); ?>
 
 <?php require(DOC_ROOT_PATH . '/views/layout/main.php'); ?>
-
-<script>
-  $(function () {
-    $('[data-toggle="modal"]').tooltip()
-  })
-</script>
