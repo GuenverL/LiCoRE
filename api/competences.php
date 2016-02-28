@@ -19,10 +19,10 @@ switch ($type) {
         break;
 
     case 'getCompetencesVisibles':
-        $competences = getCompetencesVisiblesApi();
+        $json = getCompetencesVisiblesApi();
         break;
     case 'getCompetencesInvisibles':
-        $competences = getCompetencesInvisiblesApi();
+        $json = getCompetencesInvisiblesApi();
         break;
     case 'getCompetencesValides':
         $json = getCompetencesValidesApi();
