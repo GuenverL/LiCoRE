@@ -6,7 +6,7 @@ $(window).on('load', function () {
   if (!action) {
     $('#listeCompetences').empty();
     $.getJSON('api/competences.php', {
-      type: 'getCompetencesVisibles',
+      type: 'getCompetencesVisiblesSansFeuilles',
     }).always(function (competences) {
       $('#listeCompetences').append('<a href="#">Liste des compétences</a>');
       $('#listeCompetences').append(genererListeCompetences(0,0,competences,'afficherCompetences'));

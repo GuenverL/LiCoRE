@@ -21,6 +21,9 @@ switch ($type) {
     case 'getCompetencesVisibles':
         $json = getCompetencesVisiblesApi();
         break;
+    case 'getCompetencesVisiblesSansFeuilles':
+        $json = getCompetencesVisiblesSansFeuillesApi();
+        break;
     case 'getCompetencesInvisibles':
         $json = getCompetencesInvisiblesApi();
         break;
@@ -94,6 +97,10 @@ function getCompetencesValidesApi(){
 }
 
 function getCompetencesVisiblesApi(){
+	return json_encode(getToutesLesCompetences(0));
+}
+
+function getCompetencesVisiblesSansFeuillesApi(){
 	return json_encode(getCompetencesVisibles());
 }
 
