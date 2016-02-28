@@ -19,7 +19,7 @@ switch ($type) {
         break;
 
     case 'getCompetencesVisibles':
-        $json = getCompetencesVisiblesApi();
+        $json = getCompetencesApi('visibles');
         break;
     case 'getCompetencesVisiblesSansFeuilles':
         $json = getCompetencesVisiblesSansFeuillesApi();
@@ -31,7 +31,7 @@ switch ($type) {
         $json = getCompetencesValidesApi();
         break;
     case 'getToutesLesCompetences':
-        $json = getToutesLesCompetencesApi();
+        $json = getCompetencesApi('toutes');
         break;
 
     case 'validation':
@@ -88,16 +88,12 @@ function getUtilisateursCompetenceApi($idCompetence) {
     return json_encode(getUtilisateursCompetence($idCompetence));
 }
 
-function getToutesLesCompetencesApi(){
-	return json_encode(getToutesLesCompetences());
+function getCompetencesApi(visibilite){
+	return json_encode(getToutesLesCompetences(visibilite));
 }
 
 function getCompetencesValidesApi(){
 	return json_encode(getCompetencesValides());
-}
-
-function getCompetencesVisiblesApi(){
-	return json_encode(getToutesLesCompetences(0));
 }
 
 function getCompetencesVisiblesSansFeuillesApi(){

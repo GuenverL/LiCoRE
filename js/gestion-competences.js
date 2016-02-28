@@ -113,7 +113,7 @@ function majArbreGestionCompetences(button, type) {
     majButtons($button);
     $('#arbreGestionCompetences').empty();
     $.getJSON('api/competences.php', {
-      type: typeAffichageCompetences,
+      type: type,
     }).always(function (competences) {
       if (competences.responseText !== '') {
         $('#arbreGestionCompetences').append('<li id="listeCompetences"><a href="#">Liste des compétences</a>');
