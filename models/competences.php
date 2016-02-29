@@ -278,6 +278,8 @@ function setCompetencesInvisibles($idCompetence){
 }
 
 function setCompetencesVisibles($idCompetence){
+    global $bdd;
+    
 	if(!estUneFeuille($idCompetence)){
 		$querySelect = $bdd->prepare("Select idCompetence From competence Where idPereCompetence = :idCompetence and visible = 0");
 		$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);

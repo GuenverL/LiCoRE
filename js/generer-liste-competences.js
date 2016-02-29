@@ -1,33 +1,46 @@
-function setCompetencesVisibilite(typeVisibilite, idCompetence) {
+function genererBoutonGestion(idCompetence, nomCompetence, dataType, title, classGlyphicon) {
+  html = '';
+
+  if (dataType === 'setCompetencesInvisibles' || dataType === 'setCompetencesVisibles') {
+    html += ' <span data-toggle="modal" onclick="setCompetencesVisibilite(\'' + dataType + '\',' + idCompetence + ',\'' + nomCompetence + '\')';
+  } else {
+    html += ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="' + dataType +
+      '" data-id-competence="' + idCompetence +
+      '" data-nom-competence="' + nomCompetence;
+  }
+
+  html += '" data-placement="top"' +
+    ' title="' + title +
+    '" class="glyphicon cursor-pointer ' + classGlyphicon +
+    '" aria-hidden="true"></span>';
+  return html;
+};
+
+function setCompetencesVisibilite(visibilite, idCompetence, nomCompetence) {
   'use strict';
-  console.log('yolo');
   $.getJSON('api/competences.php', {
-    type: 'setCompetencesInvisibles',
+    type: visibilite,
     idCompetence: idCompetence,
-  }).always(function () {
-    console.log('yolo');
+  }).always(function() {
+    $('#competence-' + idCompetence).toggleClass('couleur-grise');
+    $('.tooltip').remove();
+
+    if (visibilite === 'setCompetencesInvisibles') {
+      $('#competence-' + idCompetence).find('span.glyphicon-eye-close').remove();
+      $('#competence-' + idCompetence).append(
+        genererBoutonGestion(idCompetence, nomCompetence, 'setCompetencesVisibles', 'Rendre la compétence visible', 'glyphicon-eye-open couleur-bleue'));
+    } else {
+      $('#competence-' + idCompetence).find('span.glyphicon-eye-open').remove();
+      $('#competence-' + idCompetence).append(
+        genererBoutonGestion(idCompetence, nomCompetence, 'setCompetencesInvisibles', 'Rendre la compétence invisible', 'glyphicon-eye-close couleur-bleue'));
+    }
+
+    $('[data-toggle="modal"]').tooltip();
   });
 }
 
 function genererListeCompetences(parent, niveau, competencesJson, typeAffichage) {
   'use strict';
-
-  var genererBoutonGestion = function (competence, dataType, title, classGlyphicon) {
-    html = '';
-    if (dataType === 'setCompetencesInvisibles' || dataType === 'setCompetencesVisibles') {
-      html += ' <span data-toggle="modal" onclick="setCompetencesVisibilite(' + dataType + ',' + competence.idCompetence + ')';
-    } else {
-      html += ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="' + dataType +
-        '" data-id-competence="' + competence.idCompetence +
-        '" data-nom-competence="' + competence.nomCompetence;
-    }
-
-    html += '" data-placement="top"' +
-      ' title="' + title +
-      '" class="glyphicon cursor-pointer ' + classGlyphicon +
-      '" aria-hidden="true"></span>';
-    return html;
-  };
 
   var html = '';
   var niveauPrecedent = 0;
@@ -52,16 +65,15 @@ function genererListeCompetences(parent, niveau, competencesJson, typeAffichage)
 
         html += '<a href="#">' + competence.nomCompetence + '</a>';
 
-        html += genererBoutonGestion(competence, 'ajouterCompetence', 'Ajouter une compétence', 'glyphicon-plus couleur-verte');
-        html += genererBoutonGestion(competence, 'ajouterPlusieursCompetences', 'Ajouter plusieurs compétences', 'glyphicon-th-list couleur-verte');
-        html += genererBoutonGestion(competence, 'modifierCompetence', 'Modifier une compétence"', 'glyphicon-pencil couleur-jaune');
+        html += genererBoutonGestion(competence.idCompetence, competence.nomCompetence, 'ajouterCompetence', 'Ajouter une compétence', 'glyphicon-plus couleur-verte');
+        html += genererBoutonGestion(competence.idCompetence, competence.nomCompetence, 'ajouterPlusieursCompetences', 'Ajouter plusieurs compétences', 'glyphicon-th-list couleur-verte');
+        html += genererBoutonGestion(competence.idCompetence, competence.nomCompetence, 'modifierCompetence', 'Modifier une compétence"', 'glyphicon-pencil couleur-jaune');
+        html += genererBoutonGestion(competence.idCompetence, competence.nomCompetence, 'supprimerCompetence', 'Supprimer une compétence', 'glyphicon-remove couleur-rouge');
         if (competence.visible === 1) {
-          html += genererBoutonGestion(competence, 'setCompetencesInvisibles', 'Rendre la compétence invisible', 'glyphicon-eye-close couleur-bleue');
+          html += genererBoutonGestion(competence.idCompetence, competence.nomCompetence, 'setCompetencesInvisibles', 'Rendre la compétence invisible', 'glyphicon-eye-close couleur-bleue');
         } else {
-          html += genererBoutonGestion(competence, 'setCompetencesVisibles', 'Rendre la compétence visible', 'glyphicon-eye-open couleur-bleue');
+          html += genererBoutonGestion(competence.idCompetence, competence.nomCompetence, 'setCompetencesVisibles', 'Rendre la compétence visible', 'glyphicon-eye-open couleur-bleue');
         }
-
-        html += genererBoutonGestion(competence, 'supprimerCompetence', 'Supprimer une compétence', 'glyphicon-remove couleur-rouge');
       } else {
         if (competence.valide) {
           html += '<li class="text-validated">';

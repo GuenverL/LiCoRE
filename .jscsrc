@@ -1,4 +1,5 @@
 {
     "preset": "airbnb",
-    "validateLineBreaks": "CRLF"
+    "validateLineBreaks": "CRLF",
+    "requireSpacesInAnonymousFunctionExpression": null
 }
