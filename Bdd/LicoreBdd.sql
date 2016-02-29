@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 26 Février 2016 à 14:11
+-- Généré le :  Lun 29 Février 2016 à 15:35
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `competence` (
   `idCompetence` int(11) NOT NULL AUTO_INCREMENT,
   `nomCompetence` varchar(250) NOT NULL,
   `idPereCompetence` int(11) DEFAULT NULL,
-  `visible` tinyint(1) NOT NULL,
+  `visible` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idCompetence`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
 
@@ -67,7 +67,7 @@ INSERT INTO `competence` (`idCompetence`, `nomCompetence`, `idPereCompetence`, `
 (26, 'Sciences pour l''ingénieur\r\n', 27, 1),
 (27, 'Disciplinaires', NULL, 1),
 (28, 'Préprofessionnelles', NULL, 1),
-(29, 'Transversales et linguistiques', NULL, 1);
+(29, 'Transversales et linguistiques', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -100,6 +100,7 @@ INSERT INTO `utilisateur` (`idUtilisateur`, `pseudo`, `prenom`, `nom`, `mdp`) VA
 CREATE TABLE IF NOT EXISTS `validation` (
   `idUtilisateur` int(11) NOT NULL,
   `idCompetence` int(11) NOT NULL,
+  `dateValidation` date NOT NULL,
   PRIMARY KEY (`idCompetence`,`idUtilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -107,21 +108,21 @@ CREATE TABLE IF NOT EXISTS `validation` (
 -- Contenu de la table `validation`
 --
 
-INSERT INTO `validation` (`idUtilisateur`, `idCompetence`) VALUES
-(0, 4),
-(0, 8),
-(0, 10),
-(0, 11),
-(0, 13),
-(1, 13),
-(0, 14),
-(0, 16),
-(0, 17),
-(0, 18),
-(0, 19),
-(0, 20),
-(0, 21),
-(0, 22);
+INSERT INTO `validation` (`idUtilisateur`, `idCompetence`, `dateValidation`) VALUES
+(0, 4, '0000-00-00'),
+(0, 8, '0000-00-00'),
+(0, 10, '0000-00-00'),
+(0, 11, '0000-00-00'),
+(0, 13, '0000-00-00'),
+(1, 13, '0000-00-00'),
+(0, 14, '0000-00-00'),
+(0, 16, '0000-00-00'),
+(0, 17, '0000-00-00'),
+(0, 18, '0000-00-00'),
+(0, 19, '0000-00-00'),
+(0, 20, '0000-00-00'),
+(0, 21, '0000-00-00'),
+(0, 22, '0000-00-00');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
