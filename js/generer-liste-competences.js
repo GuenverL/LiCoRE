@@ -16,27 +16,27 @@ function genererBoutonGestion(idCompetence, nomCompetence, dataType, title, clas
   return html;
 };
 
-function setCompetencesVisibilite(visibilite, idCompetence, nomCompetence) {
-  'use strict';
-  $.getJSON('api/competences.php', {
-    type: visibilite,
-    idCompetence: idCompetence,
-  }).always(function() {
-    $('#competence-' + idCompetence).toggleClass('couleur-grise');
-    $('.tooltip').remove();
+function genererLigneCompetenceGestion(idCompetence, nomCompetence, visible) {
+  html = '';
+  html += '<li id="competence-' + idCompetence + '"';
+  if (visible === 0) {
+    html += ' class="couleur-grise">';
+  } else {
+    html += '>';
+  }
 
-    if (visibilite === 'setCompetencesInvisibles') {
-      $('#competence-' + idCompetence).find('span.glyphicon-eye-close').remove();
-      $('#competence-' + idCompetence).append(
-        genererBoutonGestion(idCompetence, nomCompetence, 'setCompetencesVisibles', 'Rendre la compétence visible', 'glyphicon-eye-open couleur-bleue'));
-    } else {
-      $('#competence-' + idCompetence).find('span.glyphicon-eye-open').remove();
-      $('#competence-' + idCompetence).append(
-        genererBoutonGestion(idCompetence, nomCompetence, 'setCompetencesInvisibles', 'Rendre la compétence invisible', 'glyphicon-eye-close couleur-bleue'));
-    }
+  html += '<a href="#">' + nomCompetence + '</a>';
 
-    $('[data-toggle="modal"]').tooltip();
-  });
+  html += genererBoutonGestion(idCompetence, nomCompetence, 'ajouterCompetence', 'Ajouter une compétence', 'glyphicon-plus couleur-verte');
+  html += genererBoutonGestion(idCompetence, nomCompetence, 'ajouterPlusieursCompetences', 'Ajouter plusieurs compétences', 'glyphicon-th-list couleur-verte');
+  html += genererBoutonGestion(idCompetence, nomCompetence, 'modifierCompetence', 'Modifier une compétence"', 'glyphicon-pencil couleur-jaune');
+  html += genererBoutonGestion(idCompetence, nomCompetence, 'supprimerCompetence', 'Supprimer une compétence', 'glyphicon-remove couleur-rouge');
+  if (visible === 1) {
+    html += genererBoutonGestion(idCompetence, nomCompetence, 'setCompetencesInvisibles', 'Rendre la compétence invisible', 'glyphicon-eye-close couleur-bleue');
+  } else {
+    html += genererBoutonGestion(idCompetence, nomCompetence, 'setCompetencesVisibles', 'Rendre la compétence visible', 'glyphicon-eye-open couleur-bleue');
+  }
+  return html;
 }
 
 function genererListeCompetences(parent, niveau, competencesJson, typeAffichage) {
@@ -56,24 +56,7 @@ function genererListeCompetences(parent, niveau, competencesJson, typeAffichage)
       }
 
       if (typeAffichage === 'gestionCompetences') {
-        html += '<li id="competence-' + competence.idCompetence + '"';
-        if (competence.visible === 0) {
-          html += ' class="couleur-grise">';
-        } else {
-          html += '>';
-        }
-
-        html += '<a href="#">' + competence.nomCompetence + '</a>';
-
-        html += genererBoutonGestion(competence.idCompetence, competence.nomCompetence, 'ajouterCompetence', 'Ajouter une compétence', 'glyphicon-plus couleur-verte');
-        html += genererBoutonGestion(competence.idCompetence, competence.nomCompetence, 'ajouterPlusieursCompetences', 'Ajouter plusieurs compétences', 'glyphicon-th-list couleur-verte');
-        html += genererBoutonGestion(competence.idCompetence, competence.nomCompetence, 'modifierCompetence', 'Modifier une compétence"', 'glyphicon-pencil couleur-jaune');
-        html += genererBoutonGestion(competence.idCompetence, competence.nomCompetence, 'supprimerCompetence', 'Supprimer une compétence', 'glyphicon-remove couleur-rouge');
-        if (competence.visible === 1) {
-          html += genererBoutonGestion(competence.idCompetence, competence.nomCompetence, 'setCompetencesInvisibles', 'Rendre la compétence invisible', 'glyphicon-eye-close couleur-bleue');
-        } else {
-          html += genererBoutonGestion(competence.idCompetence, competence.nomCompetence, 'setCompetencesVisibles', 'Rendre la compétence visible', 'glyphicon-eye-open couleur-bleue');
-        }
+        html += genererLigneCompetenceGestion(competence.idCompetence, competence.nomCompetence, competence.visible);
       } else {
         if (competence.valide) {
           html += '<li class="text-validated">';

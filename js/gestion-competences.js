@@ -1,7 +1,7 @@
 var $buttonSelectionne = $('#buttonToutesCompetences');
 var typeAffichageCompetences = 'getToutesLesCompetences';
 
-$('#gestionCompetencesModal').on('show.bs.modal', function (event) {
+$('#gestionCompetencesModal').on('show.bs.modal', function(event) {
   'use strict';
   var $buttonSubmit = $('#buttonSubmit');
 
@@ -15,7 +15,7 @@ $('#gestionCompetencesModal').on('show.bs.modal', function (event) {
 
   var $modal = $(this);
 
-  var updateModal = function (params) {
+  var updateModal = function(params) {
     $modal.find('.modal-body #gestionCompetencesModalForm').empty();
     $modal.find('.modal-title').text(params.title);
     $modal.find('.modal-body #gestionCompetencesModalForm').append(params.body);
@@ -75,21 +75,38 @@ $('#gestionCompetencesModal').on('show.bs.modal', function (event) {
 
   updateModal(paramsModal);
 
-  $buttonSubmit.on('click', function () {
+  $buttonSubmit.on('click', function() {
+    var nouveauNomCompetence = $modal.find('.modal-body #nomCompetence').val();
     $.getJSON('api/competences.php', {
       type: type,
       idCompetence: idCompetence,
-      nomCompetence: $modal.find('.modal-body #nomCompetence').val(),
-    }).always(function () {
-      $('#arbreGestionCompetences').empty();
+      nomCompetence: nouveauNomCompetence,
+    }).always(function() {
       $.getJSON('api/competences.php', {
         type: typeAffichageCompetences,
-      }).always(function (competences) {
+      }).always(function(competences) {
         if (competences.responseText !== '') {
-          $('#arbreGestionCompetences').append('<li id="listeCompetences"><a href="#">Liste des compétences</a>');
-          $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'gestionCompetences'));
-          majArbre('#arbreGestionCompetences');
-          $('[data-toggle="modal"]').tooltip();
+          if (type === 'ajouterCompetence') {
+            if ($('#competence-' + idCompetence).find('ul').length === 0) {
+              $('#competence-' + idCompetence).append('<ul>' + genererLigneCompetenceGestion(idCompetence, nouveauNomCompetence, 1) + '</ul>');
+              actualiserBranche($('#competence-' + idCompetence));
+            } else {
+              $('#competence-' + idCompetence).find('ul').append(genererLigneCompetenceGestion(idCompetence, nouveauNomCompetence, 1));
+            }
+          } else if (type === 'ajouterPlusieursCompetences') {
+            console.log('WIP');
+          } else if (type === 'modifierCompetence') {
+            $('#competence-' + idCompetence).find('a').first().empty();
+            $('#competence-' + idCompetence).find('a').first().append(nouveauNomCompetence);
+          } else if (type === 'supprimerCompetence') {
+            $('#competence-' + idCompetence).remove();
+          } else {
+            $('#arbreGestionCompetences').empty();
+            $('#arbreGestionCompetences').append('<li id="listeCompetences"><a href="#">Liste des compétences</a>');
+            $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'gestionCompetences'));
+            majArbre('#arbreGestionCompetences');
+            $('[data-toggle="modal"]').tooltip();
+          }
         }
       });
     });
@@ -114,7 +131,7 @@ function majArbreGestionCompetences(button, type) {
     $('#arbreGestionCompetences').empty();
     $.getJSON('api/competences.php', {
       type: type,
-    }).always(function (competences) {
+    }).always(function(competences) {
       if (competences.responseText !== '') {
         $('#arbreGestionCompetences').append('<li id="listeCompetences"><a href="#">Liste des compétences</a>');
         $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'gestionCompetences'));
@@ -125,17 +142,40 @@ function majArbreGestionCompetences(button, type) {
   }
 }
 
-$('#buttonToutesCompetences').on('click', function () {
+$('#buttonToutesCompetences').on('click', function() {
   'use strict';
   majArbreGestionCompetences('#buttonToutesCompetences', 'getToutesLesCompetences');
 });
 
-$('#buttonCompetencesVisibles').on('click', function () {
+$('#buttonCompetencesVisibles').on('click', function() {
   'use strict';
   majArbreGestionCompetences('#buttonCompetencesVisibles', 'getCompetencesVisibles');
 });
 
-$('#buttonCompetencesInvisibles').on('click', function () {
+$('#buttonCompetencesInvisibles').on('click', function() {
   'use strict';
   majArbreGestionCompetences('#buttonCompetencesInvisibles', 'getCompetencesInvisibles');
 });
+
+function setCompetencesVisibilite(visibilite, idCompetence, nomCompetence) {
+  'use strict';
+  $.getJSON('api/competences.php', {
+    type: visibilite,
+    idCompetence: idCompetence,
+  }).always(function() {
+    $('#competence-' + idCompetence).toggleClass('couleur-grise');
+    $('.tooltip').remove();
+
+    if (visibilite === 'setCompetencesInvisibles') {
+      $('#competence-' + idCompetence).find('span.glyphicon-eye-close').remove();
+      $('#competence-' + idCompetence).append(
+        genererBoutonGestion(idCompetence, nomCompetence, 'setCompetencesVisibles', 'Rendre la compétence visible', 'glyphicon-eye-open couleur-bleue'));
+    } else {
+      $('#competence-' + idCompetence).find('span.glyphicon-eye-open').remove();
+      $('#competence-' + idCompetence).append(
+        genererBoutonGestion(idCompetence, nomCompetence, 'setCompetencesInvisibles', 'Rendre la compétence invisible', 'glyphicon-eye-close couleur-bleue'));
+    }
+
+    $('[data-toggle="modal"]').tooltip();
+  });
+}
