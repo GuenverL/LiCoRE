@@ -25,23 +25,6 @@ footer {
 }
 
 /*
-Pour aligner les éléments du Footer
-*/
-
-.container-fluid {
-  height: 100%;
-  display: table;
-  width: 100%;
-  padding: 0;
-}
-.row-fluid {
-  height: 100%;
-  width: 1200px;
-  display: table-cell;
-  vertical-align: middle;
-}
-
-/*
 Couleurs
 */
 
@@ -56,6 +39,29 @@ Couleurs
 }
 .couleur-jaune {
   color: rgb(243, 148, 0);
+}
+.couleur-bleue {
+  color: rgb(83, 173, 207);
+}
+.couleur-grise {
+  color: rgb(122, 122, 122);
+}
+
+/*
+Pour aligner les éléments du Footer
+*/
+
+.container-fluid {
+  height: 100%;
+  display: table;
+  width: 100%;
+  padding: 0;
+}
+.row-fluid {
+  height: 100%;
+  width: 1200px;
+  display: table-cell;
+  vertical-align: middle;
 }
 
 /*

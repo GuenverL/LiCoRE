@@ -231,7 +231,7 @@ function getToutesLesCompetences($mode){
             	'idPereCompetence' => intval($row['idPereCompetence']),
             	'nomCompetence' => $row['nomCompetence'],
             	'feuille' => estUnefeuille($row['idCompetence'], 2),
-            	'visible' => $row['visible']
+            	'visible' => intval($row['visible'])
         	);
         }
 

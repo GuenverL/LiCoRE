@@ -69,23 +69,31 @@ switch ($type) {
         $nomCompetence = $_GET["nomCompetence"];
         modifierCompetence($idCompetence, $nomCompetence);
         break;
+    case 'setCompetencesVisibles':
+    	$idCompetence = $_GET["idCompetence"];
+    	setCompetencesVisibles($idCompetence);
+    	break;
+    case 'setCompetencesInvisibles':
+    	$idCompetence = $_GET["idCompetence"];
+    	setCompetencesInvisibles($idCompetence);
+    	break;
     case 'supprimerCompetence':
-        $idCompetence = $_GET["idCompetence"];
-        $nomCompetence = $_GET["nomCompetence"];
-        supprimerCompetence($idCompetence, $nomCompetence);
-        break;
+      $idCompetence = $_GET["idCompetence"];
+      $nomCompetence = $_GET["nomCompetence"];
+      supprimerCompetence($idCompetence, $nomCompetence);
+      break;
 
     default:
-        $json = erreurApi("Il faut renseigner le type");
-        break;
+      $json = erreurApi("Il faut renseigner le type");
+      break;
 }
 
 function getCompetencesFeuilleApi($idPere) {
-    return json_encode(getCompetencesFeuille($idPere));
+  return json_encode(getCompetencesFeuille($idPere));
 }
 
 function getUtilisateursCompetenceApi($idCompetence) {
-    return json_encode(getUtilisateursCompetence($idCompetence));
+  return json_encode(getUtilisateursCompetence($idCompetence));
 }
 
 function getCompetencesApi($visibilite){
@@ -105,7 +113,7 @@ function getCompetencesInvisiblesApi(){
 }
 
 function erreurApi($message) {
-    return '{"erreur" : '. $message . '}';
+  return '{"erreur" : '. $message . '}';
 }
 
 echo $json;
