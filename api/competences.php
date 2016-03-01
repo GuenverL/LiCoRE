@@ -71,11 +71,11 @@ switch ($type) {
         break;
     case 'setCompetencesVisibles':
     	$idCompetence = $_GET["idCompetence"];
-    	setCompetencesVisibles($idCompetence);
+    	$json = setCompetencesVisiblesApi($idCompetence);
     	break;
     case 'setCompetencesInvisibles':
     	$idCompetence = $_GET["idCompetence"];
-    	setCompetencesInvisibles($idCompetence);
+    	$json = setCompetencesInvisiblesApi($idCompetence);
     	break;
     case 'supprimerCompetence':
         $idCompetence = $_GET["idCompetence"];
@@ -122,6 +122,14 @@ function ajouterPlusieursCompetencesApi($idPere, $nomsCompetences) {
 
 function modifierCompetenceApi($idCompetence, $nomCompetence) {
   return json_encode(modifierCompetence($idCompetence, $nomCompetence));
+}
+
+function setCompetencesVisiblesApi($idCompetence) {
+  return json_encode(setCompetencesVisibles($idCompetence));
+}
+
+function setCompetencesInvisiblesApi($idCompetence) {
+  return json_encode(setCompetencesInvisibles($idCompetence));
 }
 
 function erreurApi($message) {
