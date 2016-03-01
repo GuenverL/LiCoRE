@@ -280,6 +280,16 @@ function supprimerCompetence($idCompetence){
 	$queryDelete->execute();
 }
 
+function getNomCompetence($idCompetence){
+	global $bdd;
+
+	$querySelect = $bdd->prepare("Select nomCompetence From competence Where idCompetence = :idCompetence");
+	$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+	$querySelect->execute();
+
+	return $querySelect->fetchColumn();
+}
+
 function setCompetencesInvisibles($idCompetence){
 	global $bdd;
 	$competences = array();
@@ -288,13 +298,9 @@ function setCompetencesInvisibles($idCompetence){
 	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$queryUpdate->execute();
 
-	$querySelect = $bdd->prepare("Select nomCompetence From competence Where idCompetence = :idCompetence");
-	$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
-	$querySelect->execute();
-
 	$competences[] = array(
             				'idCompetence' => intval($idCompetence),
-            				'nomCompetence' => $querySelect->fetchColumn()
+            				'nomCompetence' => getNomCompetence($idCompetence)
     				 );
 
 	if(!estUneFeuille($idCompetence)){
@@ -312,20 +318,28 @@ function setCompetencesInvisibles($idCompetence){
 
 function setCompetencesVisibles($idCompetence){
     global $bdd;
+    $competences = array();
 
-	if(!estUneFeuille($idCompetence)){
+    $queryUpdate = $bdd->prepare("Update competence Set visible = 1 Where idCompetence = :idCompetence");
+	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+	$queryUpdate->execute();
+    
+	$competences[] = array(
+            				'idCompetence' => intval($idCompetence),
+            				'nomCompetence' => getNomCompetence($idCompetence)
+    				 );
+
+	if(!estUneFeuille($idCompetence, 2)){
 		$querySelect = $bdd->prepare("Select idCompetence From competence Where idPereCompetence = :idCompetence and visible = 0");
 		$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 		$querySelect->execute();
 
 		while($row = $querySelect->fetch()){
-			setCompetencesVisibles($row['idCompetence']);
+			$competences = array_merge($competences, setCompetencesVisibles($row['idCompetence']));
 		}
 	}
 
-	$queryUpdate = $bdd->prepare("Update competence Set visible = 1 Where idCompetence = :idCompetence");
-	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
-	$queryUpdate->execute();
+	return $competences;
 }
 
 function getUtilisateursCompetence($idCompetence) {
