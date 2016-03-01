@@ -33,12 +33,14 @@ function genererLigneCompetenceGestion(idCompetence, nomCompetence, visible, dis
   html += genererBoutonGestion(idCompetence, nomCompetence, 'ajouterCompetence', 'Ajouter une compétence', 'glyphicon-plus couleur-verte');
   html += genererBoutonGestion(idCompetence, nomCompetence, 'ajouterPlusieursCompetences', 'Ajouter plusieurs compétences', 'glyphicon-th-list couleur-verte');
   html += genererBoutonGestion(idCompetence, nomCompetence, 'modifierCompetence', 'Modifier une compétence"', 'glyphicon-pencil couleur-jaune');
-  html += genererBoutonGestion(idCompetence, nomCompetence, 'supprimerCompetence', 'Supprimer une compétence', 'glyphicon-remove couleur-rouge');
   if (visible === 1) {
     html += genererBoutonGestion(idCompetence, nomCompetence, 'setCompetencesInvisibles', 'Rendre la compétence invisible', 'glyphicon-eye-close couleur-bleue');
   } else {
     html += genererBoutonGestion(idCompetence, nomCompetence, 'setCompetencesVisibles', 'Rendre la compétence visible', 'glyphicon-eye-open couleur-bleue');
   }
+
+  html += genererBoutonGestion(idCompetence, nomCompetence, 'supprimerCompetence', 'Supprimer une compétence', 'glyphicon-remove couleur-rouge');
+
   return html;
 }
 
