@@ -180,14 +180,16 @@ function getCompetencesValides(){
 function modifierCompetence($idCompetence, $nouveauNom){
 	global $bdd;
 
-	if(empty(trim($nomCompetence))){
-		return -1;
+	if(empty(trim($nouveauNom))){
+		return false;
 	}
 
 	$queryUpdate = $bdd->prepare("Update competence Set nomCompetence = :nouveauNom Where idCompetence = :idCompetence");
 	$queryUpdate->bindParam(':nouveauNom', $nouveauNom, PDO::PARAM_STR);
 	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$queryUpdate->execute();
+
+	return true;
 }
 
 function ajouterCompetence($idPere, $nomCompetence){
@@ -276,6 +278,15 @@ function supprimerCompetence($idCompetence){
 
 function setCompetencesInvisibles($idCompetence){
 	global $bdd;
+	$competences = array();
+
+	$queryUpdate = $bdd->prepare("Update competence Set visible = 0 Where idCompetence = :idCompetence");
+	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+	$queryUpdate->execute();
+
+	$querySelect = $bdd->prepare("Select nomCompetence From competence Where idCompetence = :idCompetence");
+	$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+	$querySelect->execute();
 
 	if(!estUneFeuille($idCompetence)){
 		$querySelect = $bdd->prepare("Select idCompetence From competence Where idPereCompetence = :idCompetence and visible = 1");
@@ -286,10 +297,6 @@ function setCompetencesInvisibles($idCompetence){
 			setCompetencesInvisibles($row['idCompetence']);
 		}
 	}
-
-	$queryUpdate = $bdd->prepare("Update competence Set visible = 0 Where idCompetence = :idCompetence");
-	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
-	$queryUpdate->execute();
 }
 
 function setCompetencesVisibles($idCompetence){
