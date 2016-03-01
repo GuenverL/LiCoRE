@@ -329,7 +329,7 @@ function setCompetencesVisibles($idCompetence){
             				'nomCompetence' => getNomCompetence($idCompetence)
     				 );
 
-	if(!estUneFeuille($idCompetence, 2)){
+	/*if(!estUneFeuille($idCompetence, 2)){
 		$querySelect = $bdd->prepare("Select idCompetence From competence Where idPereCompetence = :idCompetence and visible = 0");
 		$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 		$querySelect->execute();
@@ -337,7 +337,7 @@ function setCompetencesVisibles($idCompetence){
 		while($row = $querySelect->fetch()){
 			$competences = array_merge($competences, setCompetencesVisibles($row['idCompetence']));
 		}
-	}
+	}*/
 
 	return $competences;
 }
