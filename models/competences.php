@@ -182,7 +182,7 @@ function modifierCompetence($idCompetence, $nouveauNom){
 
 	if(empty(trim($nouveauNom))){
 		return array(
-						'retour' => false;	
+						'retour' => false	
 			   );
 	}
 
@@ -192,7 +192,7 @@ function modifierCompetence($idCompetence, $nouveauNom){
 	$queryUpdate->execute();
 
 	return array(
-					'retour' => true;
+					'retour' => true
 		   );
 }
 
