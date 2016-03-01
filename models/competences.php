@@ -180,6 +180,10 @@ function getCompetencesValides(){
 function modifierCompetence($idCompetence, $nouveauNom){
 	global $bdd;
 
+	if(empty(trim($nomCompetence))){
+		return -1;
+	}
+	
 	$queryUpdate = $bdd->prepare("Update competence Set nomCompetence = :nouveauNom Where idCompetence = :idCompetence");
 	$queryUpdate->bindParam(':nouveauNom', $nouveauNom, PDO::PARAM_STR);
 	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
@@ -188,20 +192,31 @@ function modifierCompetence($idCompetence, $nouveauNom){
 
 function ajouterCompetence($idPere, $nomCompetence){
 	global $bdd;
+	$idCompetence = -1;
 
-  $visible = 1;
-	$queryInsert = $bdd->prepare("Insert into competence (nomCompetence, idPereCompetence, visible) Values (:nomCompetence, :idPereCompetence, :visible)");
-	$queryInsert->bindParam(':nomCompetence', $nomCompetence, PDO::PARAM_STR);
-	$queryInsert->bindParam(':idPereCompetence', $idPere, PDO::PARAM_INT);
-  $queryInsert->bindParam(':visible', $visible, PDO::PARAM_BOOL);
-	$queryInsert->execute();
+	if(!empty(trim($nomCompetence))){
+		$queryInsert = $bdd->prepare("Insert into competence (nomCompetence, idPereCompetence) Values (:nomCompetence, :idPereCompetence)");
+		$queryInsert->bindParam(':nomCompetence', $nomCompetence, PDO::PARAM_STR);
+		$queryInsert->bindParam(':idPereCompetence', $idPere, PDO::PARAM_INT);
+		$queryInsert->execute();
+		$idCompetence = $bdd->lastInsertId();
+	}
+
+	return array(
+                'idCompetence' => $idCompetence,
+                'nomCompetence' => $nomCompetence
+           );
 }
 
 function ajouterPlusieursCompetences($idPere, $nomsCompetences) {
-  $tableauCompetences = preg_split("/\r\n|\n|\r/", $nomsCompetences);
-  foreach ($tableauCompetences as $nomCompetence) {
-    ajouterCompetence($idPere, $nomCompetence);
-  }
+	$tableauCompetences = preg_split("/\r\n|\n|\r/", $nomsCompetences);
+	$competencesAjoutees = array();
+
+	foreach ($tableauCompetences as $nomCompetence) {
+    	$competencesAjoutees[] = ajouterCompetence($idPere, $nomCompetence);
+	}
+
+	return $competencesAjoutees;
 }
 
 function getToutesLesCompetences($mode){

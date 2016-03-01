@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 29 Février 2016 à 15:35
+-- Généré le :  Mar 01 Mars 2016 à 16:42
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `competence` (
   `idPereCompetence` int(11) DEFAULT NULL,
   `visible` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idCompetence`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
 
 --
 -- Contenu de la table `competence`
@@ -67,7 +67,7 @@ INSERT INTO `competence` (`idCompetence`, `nomCompetence`, `idPereCompetence`, `
 (26, 'Sciences pour l''ingénieur\r\n', 27, 1),
 (27, 'Disciplinaires', NULL, 1),
 (28, 'Préprofessionnelles', NULL, 1),
-(29, 'Transversales et linguistiques', NULL, 0);
+(29, 'Transversales et linguistiques', NULL, 1);
 
 -- --------------------------------------------------------
 
