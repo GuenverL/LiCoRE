@@ -183,7 +183,7 @@ function modifierCompetence($idCompetence, $nouveauNom){
 	if(empty(trim($nomCompetence))){
 		return -1;
 	}
-	
+
 	$queryUpdate = $bdd->prepare("Update competence Set nomCompetence = :nouveauNom Where idCompetence = :idCompetence");
 	$queryUpdate->bindParam(':nouveauNom', $nouveauNom, PDO::PARAM_STR);
 	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
@@ -203,7 +203,7 @@ function ajouterCompetence($idPere, $nomCompetence){
 	}
 
 	return array(
-                'idCompetence' => $idCompetence,
+                'idCompetence' => intval($idCompetence),
                 'nomCompetence' => $nomCompetence
            );
 }
