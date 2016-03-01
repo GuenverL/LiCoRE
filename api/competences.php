@@ -57,17 +57,17 @@ switch ($type) {
     case 'ajouterCompetence':
         $idPere = $_GET["idCompetence"];
         $nomCompetence = $_GET["nomCompetence"];
-        ajouterCompetence($idPere, $nomCompetence);
+        $json = ajouterCompetenceApi($idPere, $nomCompetence);
         break;
     case 'ajouterPlusieursCompetences':
         $idPere = $_GET["idCompetence"];
         $nomsCompetences = $_GET["nomCompetence"];
-        ajouterPlusieursCompetences($idPere, $nomsCompetences);
+        $json = ajouterPlusieursCompetencesApi($idPere, $nomsCompetences);
         break;
     case 'modifierCompetence':
         $idCompetence = $_GET["idCompetence"];
         $nomCompetence = $_GET["nomCompetence"];
-        modifierCompetence($idCompetence, $nomCompetence);
+        $json = modifierCompetenceApi($idCompetence, $nomCompetence);
         break;
     case 'setCompetencesVisibles':
     	$idCompetence = $_GET["idCompetence"];
@@ -110,6 +110,18 @@ function getCompetencesVisiblesSansFeuillesApi(){
 
 function getCompetencesInvisiblesApi(){
 	return json_encode(getCompetencesInvisibles());
+}
+
+function ajouterCompetenceApi($idPere, $nomCompetence) {
+  return json_encode(ajouterCompetence($idPere, $nomCompetence));
+}
+
+function ajouterPlusieursCompetencesApi($idPere, $nomsCompetences) {
+  return json_encode(ajouterPlusieursCompetences($idPere, $nomsCompetences));
+}
+
+function modifierCompetenceApi($idCompetence, $nomCompetence) {
+  return json_encode(modifierCompetence($idCompetence, $nomCompetence));
 }
 
 function erreurApi($message) {

@@ -16,11 +16,14 @@ function genererBoutonGestion(idCompetence, nomCompetence, dataType, title, clas
   return html;
 };
 
-function genererLigneCompetenceGestion(idCompetence, nomCompetence, visible) {
+function genererLigneCompetenceGestion(idCompetence, nomCompetence, visible, display) {
   html = '';
   html += '<li id="competence-' + idCompetence + '"';
   if (visible === 0) {
-    html += ' class="couleur-grise">';
+    html += ' class="couleur-grise"';
+  }
+  if (display === 'display-none') {
+    html += ' style="display: none;">';
   } else {
     html += '>';
   }
@@ -56,7 +59,7 @@ function genererListeCompetences(parent, niveau, competencesJson, typeAffichage)
       }
 
       if (typeAffichage === 'gestionCompetences') {
-        html += genererLigneCompetenceGestion(competence.idCompetence, competence.nomCompetence, competence.visible);
+        html += genererLigneCompetenceGestion(competence.idCompetence, competence.nomCompetence, competence.visible, 'display-normal');
       } else {
         if (competence.valide) {
           html += '<li class="text-validated">';
