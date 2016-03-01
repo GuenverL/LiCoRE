@@ -181,7 +181,9 @@ function modifierCompetence($idCompetence, $nouveauNom){
 	global $bdd;
 
 	if(empty(trim($nouveauNom))){
-		return "false";
+		return array(
+						'retour' => false;	
+			   );
 	}
 
 	$queryUpdate = $bdd->prepare("Update competence Set nomCompetence = :nouveauNom Where idCompetence = :idCompetence");
@@ -189,7 +191,9 @@ function modifierCompetence($idCompetence, $nouveauNom){
 	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$queryUpdate->execute();
 
-	return "true";
+	return array(
+					'retour' => true;
+		   );
 }
 
 function ajouterCompetence($idPere, $nomCompetence){
@@ -299,11 +303,11 @@ function setCompetencesInvisibles($idCompetence){
 		$querySelect->execute();
 
 		while($row = $querySelect->fetch()){
-			setCompetencesInvisibles($row['idCompetence']);
+			$competences = array_merge($competences, setCompetencesInvisibles($row['idCompetence']));
 		}
 	}
 
-
+	return $competences;
 }
 
 function setCompetencesVisibles($idCompetence){
