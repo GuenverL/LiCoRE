@@ -7,9 +7,7 @@ function validation(id, button, type) {
                 type: 'validation',
                 idCompetence: id
             });
-            console.log(button[0])
-            button.style.background = "rgb(105, 105, 255)";
-            button.className += " validated";
+            button.className += " couleur-jaune-bg";
             span.className = "glyphicon glyphicon-hourglass";
 
             break;
@@ -20,7 +18,6 @@ function validation(id, button, type) {
                 idCompetence: id
             });
 
-            button.style.background = "rgb(255, 255, 255)";
             button.className = "list-group-item cursor-pointer";
             span.className = "glyphicon glyphicon-remove";
 
@@ -59,7 +56,7 @@ function afficherCompetence(lien, id){
                 if(competence.valide == true){
                     if(competence.idTuteur == null){
                         $('#competences-a-valider').append(
-                            '<div class="list-group-item cursor-pointer" data-toggle="modal" data-target="#validationCompetencesModal" data-type="invaliderCompetence" data-id-competence="' + competence.id + '" data-nom-competence="' + competence.nom + '" style="background-color: rgb(105, 105, 255)">' +
+                            '<div class="list-group-item cursor-pointer couleur-jaune-bg" data-toggle="modal" data-target="#validationCompetencesModal" data-type="invaliderCompetence" data-id-competence="' + competence.id + '" data-nom-competence="' + competence.nom + '">' +
                                 '<div class="media">' +
                                     '<div class="media-body">' +
                                         competence.nom +
@@ -68,12 +65,11 @@ function afficherCompetence(lien, id){
                                         '<span id="idComp' + competence.id + '" class="glyphicon glyphicon-hourglass" aria-hidden="true">' +
                                         '</span>' +
                                     '</div>' +
-                                    '<hr> Compétence en attente de validation par un tuteur '+
                                 '</div>' +
                             '</div>');
                     }else{
                         $('#competences-a-valider').append(
-                            '<div class="list-group-item cursor-pointer" data-toggle="modal" data-target="#validationCompetencesModal" data-type="invaliderCompetence" data-id-competence="' + competence.id + '" data-nom-competence="' + competence.nom + '" style="background-color: rgb(142, 188, 62)">' +
+                            '<div class="list-group-item cursor-pointer couleur-verte-bg" data-toggle="modal" data-target="#validationCompetencesModal" data-type="invaliderCompetence" data-id-competence="' + competence.id + '" data-nom-competence="' + competence.nom + '">' +
                                 '<div class="media">' +
                                     '<div class="media-body">' +
                                         competence.nom +

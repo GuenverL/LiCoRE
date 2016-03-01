@@ -34,11 +34,17 @@ Couleurs
 .text-validated, .couleur-verte {
   color: rgb(142, 188, 62);
 }
+.couleur-verte-bg {
+  background-color: rgb(142, 188, 62);
+}
 .text-default {
   color: rgb(34, 68, 238);
 }
 .couleur-jaune {
   color: rgb(243, 148, 0);
+}
+.couleur-jaune-bg {
+  background-color: rgb(243, 148, 0);
 }
 .couleur-bleue {
   color: rgb(83, 173, 207);
