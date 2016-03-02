@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 01 Mars 2016 à 16:42
+-- Généré le :  Mer 02 Mars 2016 à 15:15
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -23,6 +23,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `acces`
+--
+
+CREATE TABLE IF NOT EXISTS `acces` (
+  `idRole` int(11) NOT NULL,
+  `idPage` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `acces`
+--
+
+INSERT INTO `acces` (`idRole`, `idPage`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(2, 1),
+(2, 3),
+(3, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `competence`
 --
 
@@ -32,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `competence` (
   `idPereCompetence` int(11) DEFAULT NULL,
   `visible` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idCompetence`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
 
 --
 -- Contenu de la table `competence`
@@ -72,6 +95,48 @@ INSERT INTO `competence` (`idCompetence`, `nomCompetence`, `idPereCompetence`, `
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `page`
+--
+
+CREATE TABLE IF NOT EXISTS `page` (
+  `idPage` int(11) NOT NULL AUTO_INCREMENT,
+  `nomPage` varchar(50) NOT NULL,
+  PRIMARY KEY (`idPage`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Contenu de la table `page`
+--
+
+INSERT INTO `page` (`idPage`, `nomPage`) VALUES
+(1, 'Accueil'),
+(2, 'Gestion'),
+(3, 'Validation');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `role`
+--
+
+CREATE TABLE IF NOT EXISTS `role` (
+  `idRole` int(11) NOT NULL AUTO_INCREMENT,
+  `nomRole` varchar(50) NOT NULL,
+  PRIMARY KEY (`idRole`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Contenu de la table `role`
+--
+
+INSERT INTO `role` (`idRole`, `nomRole`) VALUES
+(1, 'Administrateur'),
+(2, 'Tuteur'),
+(3, 'Etudiant');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `utilisateur`
 --
 
@@ -81,6 +146,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `prenom` varchar(250) NOT NULL,
   `nom` varchar(250) NOT NULL,
   `mdp` varchar(250) NOT NULL,
+  `idRole` int(11) NOT NULL,
   PRIMARY KEY (`idUtilisateur`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
@@ -88,8 +154,8 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 -- Contenu de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`idUtilisateur`, `pseudo`, `prenom`, `nom`, `mdp`) VALUES
-(1, 'UtilisateurTest', 'Jean', 'Didier', 'test');
+INSERT INTO `utilisateur` (`idUtilisateur`, `pseudo`, `prenom`, `nom`, `mdp`, `idRole`) VALUES
+(1, 'UtilisateurTest', 'Jean', 'Didier', 'test', 3);
 
 -- --------------------------------------------------------
 
@@ -101,6 +167,7 @@ CREATE TABLE IF NOT EXISTS `validation` (
   `idUtilisateur` int(11) NOT NULL,
   `idCompetence` int(11) NOT NULL,
   `dateValidation` date NOT NULL,
+  `idTuteur` int(11) NOT NULL,
   PRIMARY KEY (`idCompetence`,`idUtilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -108,21 +175,21 @@ CREATE TABLE IF NOT EXISTS `validation` (
 -- Contenu de la table `validation`
 --
 
-INSERT INTO `validation` (`idUtilisateur`, `idCompetence`, `dateValidation`) VALUES
-(0, 4, '0000-00-00'),
-(0, 8, '0000-00-00'),
-(0, 10, '0000-00-00'),
-(0, 11, '0000-00-00'),
-(0, 13, '0000-00-00'),
-(1, 13, '0000-00-00'),
-(0, 14, '0000-00-00'),
-(0, 16, '0000-00-00'),
-(0, 17, '0000-00-00'),
-(0, 18, '0000-00-00'),
-(0, 19, '0000-00-00'),
-(0, 20, '0000-00-00'),
-(0, 21, '0000-00-00'),
-(0, 22, '0000-00-00');
+INSERT INTO `validation` (`idUtilisateur`, `idCompetence`, `dateValidation`, `idTuteur`) VALUES
+(0, 4, '0000-00-00', 0),
+(0, 8, '0000-00-00', 0),
+(0, 10, '0000-00-00', 0),
+(0, 11, '0000-00-00', 0),
+(0, 13, '0000-00-00', 0),
+(1, 13, '0000-00-00', 0),
+(0, 14, '0000-00-00', 0),
+(0, 16, '0000-00-00', 0),
+(0, 17, '0000-00-00', 0),
+(0, 18, '0000-00-00', 0),
+(0, 19, '0000-00-00', 0),
+(0, 20, '0000-00-00', 0),
+(0, 21, '0000-00-00', 0),
+(0, 22, '0000-00-00', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
