@@ -11,11 +11,20 @@ function setCompetencesVisibilite(competences, visibilite) {
       $('#competence-' + competence.idCompetence).find('span.glyphicon-eye-open').remove();
       $('#competence-' + competence.idCompetence).find('span.glyphicon-pencil').after(
         genererBoutonGestion(competence, 'setCompetencesVisibles', 'Rendre la compétence visible', 'glyphicon-eye-open couleur-bleue'));
+
+      var competenceObjet = {
+        idCompetence: competence.idCompetence,
+        nomCompetence: competence.nomCompetence,
+        visibilite: 'setCompetencesVisibles',
+      };
+      $('#competence-' + competence.idCompetence + '-button-visibilite').off();
+      $('#competence-' + competence.idCompetence + '-button-visibilite').click(competenceObjet, setCompetencesVisibiliteOnClick);
     } else {
       $('#competence-' + competence.idCompetence).toggleClass('couleur-grise');
       $('#competence-' + competence.idCompetence).find('span.glyphicon-eye-open').first().remove();
       $('#competence-' + competence.idCompetence).find('span.glyphicon-pencil').first().after(
         genererBoutonGestion(competence, 'setCompetencesInvisibles', 'Rendre la compétence invisible', 'glyphicon-eye-close couleur-bleue'));
+      $('#competence-' + competence.idCompetence + '-button-visibilite').off();
     }
   }
 }
