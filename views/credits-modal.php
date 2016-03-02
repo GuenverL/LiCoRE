@@ -6,7 +6,7 @@
         <h4 class="modal-title" id="creditsModalLabel">Crédits</h4>
       </div>
       <div class="modal-body">
-          Ce site a été réalisé par :
+          Ce site a été réalisé en 2016 par trois étudiants en Master 1 ISI à l'Université du Maine :
           <ul>
             <li>Corentin Delorme (IHM, CSS et Javascript)</li>
             <li>Loïc Guenver (IHM, CSS et Javascript)</li>

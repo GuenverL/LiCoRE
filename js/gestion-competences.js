@@ -25,52 +25,68 @@ $('#gestionCompetencesModal').on('show.bs.modal', function(event) {
 
   var paramsModal = {};
 
-  if (type === 'ajouterCompetence') {
-    paramsModal.title = 'Ajouter une compétence à "' + nomCompetence + '"';
-    paramsModal.body = '<div class="form-group">' +
-      '<label for="nom-competence" class="control-label" id="label"></label>' +
-      '<input type="text" class="form-control" id="nomCompetence">' +
-      '</div>';
-    paramsModal.label = 'Nom de la nouvelle compétence :';
-    paramsModal.nomCompetence = '';
+  switch (type) {
+    case 'ajouterCompetence':
+      paramsModal.title = 'Ajouter une compétence à "' + nomCompetence + '"';
+      paramsModal.body = '<div class="form-group">' +
+        '<label for="nom-competence" class="control-label" id="label"></label>' +
+        '<input type="text" class="form-control" id="nomCompetence">' +
+        '</div>';
+      paramsModal.label = 'Nom de la nouvelle compétence :';
+      paramsModal.nomCompetence = '';
+      break;
 
-  } else if (type === 'ajouterPlusieursCompetences') {
-    paramsModal.title = 'Ajouter des compétences à "' + nomCompetence + '"';
-    paramsModal.body = '<div class="form-group">' +
-      '<label for="nom-competence" class="control-label" id="label"></label>' +
-      '<textarea rows="20" class="form-control" id="nomCompetence"></textarea>' +
-      '</div>';
-    paramsModal.label = 'Nom des nouvelles compétences (séparée par un retour à la ligne) :';
-    paramsModal.nomCompetence = '';
+    case 'ajouterPlusieursCompetences':
+      paramsModal.title = 'Ajouter des compétences à "' + nomCompetence + '"';
+      paramsModal.body = '<div class="form-group">' +
+        '<label for="nom-competence" class="control-label" id="label"></label>' +
+        '<textarea rows="20" class="form-control" id="nomCompetence"></textarea>' +
+        '</div>';
+      paramsModal.label = 'Nom des nouvelles compétences (séparée par un retour à la ligne) :';
+      paramsModal.nomCompetence = '';
+      break;
 
-  } else if (type === 'modifierCompetence') {
-    paramsModal.title = 'Modifier la compétence "' + nomCompetence + '"';
-    paramsModal.body = '<div class="form-group">' +
-      '<label for="nom-competence" class="control-label" id="label"></label>' +
-      '<input type="text" class="form-control" id="nomCompetence">' +
-      '</div>';
-    paramsModal.label = 'Nom :';
-    paramsModal.nomCompetence = nomCompetence;
+    case 'modifierCompetence':
+      paramsModal.title = 'Modifier la compétence "' + nomCompetence + '"';
+      paramsModal.body = '<div class="form-group">' +
+        '<label for="nom-competence" class="control-label" id="label"></label>' +
+        '<input type="text" class="form-control" id="nomCompetence">' +
+        '</div>';
+      paramsModal.label = 'Nom :';
+      paramsModal.nomCompetence = nomCompetence;
+      break;
 
-  } else if (type === 'supprimerCompetence') {
-    var feuille = $button.data('feuille');
-    paramsModal.label = '';
-    paramsModal.nomCompetence = nomCompetence;
+    case 'supprimerCompetence':
+      var feuille = $button.data('feuille');
+      paramsModal.label = '';
+      paramsModal.nomCompetence = nomCompetence;
 
-    if (feuille) {
-      paramsModal.title = 'Supprimer la compétence "' + nomCompetence + '"';
+      if (feuille) {
+        paramsModal.title = 'Supprimer la compétence "' + nomCompetence + '"';
+        paramsModal.body = '<div class="alert alert-warning" role="alert">' +
+          '<strong>Attention!</strong>' +
+          '<p>Voulez-vous vraiment continuer et supprimer cette compétence ?</p></div>';
+
+      } else {
+        paramsModal.title = 'Supprimer la catégorie "' + nomCompetence + '" et ses sous-compétences';
+        paramsModal.body = '<div class="alert alert-warning" role="alert">' +
+          '<strong>Attention!</strong>' +
+          '<p>La suppression de cette catégorie entrainera la suppression ' +
+          'de toutes ses sous-catégories et compétences.</p>' +
+          '<p>Voulez-vous vraiment continuer et supprimer cette catégorie ?</p></div>';
+      }
+      break;
+
+    case 'setCompetencesInvisibles':
+      paramsModal.label = '';
+      paramsModal.nomCompetence = nomCompetence;
+      paramsModal.title = 'Rendre invisible la catégorie "' + nomCompetence + '" et ses sous-compétences';
       paramsModal.body = '<div class="alert alert-warning" role="alert">' +
         '<strong>Attention!</strong>' +
-        '<p>Voulez-vous vraiment continuer et supprimer cette compétence ?</p></div>';
-
-    } else {
-      paramsModal.title = 'Supprimer la catégorie "' + nomCompetence + '" et ses sous-compétences';
-      paramsModal.body = '<div class="alert alert-warning" role="alert">' +
-        '<strong>Attention!</strong>' +
-        '<p>La suppression de cette catégorie entrainera la suppression ' +
-        'de toutes ses sous-catégories et compétences.</p>' +
-        '<p>Voulez-vous vraiment continuer et supprimer cette catégorie ?</p></div>';
-    }
+        '<p>Rendre invisible cette catégorie va mettre invisible ' +
+        'toutes ses sous-catégories et compétences.</p>' +
+        '<p>Voulez-vous vraiment continuer et rendre invisible cette catégorie ?</p></div>';
+      break;
   }
 
   updateModal(paramsModal);
@@ -141,6 +157,12 @@ $('#gestionCompetencesModal').on('show.bs.modal', function(event) {
             }
             break;
 
+          case 'setCompetencesInvisibles':
+            for (var competence of competences) {
+              setCompetencesVisibilite('setCompetencesInvisibles', competence.idCompetence, competence.nomCompetence);
+            }
+            break;
+
           case 'supprimerCompetence':
             $('#competence-' + idCompetence).remove();
             break;
@@ -207,21 +229,6 @@ $('#buttonCompetencesInvisibles').on('click', function() {
 
 function setCompetencesVisibilite(visibilite, idCompetence, nomCompetence) {
   'use strict';
-
-  // var visible = $('#competence-' + idCompetence).findExclude('span.glyphicon-eye-close', 'span.glyphicon-eye-remove');
-  // Find-like method which masks any descendant
-  // branches matching the Mask argument.
-  $.fn.findExclude = function(selector, mask, result) {
-    result = typeof result !== 'undefined' ? result : new jQuery();
-    this.children().each(function() {
-      var thisObject = jQuery(this);
-      if (thisObject.is(selector))
-        result.push(this);
-      if (!thisObject.is(mask))
-        thisObject.findExclude(selector, mask, result);
-    });
-    return result;
-  };
 
   var actualiserGlyphicon = function(idCompetence, nomCompetence, visibilite) {
     if (visibilite === 'setCompetencesInvisibles') {
