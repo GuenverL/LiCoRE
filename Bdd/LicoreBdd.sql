@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 02 Mars 2016 à 15:15
+-- Généré le :  Mer 02 Mars 2016 à 15:57
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `validation` (
   `idUtilisateur` int(11) NOT NULL,
   `idCompetence` int(11) NOT NULL,
   `dateValidation` date NOT NULL,
-  `idTuteur` int(11) NOT NULL,
+  `idTuteur` int(11) DEFAULT NULL,
   PRIMARY KEY (`idCompetence`,`idUtilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -176,20 +176,20 @@ CREATE TABLE IF NOT EXISTS `validation` (
 --
 
 INSERT INTO `validation` (`idUtilisateur`, `idCompetence`, `dateValidation`, `idTuteur`) VALUES
-(0, 4, '0000-00-00', 0),
-(0, 8, '0000-00-00', 0),
-(0, 10, '0000-00-00', 0),
-(0, 11, '0000-00-00', 0),
-(0, 13, '0000-00-00', 0),
-(1, 13, '0000-00-00', 0),
-(0, 14, '0000-00-00', 0),
-(0, 16, '0000-00-00', 0),
-(0, 17, '0000-00-00', 0),
-(0, 18, '0000-00-00', 0),
-(0, 19, '0000-00-00', 0),
-(0, 20, '0000-00-00', 0),
-(0, 21, '0000-00-00', 0),
-(0, 22, '0000-00-00', 0);
+(0, 4, '0000-00-00', NULL),
+(0, 8, '0000-00-00', NULL),
+(0, 10, '0000-00-00', NULL),
+(0, 11, '0000-00-00', NULL),
+(0, 13, '0000-00-00', NULL),
+(1, 13, '0000-00-00', NULL),
+(0, 14, '0000-00-00', NULL),
+(0, 16, '0000-00-00', NULL),
+(0, 17, '0000-00-00', NULL),
+(0, 18, '0000-00-00', NULL),
+(0, 19, '0000-00-00', NULL),
+(0, 20, '0000-00-00', NULL),
+(0, 21, '0000-00-00', NULL),
+(0, 22, '0000-00-00', NULL);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
