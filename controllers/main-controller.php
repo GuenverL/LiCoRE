@@ -18,6 +18,10 @@ function validerCompetencesUtilisateurs() {
     require(DOC_ROOT_PATH . '/views/tableau-de-bord/valider-competences-utilisateurs.php');
 }
 
+function connexion() {
+    require(DOC_ROOT_PATH . '/views/connexion.php');
+}
+
 // Affiche une erreur
 function erreur($msgErreur) {
     require(DOC_ROOT_PATH . '/views/erreur.php');

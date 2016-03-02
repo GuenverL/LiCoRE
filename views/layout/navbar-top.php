@@ -27,7 +27,7 @@
                 </ul>
             </div>
 
-            <button type="button" class="btn btn-default navbar-btn">Connexion</button>
+            <a href="index.php?action=connexion"><button type="button" class="btn btn-default navbar-btn">Connexion</button></a>
         </div>
 
     </div>

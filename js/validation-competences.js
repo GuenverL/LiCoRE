@@ -155,24 +155,3 @@ $('#validationCompetencesModal').on('show.bs.modal', function(event){
         validation(idCompetence, $button[0], type);
     });
 });
-
-$('#toggleFullscreenCompetencesValidees').click(function(){
-    if ($('#col-competences-validees').hasClass('col-md-4')){
-        $('#col-liste-competences').css({
-            display: "none"
-        });
-        $('#col-competences-a-valider').css({
-            display: "none"
-        });
-    } else {
-        $('#col-liste-competences').css({
-            display: "block"
-        });
-        $('#col-competences-a-valider').css({
-            display: "block"
-        });
-    }
-
-    $('#col-competences-validees').toggleClass('col-md-4');
-    $('#col-competences-validees').toggleClass('col-md-12');
-});

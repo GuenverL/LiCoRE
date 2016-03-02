@@ -15,6 +15,9 @@ try {
     elseif ($_GET['action'] == 'valider-competences-utilisateurs') {
         validerCompetencesUtilisateurs();
     }
+    elseif ($_GET['action'] == 'connexion') {
+        connexion();
+    }
     else {
         throw new Exception("Action non valide");
     }

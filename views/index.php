@@ -16,3 +16,5 @@
 <?php $contenu = ob_get_clean(); ?>
 
 <?php require(DOC_ROOT_PATH . '/views/layout/main.php'); ?>
+
+<?= $scripts ?>
