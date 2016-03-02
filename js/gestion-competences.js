@@ -85,25 +85,27 @@ $('#gestionCompetencesModal').on('show.bs.modal', function(event) {
       if (competences) {
         switch (type) {
           case 'ajouterCompetence':
-            var longueur = $('#competence-' + idCompetence).find('ul').length;
-            var ouvert = $('#competence-' + idCompetence).find('i').hasClass('glyphicon-chevron-down');
-            if (longueur === 0) {
-              $('#competence-' + idCompetence).append('<ul>');
-            }
+            if (competence.idCompetence !== -1) {
+              var longueur = $('#competence-' + idCompetence).find('ul').length;
+              var ouvert = $('#competence-' + idCompetence).find('i').hasClass('glyphicon-chevron-down');
+              if (longueur === 0) {
+                $('#competence-' + idCompetence).append('<ul>');
+              }
 
-            if (ouvert) {
-              $('#competence-' + idCompetence).find('ul').first().append(
-                genererLigneCompetenceGestion(competences.idCompetence, competences.nomCompetence, 1, 'display-normal'));
-            } else {
-              $('#competence-' + idCompetence).find('ul').first().append(
-                genererLigneCompetenceGestion(competences.idCompetence, competences.nomCompetence, 1, 'display-none'));
-            }
+              if (ouvert) {
+                $('#competence-' + idCompetence).find('ul').first().append(
+                  genererLigneCompetenceGestion(competences.idCompetence, competences.nomCompetence, 1, 'display-normal'));
+              } else {
+                $('#competence-' + idCompetence).find('ul').first().append(
+                  genererLigneCompetenceGestion(competences.idCompetence, competences.nomCompetence, 1, 'display-none'));
+              }
 
-            if (longueur === 0) {
-              $('#competence-' + idCompetence).append('</ul>');
-              actualiserBranche($('#competence-' + idCompetence));
-              $('#competence-' + idCompetence).find('i').removeClass('glyphicon-chevron-right');
-              $('#competence-' + idCompetence).find('i').addClass('glyphicon-chevron-down');
+              if (longueur === 0) {
+                $('#competence-' + idCompetence).append('</ul>');
+                actualiserBranche($('#competence-' + idCompetence));
+                $('#competence-' + idCompetence).find('i').removeClass('glyphicon-chevron-right');
+                $('#competence-' + idCompetence).find('i').addClass('glyphicon-chevron-down');
+              }
             }
             break;
 
@@ -114,12 +116,14 @@ $('#gestionCompetencesModal').on('show.bs.modal', function(event) {
               $('#competence-' + idCompetence).append('<ul>');
             }
             for (var competence of competences) {
-              if (ouvert) {
-                $('#competence-' + idCompetence).find('ul').first().append(
-                  genererLigneCompetenceGestion(competence.idCompetence, competence.nomCompetence, 1, 'display-normal'));
-              } else {
-                $('#competence-' + idCompetence).find('ul').first().append(
-                  genererLigneCompetenceGestion(competence.idCompetence, competence.nomCompetence, 1, 'display-none'));
+              if (competence.idCompetence !== -1) {
+                if (ouvert) {
+                  $('#competence-' + idCompetence).find('ul').first().append(
+                    genererLigneCompetenceGestion(competence.idCompetence, competence.nomCompetence, 1, 'display-normal'));
+                } else {
+                  $('#competence-' + idCompetence).find('ul').first().append(
+                    genererLigneCompetenceGestion(competence.idCompetence, competence.nomCompetence, 1, 'display-none'));
+                }
               }
             }
             if (longueur === 0) {
