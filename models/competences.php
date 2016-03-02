@@ -407,4 +407,18 @@ function getCompetencesInvisibles(){
     return $competences;
 }
 
+function estUnUtilisateur($pseudo, $mdp){
+	global $bdd;
+	$querySelect = $bdd->prepare("Select * From utilisateur Where pseudo = :pseudo and mdp = :mdp");
+	$querySelect->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+	$querySelect->bindParam(':mdp', $mdp, PDO::PARAM_STR);
+	$querySelect->execute();
+
+	if($querySelect->fetch()){
+		return true;
+	}
+
+	return false;
+}
+
 ?>
