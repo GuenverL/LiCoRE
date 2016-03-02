@@ -345,7 +345,7 @@ function setCompetencesVisibles($idCompetence){
 function getUtilisateursCompetence($idCompetence) {
 	global $bdd;
 	$utilisateurs = array();
-	$querySelect = $bdd->prepare("Select idUtilisateur, nom, prenom From utilisateur");
+	$querySelect = $bdd->prepare("Select idUtilisateur, nom, prenom From utilisateur Natural Join validation Where idTuteur is NULL");
 	$querySelect->execute();
 
 	while($row = $querySelect->fetch()){
@@ -353,7 +353,6 @@ function getUtilisateursCompetence($idCompetence) {
             'idUtilisateur' => $row['idUtilisateur'],
             'prenom' => $row['prenom'],
             'nom' => $row['nom'],
-            'valide' => estCompetenceValide($idCompetence, $row['idUtilisateur'])
         );
 
         $utilisateurs[] = $utilisateur;
@@ -405,6 +404,20 @@ function getCompetencesInvisibles(){
     }
 
     return $competences;
+}
+
+function estUnUtilisateur($pseudo, $mdp){
+	global $bdd;
+	$querySelect = $bdd->prepare("Select * From utilisateur Where pseudo = :pseudo and mdp = :mdp");
+	$querySelect->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+	$querySelect->bindParam(':mdp', $mdp, PDO::PARAM_STR);
+	$querySelect->execute();
+
+	if($querySelect->fetch()){
+		return true;
+	}
+
+	return false;
 }
 
 ?>
