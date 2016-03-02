@@ -10,6 +10,7 @@
                     <li><a id="btnPDF" target="_blank" href="views/pdf.php">PDF</a></li>
                 </ul>
             </div>
+            <span id="toggleFullscreenCompetencesValidees" class="glyphicon glyphicon-fullscreen cursor-pointer" aria-hidden="true"></span>
     </div>
 
     <div id="panel-body-competences-validees" class="panel-body">
