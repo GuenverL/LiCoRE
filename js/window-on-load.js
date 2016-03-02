@@ -36,6 +36,19 @@ $(window).on('load', function() {
         $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'gestionCompetences'));
         majArbre('#arbreGestionCompetences');
         $('[data-toggle="modal"]').tooltip();
+
+        for (var competence of competences) {
+          if (competence.visible === 0) {
+            var competenceObjet = {
+              idCompetence: competence.idCompetence,
+              nomCompetence: competence.nomCompetence,
+              visibilite: 'setCompetencesVisibles',
+            };
+            $('#competence-' + competence.idCompetence + '-button-visibilite').off();
+            $('#competence-' + competence.idCompetence + '-button-visibilite').click(competenceObjet, setCompetencesVisibiliteOnClick);
+          }
+        }
+
       }
     });
   } else if (action === 'valider-competences-utilisateurs') {

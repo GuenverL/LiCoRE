@@ -1,6 +1,42 @@
 var $buttonSelectionne = $('#buttonToutesCompetences');
 var typeAffichageCompetences = 'getToutesLesCompetences';
 
+function setCompetencesVisibilite(competences, visibilite) {
+  'use strict';
+
+  for (var competence of competences) {
+    if (visibilite === 'setCompetencesInvisibles') {
+      $('#competence-' + competence.idCompetence).addClass('couleur-grise');
+      $('#competence-' + competence.idCompetence).find('span.glyphicon-eye-close').remove();
+      $('#competence-' + competence.idCompetence).find('span.glyphicon-eye-open').remove();
+      $('#competence-' + competence.idCompetence).find('span.glyphicon-pencil').after(
+        genererBoutonGestion(competence, 'setCompetencesVisibles', 'Rendre la compétence visible', 'glyphicon-eye-open couleur-bleue'));
+    } else {
+      $('#competence-' + competence.idCompetence).toggleClass('couleur-grise');
+      $('#competence-' + competence.idCompetence).find('span.glyphicon-eye-open').first().remove();
+      $('#competence-' + competence.idCompetence).find('span.glyphicon-pencil').first().after(
+        genererBoutonGestion(competence, 'setCompetencesInvisibles', 'Rendre la compétence invisible', 'glyphicon-eye-close couleur-bleue'));
+    }
+  }
+}
+
+function setCompetencesVisibiliteOnClick(event) {
+  'use strict';
+
+  var idCompetence = event.data.idCompetence;
+  var nomCompetence = event.data.nomCompetence;
+  var visibilite = event.data.visibilite;
+
+  $.getJSON('api/competences.php', {
+    type: visibilite,
+    idCompetence: idCompetence,
+  }).always(function(competences) {
+    $('.tooltip').remove();
+    setCompetencesVisibilite(competences, visibilite);
+    $('[data-toggle="modal"]').tooltip();
+  });
+}
+
 $('#gestionCompetencesModal').on('show.bs.modal', function(event) {
   'use strict';
   var $buttonSubmit = $('#buttonSubmit');
@@ -63,13 +99,13 @@ $('#gestionCompetencesModal').on('show.bs.modal', function(event) {
 
       if (feuille) {
         paramsModal.title = 'Supprimer la compétence "' + nomCompetence + '"';
-        paramsModal.body = '<div class="alert alert-warning" role="alert">' +
+        paramsModal.body = '<div class="alert alert-danger" role="alert">' +
           '<strong>Attention!</strong>' +
           '<p>Voulez-vous vraiment continuer et supprimer cette compétence ?</p></div>';
 
       } else {
         paramsModal.title = 'Supprimer la catégorie "' + nomCompetence + '" et ses sous-compétences';
-        paramsModal.body = '<div class="alert alert-warning" role="alert">' +
+        paramsModal.body = '<div class="alert alert-danger" role="alert">' +
           '<strong>Attention!</strong>' +
           '<p>La suppression de cette catégorie entrainera la suppression ' +
           'de toutes ses sous-catégories et compétences.</p>' +
@@ -101,7 +137,7 @@ $('#gestionCompetencesModal').on('show.bs.modal', function(event) {
       if (competences) {
         switch (type) {
           case 'ajouterCompetence':
-            if (competence.idCompetence !== -1) {
+            if (competences.idCompetence !== -1) {
               var longueur = $('#competence-' + idCompetence).find('ul').length;
               var ouvert = $('#competence-' + idCompetence).find('i').hasClass('glyphicon-chevron-down');
               if (longueur === 0) {
@@ -110,10 +146,10 @@ $('#gestionCompetencesModal').on('show.bs.modal', function(event) {
 
               if (ouvert) {
                 $('#competence-' + idCompetence).find('ul').first().append(
-                  genererLigneCompetenceGestion(competences.idCompetence, competences.nomCompetence, 1, 'display-normal'));
+                  genererLigneCompetenceGestion(competences, 'display-normal'));
               } else {
                 $('#competence-' + idCompetence).find('ul').first().append(
-                  genererLigneCompetenceGestion(competences.idCompetence, competences.nomCompetence, 1, 'display-none'));
+                  genererLigneCompetenceGestion(competences, 'display-none'));
               }
 
               if (longueur === 0) {
@@ -135,10 +171,10 @@ $('#gestionCompetencesModal').on('show.bs.modal', function(event) {
               if (competence.idCompetence !== -1) {
                 if (ouvert) {
                   $('#competence-' + idCompetence).find('ul').first().append(
-                    genererLigneCompetenceGestion(competence.idCompetence, competence.nomCompetence, 1, 'display-normal'));
+                    genererLigneCompetenceGestion(competence, 'display-normal'));
                 } else {
                   $('#competence-' + idCompetence).find('ul').first().append(
-                    genererLigneCompetenceGestion(competence.idCompetence, competence.nomCompetence, 1, 'display-none'));
+                    genererLigneCompetenceGestion(competence, 'display-none'));
                 }
               }
             }
@@ -152,15 +188,19 @@ $('#gestionCompetencesModal').on('show.bs.modal', function(event) {
 
           case 'modifierCompetence':
             if (competences.retour) {
+              $('#competence-' + idCompetence).find('span.glyphicon-plus').first().attr('data-nom-competence', nouveauNomCompetence);
+              $('#competence-' + idCompetence).find('span.glyphicon-th-list').first().attr('data-nom-competence', nouveauNomCompetence);
+              $('#competence-' + idCompetence).find('span.glyphicon-pencil').first().attr('data-nom-competence', nouveauNomCompetence);
+              $('#competence-' + idCompetence).find('span.glyphicon-eye-close').first().attr('data-nom-competence', nouveauNomCompetence);
+              $('#competence-' + idCompetence).find('span.glyphicon-eye-open').first().attr('data-nom-competence', nouveauNomCompetence);
+              $('#competence-' + idCompetence).find('span.glyphicon-remove').first().attr('data-nom-competence', nouveauNomCompetence);
               $('#competence-' + idCompetence).find('a').first().empty();
               $('#competence-' + idCompetence).find('a').first().append(nouveauNomCompetence);
             }
             break;
 
           case 'setCompetencesInvisibles':
-            for (var competence of competences) {
-              setCompetencesVisibilite('setCompetencesInvisibles', competence.idCompetence, competence.nomCompetence);
-            }
+            setCompetencesVisibilite(competences, 'setCompetencesInvisibles');
             break;
 
           case 'supprimerCompetence':
@@ -226,35 +266,3 @@ $('#buttonCompetencesInvisibles').on('click', function() {
   'use strict';
   majArbreGestionCompetences('#buttonCompetencesInvisibles', 'getCompetencesInvisibles');
 });
-
-function setCompetencesVisibilite(visibilite, idCompetence, nomCompetence) {
-  'use strict';
-
-  var actualiserGlyphicon = function(idCompetence, nomCompetence, visibilite) {
-    if (visibilite === 'setCompetencesInvisibles') {
-      $('#competence-' + idCompetence).addClass('couleur-grise');
-      $('#competence-' + idCompetence).find('span.glyphicon-eye-close').remove();
-      $('#competence-' + idCompetence).find('span.glyphicon-eye-open').remove();
-      $('#competence-' + idCompetence).find('span.glyphicon-pencil').after(
-        genererBoutonGestion(idCompetence, nomCompetence, 'setCompetencesVisibles', 'Rendre la compétence visible', 'glyphicon-eye-open couleur-bleue'));
-    } else {
-      $('#competence-' + idCompetence).toggleClass('couleur-grise');
-      $('#competence-' + idCompetence).find('span.glyphicon-eye-open').first().remove();
-      $('#competence-' + idCompetence).find('span.glyphicon-pencil').first().after(
-        genererBoutonGestion(idCompetence, nomCompetence, 'setCompetencesInvisibles', 'Rendre la compétence invisible', 'glyphicon-eye-close couleur-bleue'));
-    }
-  };
-
-  $.getJSON('api/competences.php', {
-    type: visibilite,
-    idCompetence: idCompetence,
-  }).always(function(competences) {
-    $('.tooltip').remove();
-
-    for (var competence of competences) {
-      actualiserGlyphicon(competence.idCompetence, competence.nomCompetence, visibilite);
-    }
-
-    $('[data-toggle="modal"]').tooltip();
-  });
-}
