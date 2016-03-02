@@ -134,6 +134,16 @@ function invaliderCompetence($idCompetence, $idUtilisateur = 0){
 	$queryDelete->execute();
 }
 
+/*function validationCompetenceParTuteur($idCompetence, $idUtilisateur){
+	global $bdd;
+	
+	$queryUpdate = $bdd->prepare("Update validation Set idTuteur = :idTuteur Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence");
+	$queryUpdate->bindParam(':idTuteur', $idTuteur, PDO::PARAM_INT);
+	$queryUpdate->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
+	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+	$queryUpdate->execute();
+} */
+
 function auMoinsUneCompetenceEstValide($idPere){
 	global $bdd;
 	$querySelect = $bdd->prepare("Select idCompetence From competence Where idPereCompetence = :idPere and visible = 1");
@@ -328,6 +338,20 @@ function setCompetencesVisibles($idCompetence){
             				'idCompetence' => intval($idCompetence),
             				'nomCompetence' => getNomCompetence($idCompetence)
     				 );
+
+	$querySelect = $bdd->prepare("Select idPereCompetence From competence Where idCompetence = :idCompetence");
+	$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+	$querySelect->execute();
+
+	if(!empty($idPere = $querySelect->fetchColumn())){
+		$querySelect = $bdd->prepare("Select visible From competence Where idCompetence = :idPere");
+		$querySelect->bindParam(':idPere', $idPere, PDO::PARAM_INT);
+		$querySelect->execute();
+
+		if(!$querySelect->fetchColumn()){
+			$competences = array_merge($competences, setCompetencesVisibles($idPere));
+		}
+	}
 
 	/*if(!estUneFeuille($idCompetence, 2)){
 		$querySelect = $bdd->prepare("Select idCompetence From competence Where idPereCompetence = :idCompetence and visible = 0");
