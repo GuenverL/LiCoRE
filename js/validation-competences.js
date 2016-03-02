@@ -1,15 +1,12 @@
-function validation(id, button, type){
+function validation(id, nom, button, type){
     span = document.getElementById("idComp" + id)
-
     switch(type){
         case 'validerCompetence':
             $.getJSON('api/competences.php', {
                 type: 'validation',
                 idCompetence: id
             });
-            button.className += " couleur-jaune-bg";
-            span.className = "glyphicon glyphicon-hourglass";
-
+            button.outerHTML = genererBouttonCompetence(id, nom,"jaune","invaliderCompetence","glyphicon-hourglass");
             break;
 
         case 'invaliderCompetence':
@@ -17,10 +14,7 @@ function validation(id, button, type){
                 type: 'invalidation',
                 idCompetence: id
             });
-
-            button.className = "list-group-item cursor-pointer";
-            span.className = "glyphicon glyphicon-remove";
-
+            button.outerHTML = genererBouttonCompetence(id, nom,"blanc","validerCompetence","glyphicon-remove");
             break;
 
         default:
@@ -55,44 +49,17 @@ function afficherCompetence(lien, id){
                 if(competence.valide == true){
                     if(competence.idTuteur == null){
                         $('#competences-a-valider').append(
-                            '<div class="list-group-item cursor-pointer couleur-jaune-bg" data-toggle="modal" data-target="#validationCompetencesModal" data-type="invaliderCompetence" data-id-competence="' + competence.id + '" data-nom-competence="' + competence.nom + '">' +
-                                '<div class="media">' +
-                                    '<div class="media-body">' +
-                                        competence.nom +
-                                    '</div>' +
-                                    '<div class="media-right media-middle">' +
-                                        '<span id="idComp' + competence.id + '" class="glyphicon glyphicon-hourglass" aria-hidden="true">' +
-                                        '</span>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>');
+                            genererBouttonCompetence(competence.id, competence.nom, "jaune", "invaliderCompetence", "glyphicon-hourglass")
+                        );
                     }else{
                         $('#competences-a-valider').append(
-                            '<div class="list-group-item cursor-pointer couleur-verte-bg" data-toggle="modal" data-target="#validationCompetencesModal" data-type="invaliderCompetence" data-id-competence="' + competence.id + '" data-nom-competence="' + competence.nom + '">' +
-                                '<div class="media">' +
-                                    '<div class="media-body">' +
-                                        competence.nom +
-                                    '</div>' +
-                                    '<div class="media-right media-middle">' +
-                                    '<span id="idComp' + competence.id + '" class="glyphicon glyphicon-ok" aria-hidden="true">' +
-                                    '</span>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>');
+                            genererBouttonCompetence(competence.id, competence.nom, "vert", "invaliderCompetence", "glyphicon-ok")
+                        );
                     }
                 }else{
                     $('#competences-a-valider').append(
-                        '<div class="list-group-item cursor-pointer" data-toggle="modal" data-target="#validationCompetencesModal" data-type="validerCompetence" data-id-competence="' + competence.id + '" data-nom-competence="' + competence.nom + '">' +
-                            '<div class="media">' +
-                                '<div class="media-body">' +
-                                    competence.nom +
-                                '</div>' +
-                                '<div class="media-right media-middle">' +
-                                    '<span id="idComp' + competence.id + '" class="glyphicon glyphicon-remove" aria-hidden="true">' +
-                                    '</span>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>');
+                        genererBouttonCompetence(competence.id, competence.nom, "blanc", "validerCompetence", "glyphicon-remove")
+                    );
                 }
             }
         }
@@ -105,10 +72,8 @@ function afficherCompetence(lien, id){
 $('#validationCompetencesModal').on('show.bs.modal', function(event){
     'use strict';
     var $buttonSubmit = $('#buttonSubmit');
-
     $(this).removeData();
     $buttonSubmit.off();
-
     var $button = $(event.relatedTarget);
     var idCompetence = $button.data('id-competence');
     var nomCompetence = $button.data('nom-competence');
@@ -133,7 +98,8 @@ $('#validationCompetencesModal').on('show.bs.modal', function(event){
                                 '<strong>' +
                                     'Attention!' +
                                 '</strong>' +
-                                '<p>Vous allez valider une compétence et celle ci sera donc mise en attente de validation par un tuteur. Voulez vous continuer ?' +
+                                '<p>' +
+                                    'Vous allez valider une compétence et celle ci sera donc mise en attente de validation par un tuteur. Voulez vous continuer ?' +
                                 '</p>' +
                             '</div>';
     }else if(type === 'invaliderCompetence'){
@@ -144,7 +110,8 @@ $('#validationCompetencesModal').on('show.bs.modal', function(event){
                                 '<strong>' +
                                     'Attention!' +
                                 '</strong>' +
-                                '<p>Vous allez invalider une compétence et celle ci sera donc retiré de votre liste de compétences validées. Voulez vous continuer ?' +
+                                '<p>' +
+                                    'Vous allez invalider une compétence et celle ci sera donc retiré de votre liste de compétences validées. Voulez vous continuer ?' +
                                 '</p>' +
                             '</div>';
     }
@@ -152,6 +119,23 @@ $('#validationCompetencesModal').on('show.bs.modal', function(event){
     updateModal(paramsModal);
 
     $buttonSubmit.on('click', function(){
-        validation(idCompetence, $button[0], type);
+        validation(idCompetence, nomCompetence, $button[0], type);
     });
 });
+
+
+function genererBouttonCompetence(id, nom, couleur, type, icon){
+    var html='';
+    html =  '<div class="list-group-item cursor-pointer couleur-' + couleur + '-bg" data-toggle="modal" data-target="#validationCompetencesModal" data-type="' + type + '" data-id-competence="' + id + '" data-nom-competence="' + nom + '">' +
+                '<div class="media">' +
+                    '<div class="media-body">' +
+                        nom +
+                    '</div>' +
+                    '<div class="media-right media-middle">' +
+                        '<span id="idComp' + id + '" class="glyphicon ' + icon + '" aria-hidden="true">' +
+                        '</span>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+    return html;
+}
