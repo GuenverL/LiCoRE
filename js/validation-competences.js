@@ -1,24 +1,18 @@
 function validation(id, nom, button, type){
     span = document.getElementById("idComp" + id)
-    switch(type){
-        case 'validerCompetence':
-            $.getJSON('api/competences.php', {
-                type: 'validation',
-                idCompetence: id
-            });
-            button.outerHTML = genererBouttonCompetence(id, nom,"jaune","invaliderCompetence","glyphicon-hourglass");
-            break;
+    if(type == 'validerCompetence'){
+        $.getJSON('api/competences.php', {
+            type: 'validation',
+            idCompetence: id
+        });
+        button.outerHTML = genererBouttonCompetence(id, nom,"jaune","invaliderCompetence","glyphicon-hourglass");
 
-        case 'invaliderCompetence':
-            $.getJSON('api/competences.php', {
-                type: 'invalidation',
-                idCompetence: id
-            });
-            button.outerHTML = genererBouttonCompetence(id, nom,"blanc","validerCompetence","glyphicon-remove");
-            break;
-
-        default:
-            break;
+    }else{
+        $.getJSON('api/competences.php', {
+            type: 'invalidation',
+            idCompetence: id
+        });
+        button.outerHTML = genererBouttonCompetence(id, nom,"blanc","validerCompetence","glyphicon-remove");
     }
 }
 
@@ -53,7 +47,7 @@ function afficherCompetence(lien, id){
                         );
                     }else{
                         $('#competences-a-valider').append(
-                            genererBouttonCompetence(competence.id, competence.nom, "vert", "invaliderCompetence", "glyphicon-ok")
+                            genererBouttonCompetence(competence.id, competence.nom, "vert", "invaliderCompetenceTemporaire", "glyphicon-ok")
                         );
                     }
                 }else{
@@ -112,6 +106,18 @@ $('#validationCompetencesModal').on('show.bs.modal', function(event){
                                 '</strong>' +
                                 '<p>' +
                                     'Vous allez invalider une compétence et celle ci sera donc retiré de votre liste de compétences validées. Voulez vous continuer ?' +
+                                '</p>' +
+                            '</div>';
+    }else if(type === 'invaliderCompetenceTemporaire'){
+        paramsModal.label = '';
+        paramsModal.nomCompetence = nomCompetence;
+        paramsModal.title = 'Invalidation de la compétence "' + nomCompetence + '"';
+        paramsModal.body =  '<div class="alert alert-warning" role="alert">' +
+                                '<strong>' +
+                                    'Attention!' +
+                                '</strong>' +
+                                '<p>' +
+                                    'Vous allez retirer une compétence actuellement en attente de validation par un tuteur. Voulez vous continuer ?' +
                                 '</p>' +
                             '</div>';
     }
