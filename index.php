@@ -1,7 +1,6 @@
 <?php
 
 session_start();
-$_SESSION['idUtilisateur'] = 1;
 define('DOC_ROOT_PATH', $_SERVER['DOCUMENT_ROOT'].'/'.'Projet_Licore-master');
 
 include_once(DOC_ROOT_PATH . '/models/connexion_sql.php');

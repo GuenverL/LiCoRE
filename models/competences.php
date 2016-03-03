@@ -445,23 +445,19 @@ function getCompetencesInvisibles(){
     return $competences;
 }
 
-function estUnUtilisateur($pseudo, $mdp){
+function estUnUtilisateur($mail, $mdp){
 	global $bdd;
 
-	$querySelect = $bdd->prepare("Select idUtilisateur From utilisateur Where pseudo = :pseudo and mdp = :mdp");
-	$querySelect->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
+	$querySelect = $bdd->prepare("Select idUtilisateur From utilisateur Where mail = :mail and mdp = :mdp");
+	$querySelect->bindParam(':mail', $mail, PDO::PARAM_STR);
 	$querySelect->bindParam(':mdp', $mdp, PDO::PARAM_STR);
 	$querySelect->execute();
 
 	if($id = $querySelect->fetchColumn()){
-		return array(
-						'id' => intval($id)	
-			   );
+		return $id;
 	}
 
-	return array(
-					'id' => -1	
-		   );
+	return -1;
 }
 
 ?>
