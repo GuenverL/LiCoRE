@@ -5,7 +5,7 @@ function validation(id, nom, button, type){
             type: 'validation',
             idCompetence: id
         });
-        button.outerHTML = genererBouttonCompetence(id, nom,"jaune","invaliderCompetence","glyphicon-hourglass");
+        button.outerHTML = genererBouttonCompetence(id, nom,"jaune","invaliderCompetenceTemporaire","glyphicon-hourglass");
 
     }else{
         $.getJSON('api/competences.php', {
