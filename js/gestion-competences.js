@@ -50,13 +50,13 @@ $('#gestionCompetencesModal').on('show.bs.modal', function(event) {
   'use strict';
   var $buttonSubmit = $('#buttonSubmit');
 
-  $(this).removeData();
+  $(this).removeData('modal');
   $buttonSubmit.off();
 
   var $button = $(event.relatedTarget);
-  var idCompetence = $button.data('id-competence');
-  var nomCompetence = $button.data('nom-competence');
-  var type = $button.data('type');
+  var idCompetence = $button[0].dataset['idCompetence'];
+  var nomCompetence = $button[0].dataset['nomCompetence'];
+  var type = $button[0].dataset['type'];
 
   var $modal = $(this);
 
