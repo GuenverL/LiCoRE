@@ -1,5 +1,6 @@
 function genererBoutonGestion(competence, dataType, title, classGlyphicon) {
-  html = '';
+  'use strict';
+  var html = '';
 
   if (dataType === 'setCompetencesVisibles') {
     html += ' <span id="competence-' + competence.idCompetence + '-button-visibilite" data-toggle="modal"';
@@ -15,14 +16,18 @@ function genererBoutonGestion(competence, dataType, title, classGlyphicon) {
     '" aria-hidden="true"></span>';
 
   return html;
-};
+}
 
 function genererLigneCompetenceGestion(competence, display) {
-  html = '';
+  'use strict';
+
+  var html = '';
   html += '<li id="competence-' + competence.idCompetence + '"';
-  if (!competence.visible) {
+
+  if ((competence.visible !== undefined) && (!competence.visible)) {
     html += ' class="couleur-grise"';
   }
+
   if (display === 'display-none') {
     html += ' style="display: none;">';
   } else {
@@ -34,7 +39,7 @@ function genererLigneCompetenceGestion(competence, display) {
   html += genererBoutonGestion(competence, 'ajouterCompetence', 'Ajouter une compétence', 'glyphicon-plus couleur-verte');
   html += genererBoutonGestion(competence, 'ajouterPlusieursCompetences', 'Ajouter plusieurs compétences', 'glyphicon-th-list couleur-verte');
   html += genererBoutonGestion(competence, 'modifierCompetence', 'Modifier une compétence', 'glyphicon-pencil couleur-jaune');
-  if (competence.visible) {
+  if (competence.visible || (competence.visible === undefined)) {
     html += genererBoutonGestion(competence, 'setCompetencesInvisibles', 'Rendre la compétence invisible', 'glyphicon-eye-close couleur-bleue');
   } else {
     html += genererBoutonGestion(competence, 'setCompetencesVisibles', 'Rendre la compétence visible', 'glyphicon-eye-open couleur-bleue');

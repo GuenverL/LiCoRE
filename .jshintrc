@@ -31,7 +31,7 @@
   "latedef": true,
 
   // Enforce line length to 100 characters
-  "maxlen": 100,
+  "maxlen": 130,
 
   // Require capitalized names for constructor functions.
   "newcap": true,
