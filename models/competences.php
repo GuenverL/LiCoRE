@@ -104,8 +104,8 @@ function getCompetencesFeuille($idPere){
 	while($row = $querySelect->fetch()){
 		if(estUneFeuille($row['idCompetence'])){
 			$competence = array(
-				'id' => $row['idCompetence'],
-				'nom' => $row['nomCompetence'],
+				'idCompetence' => $row['idCompetence'],
+				'nomCompetence' => $row['nomCompetence'],
 				'valide' => estCompetenceValide($row['idCompetence'])
 			);
 
@@ -140,7 +140,7 @@ function invaliderCompetence($idCompetence, $idUtilisateur = 0){
 	global $bdd;
 	$idTuteur = $_SESSION['idUtilisateur'];
 	$date = date("Y-m-d");
-	
+
 	$queryUpdate = $bdd->prepare("Update validation Set idTuteur = :idTuteur, dateValidation = :dateValidation Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence");
 	$queryUpdate->bindParam(':idTuteur', $idTuteur, PDO::PARAM_INT);
 	$queryUpdate->bindParam(':dateValidation', $date, PDO::PARAM_STR);
@@ -197,7 +197,7 @@ function modifierCompetence($idCompetence, $nouveauNom){
 
 	if(empty(trim($nouveauNom))){
 		return array(
-						'retour' => false	
+						'retour' => false
 			   );
 	}
 
@@ -353,7 +353,7 @@ function setCompetencesVisibles($idCompetence){
     $queryUpdate = $bdd->prepare("Update competence Set visible = 1 Where idCompetence = :idCompetence");
 	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$queryUpdate->execute();
-    
+
 	$competences[] = array(
             				'idCompetence' => intval($idCompetence),
             				'nomCompetence' => getNomCompetence($idCompetence)

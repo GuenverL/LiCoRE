@@ -75,23 +75,13 @@ function genererListeCompetences(parent, niveau, competencesJson, typeAffichage)
         };
         html += genererLigneCompetenceGestion(competenceObject, 'display-normal');
       } else {
+        html += '<li id="competence-' + competence.idCompetence + '"';
         if (competence.valide) {
-          html += '<li class="text-validated">';
+          html += ' class="text-validated">';
         } else {
-          html += '<li>';
+          html += ' class="text-default">';
         }
-
-        if (competence.feuille) {
-          if (typeAffichage === 'validerCompetencesUtilisateurs') {
-            html += '<a onclick="afficherUtilisateursCompetence(this,' + competence.idCompetence +
-              ')" href="#">' + competence.nomCompetence + '</a>';
-          } else {
-            html += '<a onclick="afficherCompetence(this,' + competence.idCompetence +
-              ')" href="#">' + competence.nomCompetence + '</a>';
-          }
-        } else {
-          html += '<a href="#">' + competence.nomCompetence + '</a>';
-        }
+        html += '<a href="#">' + competence.nomCompetence + '</a>';
       }
 
       niveauPrecedent = niveau;

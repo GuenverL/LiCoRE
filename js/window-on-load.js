@@ -11,6 +11,13 @@ $(window).on('load', function() {
       $('#listeCompetences').append('<a href="#">Liste des compétences</a>');
       $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'afficherCompetences'));
       majArbre('#arbreListeCompetences');
+      for (var competence of competences) {
+        var competenceObjet = {
+          idCompetence: competence.idCompetence,
+          nomCompetence: competence.nomCompetence,
+        };
+        $('#competence-' + competence.idCompetence).find('a').first().click(competenceObjet, afficherCompetence);
+      }
     });
 
     $('#listeCompetencesValidees').empty();
@@ -48,7 +55,6 @@ $(window).on('load', function() {
             $('#competence-' + competence.idCompetence + '-button-visibilite').click(competenceObjet, setCompetencesVisibiliteOnClick);
           }
         }
-
       }
     });
   } else if (action === 'valider-competences-utilisateurs') {

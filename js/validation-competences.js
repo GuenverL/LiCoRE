@@ -3,15 +3,16 @@ function genererListGroupItem(competence, couleurbg, type, classGlyphicon) {
 
   var html = '';
 
-  html = '<div class="list-group-item cursor-pointer couleur-' + couleurbg +
+  html = '<div id="list-group-item-' + competence.idCompetence + '"' +
+    ' class="list-group-item cursor-pointer couleur-' + couleurbg +
     '-bg" data-toggle="modal" data-target="#genericModal" data-type="' + type +
-    '" data-id-competence="' + competence.id + '" data-nom-competence="' + competence.nom + '">' +
+    '" data-id-competence="' + competence.idCompetence + '" data-nom-competence="' + competence.nomCompetence + '">' +
     '<div class="media">' +
     '<div class="media-body">' +
-    competence.nom +
+    competence.nomCompetence +
     '</div>' +
     '<div class="media-right media-middle">' +
-    '<span id="idComp' + competence.id + '" class="glyphicon ' + classGlyphicon + '" aria-hidden="true">' +
+    '<span class="glyphicon ' + classGlyphicon + '" aria-hidden="true">' +
     '</span>' +
     '</div>' +
     '</div>' +
@@ -32,43 +33,51 @@ function buttonSubmitValidation(event) {
     nomCompetence: nomCompetence,
   };
 
+  var $listGroupItemCompetence = $('#list-group-item-' + idCompetence);
+
   if (type === 'validerCompetence') {
     $.getJSON('api/competences.php', {
       type: 'validation',
       idCompetence: idCompetence,
     });
-    genererBoutonGestion(competenceObject, 'invaliderCompetenceTemporaire', 'Invalider la compétence', 'glyphicon-hourglass');
-    //button.outerHTML = genererBouttonCompetence(idCompetence, nomCompetence, 'jaune', 'invaliderCompetenceTemporaire', 'glyphicon-hourglass');
-
+    $listGroupItemCompetence.attr('data-type', 'invaliderCompetenceTemporaire');
   } else {
     $.getJSON('api/competences.php', {
       type: 'invalidation',
       idCompetence: idCompetence,
     });
-    button.outerHTML = genererBouttonCompetence(idCompetence, nomCompetence, 'blanc', 'validerCompetence', 'glyphicon-remove');
+    $listGroupItemCompetence.attr('data-type', 'validerCompetence');
   }
+
+  $listGroupItemCompetence.toggleClass('couleur-jaune-bg');
+  $listGroupItemCompetence.find('span.glyphicon').first().toggleClass('glyphicon-remove');
+  $listGroupItemCompetence.find('span.glyphicon').first().toggleClass('glyphicon-hourglass');
 }
 
-var lienPrecedent = null;
+var $lienPrecedent = null;
 
-function afficherCompetence(lien, id) {
+function afficherCompetence(event) {
   'use strict';
 
-  if (lienPrecedent !== null) {
-    lienPrecedent.style.color = 'rgb(34, 68, 238)';
+  var idCompetence = event.data.idCompetence;
+  var nomCompetence = event.data.nomCompetence;
+
+  if ($lienPrecedent !== null) {
+    $lienPrecedent.toggleClass('text-selected');
+    $lienPrecedent.toggleClass('text-default');
   }
-  lienPrecedent = lien;
-  lienPrecedent.style.color = 'rgb(232, 85, 36)';
+  $lienPrecedent = $('#competence-' + idCompetence);
+  $lienPrecedent.toggleClass('text-default');
+  $lienPrecedent.toggleClass('text-selected');
 
   $.getJSON('api/competences.php', {
       type: 'sousCompetences',
-      idPere: id,
+      idPere: idCompetence,
     },
     function(competences) {
       $('#panel-body-competences').empty();
       $('#panel-body-competences').append(
-        '<div class="list-group-item heading">' +
-        lien.innerHTML +
+        '<div class="list-group-item heading">' + nomCompetence +
         '</div>' +
         '<div id="competences-a-valider" class="list-group">' +
         '</div>');

@@ -75,17 +75,17 @@ function majArbreGestionCompetences(button, type) {
   }
 }
 
-$('#buttonToutesCompetences').on('click', function() {
+$('#buttonToutesCompetences').click(function() {
   'use strict';
   majArbreGestionCompetences('#buttonToutesCompetences', 'getToutesLesCompetences');
 });
 
-$('#buttonCompetencesVisibles').on('click', function() {
+$('#buttonCompetencesVisibles').click(function() {
   'use strict';
   majArbreGestionCompetences('#buttonCompetencesVisibles', 'getCompetencesVisibles');
 });
 
-$('#buttonCompetencesInvisibles').on('click', function() {
+$('#buttonCompetencesInvisibles').click(function() {
   'use strict';
   majArbreGestionCompetences('#buttonCompetencesInvisibles', 'getCompetencesInvisibles');
 });
