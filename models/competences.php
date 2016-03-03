@@ -209,23 +209,25 @@ function modifierCompetence($idCompetence, $nouveauNom){
 function ajouterCompetence($idPere, $nomCompetence){
 	global $bdd;
 	$idCompetence = -1;
+	$visible = 0;
 
 	if(!empty(trim($nomCompetence))){
-		$querySelect = $bdd->prepare("Select visible From competence Where idCompetence :idPere");
+		$querySelect = $bdd->prepare("Select visible From competence Where idCompetence = :idPere");
 		$querySelect->bindParam(':idPere', $idPere, PDO::PARAM_INT);
     	$querySelect->execute();
     	$visible = $querySelect->fetchColumn();
 		$queryInsert = $bdd->prepare("Insert into competence (nomCompetence, idPereCompetence, visible) Values (:nomCompetence, :idPereCompetence, :visible)");
 		$queryInsert->bindParam(':nomCompetence', $nomCompetence, PDO::PARAM_STR);
 		$queryInsert->bindParam(':idPereCompetence', $idPere, PDO::PARAM_INT);
-		$queryInsert->bindParam(':visible', $visible, PDO::PARAM_BOOL);
+		$queryInsert->bindParam(':visible', $visible, PDO::PARAM_INT);
 		$queryInsert->execute();
 		$idCompetence = $bdd->lastInsertId();
 	}
 
 	return array(
                 'idCompetence' => intval($idCompetence),
-                'nomCompetence' => $nomCompetence
+                'nomCompetence' => $nomCompetence,
+                'visible' => estVisible($visible)
            );
 }
 
