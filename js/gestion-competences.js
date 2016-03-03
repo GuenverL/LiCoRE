@@ -144,55 +144,43 @@ $('#gestionCompetencesModal').on('show.bs.modal', function(event) {
       nomCompetence: nouveauNomCompetence,
     }).always(function(competences) {
       if (competences) {
+
+        var genererLigneAjoutCompetences = function(competences) {
+          var longueur = $('#competence-' + idCompetence).find('ul').length;
+          var ouvert = $('#competence-' + idCompetence).find('i').hasClass('glyphicon-chevron-down');
+          if (longueur === 0) {
+            $('#competence-' + idCompetence).append('<ul>');
+          }
+
+          for (var competence of competences) {
+            if (competence.idCompetence !== -1) {
+              if (ouvert) {
+                $('#competence-' + idCompetence).find('ul').first().append(
+                  genererLigneCompetenceGestion(competence, 'display-normal'));
+              } else {
+                $('#competence-' + idCompetence).find('ul').first().append(
+                  genererLigneCompetenceGestion(competence, 'display-none'));
+              }
+            }
+          }
+
+          if (longueur === 0) {
+            $('#competence-' + idCompetence).append('</ul>');
+            actualiserBranche($('#competence-' + idCompetence));
+            $('#competence-' + idCompetence).find('i').removeClass('glyphicon-chevron-right');
+            $('#competence-' + idCompetence).find('i').addClass('glyphicon-chevron-down');
+          }
+        };
+
         switch (type) {
           case 'ajouterCompetence':
             if (competences.idCompetence !== -1) {
-              var longueur = $('#competence-' + idCompetence).find('ul').length;
-              var ouvert = $('#competence-' + idCompetence).find('i').hasClass('glyphicon-chevron-down');
-              if (longueur === 0) {
-                $('#competence-' + idCompetence).append('<ul>');
-              }
-
-              if (ouvert) {
-                $('#competence-' + idCompetence).find('ul').first().append(
-                  genererLigneCompetenceGestion(competences, 'display-normal'));
-              } else {
-                $('#competence-' + idCompetence).find('ul').first().append(
-                  genererLigneCompetenceGestion(competences, 'display-none'));
-              }
-
-              if (longueur === 0) {
-                $('#competence-' + idCompetence).append('</ul>');
-                actualiserBranche($('#competence-' + idCompetence));
-                $('#competence-' + idCompetence).find('i').removeClass('glyphicon-chevron-right');
-                $('#competence-' + idCompetence).find('i').addClass('glyphicon-chevron-down');
-              }
+              genererLigneAjoutCompetences([competences]);
             }
             break;
 
           case 'ajouterPlusieursCompetences':
-            longueur = $('#competence-' + idCompetence).find('ul').length;
-            ouvert = $('#competence-' + idCompetence).find('i').hasClass('glyphicon-chevron-down');
-            if (longueur === 0) {
-              $('#competence-' + idCompetence).append('<ul>');
-            }
-            for (var competence of competences) {
-              if (competence.idCompetence !== -1) {
-                if (ouvert) {
-                  $('#competence-' + idCompetence).find('ul').first().append(
-                    genererLigneCompetenceGestion(competence, 'display-normal'));
-                } else {
-                  $('#competence-' + idCompetence).find('ul').first().append(
-                    genererLigneCompetenceGestion(competence, 'display-none'));
-                }
-              }
-            }
-            if (longueur === 0) {
-              $('#competence-' + idCompetence).append('</ul>');
-              actualiserBranche($('#competence-' + idCompetence));
-              $('#competence-' + idCompetence).find('i').removeClass('glyphicon-chevron-right');
-              $('#competence-' + idCompetence).find('i').addClass('glyphicon-chevron-down');
-            }
+            genererLigneAjoutCompetences(competences);
             break;
 
           case 'modifierCompetence':

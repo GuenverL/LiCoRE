@@ -38,7 +38,7 @@ $(window).on('load', function() {
         $('[data-toggle="modal"]').tooltip();
 
         for (var competence of competences) {
-          if (competence.visible === 0) {
+          if (!competence.visible) {
             var competenceObjet = {
               idCompetence: competence.idCompetence,
               nomCompetence: competence.nomCompetence,
