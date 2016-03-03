@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 02 Mars 2016 à 15:57
+-- Généré le :  Jeu 03 Mars 2016 à 18:18
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `competence` (
   `idPereCompetence` int(11) DEFAULT NULL,
   `visible` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`idCompetence`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=42 ;
 
 --
 -- Contenu de la table `competence`
@@ -69,12 +69,12 @@ INSERT INTO `competence` (`idCompetence`, `nomCompetence`, `idPereCompetence`, `
 (5, 'Identifier et situer les champs professionnels potentiellement en relation avec les acquis de la mention ainsi que les parcours possibles pour y accéder', 28, 1),
 (6, 'Caractériser et valoriser son identité, ses compétences et son projet professionnel en fonction d’un contexte', 28, 1),
 (7, 'Se mettre en recul d’une situation, s’auto évaluer et se remettre en question pour apprendre', 28, 1),
-(8, 'Utiliser les outils numériques de référence et les règles de sécurité informatique pour acquérir, traiter, produire et diffuser de l’information ainsi que pour collaborer en interne et en externe', 29, 1),
-(9, 'Identifier et sélectionner diverses ressources spécialisées pour documenter un sujet', 29, 1),
-(10, 'Analyser et synthétiser des données en vue de leur exploitation', 29, 1),
-(11, 'Développer une argumentation avec esprit critique', 29, 1),
-(12, 'Se servir aisément des différents registres d’expression écrite et orale de la langue française', 29, 1),
-(13, 'Se servir aisément de la compréhension et de l’expression écrites et orales dans au moins une langue vivante étrangère', 29, 1),
+(8, 'Utiliser les outils numériques de référence et les règles de sécurité informatique pour acquérir, traiter, produire et diffuser de l’information ainsi que pour collaborer en interne et en externe', 29, 0),
+(9, 'Identifier et sélectionner diverses ressources spécialisées pour documenter un sujet', 29, 0),
+(10, 'Analyser et synthétiser des données en vue de leur exploitation', 29, 0),
+(11, 'Développer une argumentation avec esprit critique', 29, 0),
+(12, 'Se servir aisément des différents registres d’expression écrite et orale de la langue française', 29, 0),
+(13, 'Se servir aisément de la compréhension et de l’expression écrites et orales dans au moins une langue vivante étrangère', 29, 0),
 (14, 'Identifier le rôle et le champ d’application des sciences pour l’ingénieur dans tous les\r\nsecteurs : milieux naturels, milieux industriels, transports, environnements urbains, etc', 26, 1),
 (15, 'Valider un modèle par comparaison de ses prévisions aux résultats expérimentaux et apprécier ses limites de validité', 26, 1),
 (16, 'Identifier les principales familles de matériaux et leurs propriétés', 26, 1),
@@ -90,7 +90,7 @@ INSERT INTO `competence` (`idCompetence`, `nomCompetence`, `idPereCompetence`, `
 (26, 'Sciences pour l''ingénieur\r\n', 27, 1),
 (27, 'Disciplinaires', NULL, 1),
 (28, 'Préprofessionnelles', NULL, 1),
-(29, 'Transversales et linguistiques', NULL, 1);
+(29, 'Transversales et linguistiques', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -142,7 +142,7 @@ INSERT INTO `role` (`idRole`, `nomRole`) VALUES
 
 CREATE TABLE IF NOT EXISTS `utilisateur` (
   `idUtilisateur` int(11) NOT NULL AUTO_INCREMENT,
-  `pseudo` varchar(250) NOT NULL,
+  `identifiant` varchar(250) NOT NULL,
   `prenom` varchar(250) NOT NULL,
   `nom` varchar(250) NOT NULL,
   `mdp` varchar(250) NOT NULL,
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 -- Contenu de la table `utilisateur`
 --
 
-INSERT INTO `utilisateur` (`idUtilisateur`, `pseudo`, `prenom`, `nom`, `mdp`, `idRole`) VALUES
+INSERT INTO `utilisateur` (`idUtilisateur`, `identifiant`, `prenom`, `nom`, `mdp`, `idRole`) VALUES
 (1, 'UtilisateurTest', 'Jean', 'Didier', 'test', 3);
 
 -- --------------------------------------------------------

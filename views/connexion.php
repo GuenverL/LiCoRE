@@ -22,7 +22,7 @@
               <div class="form-group">
                 <label for="inputIdentifiant" class="col-sm-2 control-label">Identifiant</label>
                 <div class="col-sm-10">
-                  <input type="email" class="form-control" name="inputIdentifiant" placeholder="Identifiant">
+                  <input type="text" class="form-control" name="inputIdentifiant" placeholder="Identifiant">
                 </div>
               </div>
               <div class="form-group">
