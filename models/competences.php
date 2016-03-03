@@ -235,6 +235,14 @@ function ajouterPlusieursCompetences($idPere, $nomsCompetences) {
 	return $competencesAjoutees;
 }
 
+function estVisible($visible){
+	if($visible == 1){
+		return true;
+	}
+
+	return false;
+}
+
 function getToutesLesCompetences($mode){
 	global $bdd;
     $competences = array();
@@ -262,7 +270,7 @@ function getToutesLesCompetences($mode){
             	'idPereCompetence' => intval($row['idPereCompetence']),
             	'nomCompetence' => $row['nomCompetence'],
             	'feuille' => estUnefeuille($row['idCompetence'], 2),
-            	'visible' => intval($row['visible'])
+            	'visible' => estVisible($row['visible'])
         	);
         }
 
@@ -420,7 +428,7 @@ function getCompetencesInvisibles(){
             	'idPereCompetence' => intval($row['idPereCompetence']),
             	'nomCompetence' => $row['nomCompetence'],
             	'feuille' => estUnefeuille($row['idCompetence'], 2),
-            	'visible' => $row['visible']
+            	'visible' => estVisible($row['visible'])
         	);
 
         	$competences[] = $competence;
@@ -432,16 +440,21 @@ function getCompetencesInvisibles(){
 
 function estUnUtilisateur($pseudo, $mdp){
 	global $bdd;
+
 	$querySelect = $bdd->prepare("Select idUtilisateur From utilisateur Where pseudo = :pseudo and mdp = :mdp");
 	$querySelect->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
 	$querySelect->bindParam(':mdp', $mdp, PDO::PARAM_STR);
 	$querySelect->execute();
 
 	if($id = $querySelect->fetchColumn()){
-		return $id;
+		return array(
+						'id' => intval($id)	
+			   );
 	}
 
-	return -1;
+	return array(
+					'id' => -1	
+		   );
 }
 
 ?>
