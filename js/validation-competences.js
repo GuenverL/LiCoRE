@@ -43,11 +43,11 @@ function afficherCompetence(lien, id){
                 if(competence.valide == true){
                     if(competence.idTuteur == null){
                         $('#competences-a-valider').append(
-                            genererBouttonCompetence(competence.id, competence.nom, "jaune", "invaliderCompetence", "glyphicon-hourglass")
+                            genererBouttonCompetence(competence.id, competence.nom, "jaune", "invaliderCompetenceTemporaire", "glyphicon-hourglass")
                         );
                     }else{
                         $('#competences-a-valider').append(
-                            genererBouttonCompetence(competence.id, competence.nom, "vert", "invaliderCompetenceTemporaire", "glyphicon-ok")
+                            genererBouttonCompetence(competence.id, competence.nom, "vert", "invaliderCompetence", "glyphicon-ok")
                         );
                     }
                 }else{
