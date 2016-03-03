@@ -211,9 +211,14 @@ function ajouterCompetence($idPere, $nomCompetence){
 	$idCompetence = -1;
 
 	if(!empty(trim($nomCompetence))){
-		$queryInsert = $bdd->prepare("Insert into competence (nomCompetence, idPereCompetence) Values (:nomCompetence, :idPereCompetence)");
+		$querySelect = $bdd->prepare("Select visible From competence Where idCompetence :idPere");
+		$querySelect->bindParam(':idPere', $idPere, PDO::PARAM_INT);
+    	$querySelect->execute();
+    	$visible = $querySelect->fetchColumn();
+		$queryInsert = $bdd->prepare("Insert into competence (nomCompetence, idPereCompetence, visible) Values (:nomCompetence, :idPereCompetence, :visible)");
 		$queryInsert->bindParam(':nomCompetence', $nomCompetence, PDO::PARAM_STR);
 		$queryInsert->bindParam(':idPereCompetence', $idPere, PDO::PARAM_INT);
+		$queryInsert->bindParam(':visible', $visible, PDO::PARAM_BOOL);
 		$queryInsert->execute();
 		$idCompetence = $bdd->lastInsertId();
 	}
