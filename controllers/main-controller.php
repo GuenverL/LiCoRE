@@ -5,7 +5,7 @@ require(DOC_ROOT_PATH . '/views/credits-modal.php');
 
 // Affiche l'accueil du site
 function accueil() {
-    require(DOC_ROOT_PATH . '/views/index.php');
+    require(DOC_ROOT_PATH . '/views/accueil/index.php');
 }
 
 // Permet de gerer les competences
