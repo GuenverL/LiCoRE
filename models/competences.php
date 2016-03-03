@@ -209,6 +209,7 @@ function modifierCompetence($idCompetence, $nouveauNom){
 function ajouterCompetence($idPere, $nomCompetence){
 	global $bdd;
 	$idCompetence = -1;
+	$visible = 0;
 
 	if(!empty(trim($nomCompetence))){
 		$querySelect = $bdd->prepare("Select visible From competence Where idCompetence :idPere");
@@ -225,7 +226,8 @@ function ajouterCompetence($idPere, $nomCompetence){
 
 	return array(
                 'idCompetence' => intval($idCompetence),
-                'nomCompetence' => $nomCompetence
+                'nomCompetence' => $nomCompetence,
+                'visible' => estVisible($visible)
            );
 }
 
