@@ -1,4 +1,4 @@
-<div class="modal fade" id="gestionCompetencesModal" tabindex="-1" role="dialog" aria-labelledby="gestionCompetencesModal">
+<div class="modal fade" id="genericModal" tabindex="-1" role="dialog" aria-labelledby="genericModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,7 +6,7 @@
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
-                <form id="gestionCompetencesModalForm"></form>
+                <form id="genericModalForm"></form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>

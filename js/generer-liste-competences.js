@@ -5,7 +5,7 @@ function genererBoutonGestion(competence, dataType, title, classGlyphicon) {
   if (dataType === 'setCompetencesVisibles') {
     html += ' <span id="competence-' + competence.idCompetence + '-button-visibilite" data-toggle="modal"';
   } else {
-    html += ' <span data-toggle="modal" data-target="#gestionCompetencesModal" data-type="' + dataType +
+    html += ' <span data-toggle="modal" data-target="#genericModal" data-type="' + dataType +
       '" data-id-competence="' + competence.idCompetence +
       '" data-nom-competence="' + competence.nomCompetence + '"';
   }

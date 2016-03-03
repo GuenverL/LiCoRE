@@ -46,180 +46,6 @@ function setCompetencesVisibiliteOnClick(event) {
   });
 }
 
-$('#gestionCompetencesModal').on('show.bs.modal', function(event) {
-  'use strict';
-  var $buttonSubmit = $('#buttonSubmit');
-
-  $(this).removeData('modal');
-  $buttonSubmit.off();
-
-  var $button = $(event.relatedTarget);
-  var idCompetence = $button[0].dataset['idCompetence'];
-  var nomCompetence = $button[0].dataset['nomCompetence'];
-  var type = $button[0].dataset['type'];
-
-  var $modal = $(this);
-
-  var updateModal = function(params) {
-    $modal.find('.modal-body #gestionCompetencesModalForm').empty();
-    $modal.find('.modal-title').text(params.title);
-    $modal.find('.modal-body #gestionCompetencesModalForm').append(params.body);
-    $modal.find('.modal-body #label').text(params.label);
-    $modal.find('.modal-body #nomCompetence').val(params.nomCompetence);
-  };
-
-  var paramsModal = {};
-
-  switch (type) {
-    case 'ajouterCompetence':
-      paramsModal.title = 'Ajouter une compétence à "' + nomCompetence + '"';
-      paramsModal.body = '<div class="form-group">' +
-        '<label for="nom-competence" class="control-label" id="label"></label>' +
-        '<input type="text" class="form-control" id="nomCompetence">' +
-        '</div>';
-      paramsModal.label = 'Nom de la nouvelle compétence :';
-      paramsModal.nomCompetence = '';
-      break;
-
-    case 'ajouterPlusieursCompetences':
-      paramsModal.title = 'Ajouter des compétences à "' + nomCompetence + '"';
-      paramsModal.body = '<div class="form-group">' +
-        '<label for="nom-competence" class="control-label" id="label"></label>' +
-        '<textarea rows="20" class="form-control" id="nomCompetence"></textarea>' +
-        '</div>';
-      paramsModal.label = 'Nom des nouvelles compétences (séparée par un retour à la ligne) :';
-      paramsModal.nomCompetence = '';
-      break;
-
-    case 'modifierCompetence':
-      paramsModal.title = 'Modifier la compétence "' + nomCompetence + '"';
-      paramsModal.body = '<div class="form-group">' +
-        '<label for="nom-competence" class="control-label" id="label"></label>' +
-        '<input type="text" class="form-control" id="nomCompetence">' +
-        '</div>';
-      paramsModal.label = 'Nom :';
-      paramsModal.nomCompetence = nomCompetence;
-      break;
-
-    case 'supprimerCompetence':
-      var feuille = $button.data('feuille');
-      paramsModal.label = '';
-      paramsModal.nomCompetence = nomCompetence;
-
-      if (feuille) {
-        paramsModal.title = 'Supprimer la compétence "' + nomCompetence + '"';
-        paramsModal.body = '<div class="alert alert-danger" role="alert">' +
-          '<strong>Attention!</strong>' +
-          '<p>Voulez-vous vraiment continuer et supprimer cette compétence ?</p></div>';
-
-      } else {
-        paramsModal.title = 'Supprimer la catégorie "' + nomCompetence + '" et ses sous-compétences';
-        paramsModal.body = '<div class="alert alert-danger" role="alert">' +
-          '<strong>Attention!</strong>' +
-          '<p>La suppression de cette catégorie entrainera la suppression ' +
-          'de toutes ses sous-catégories et compétences.</p>' +
-          '<p>Voulez-vous vraiment continuer et supprimer cette catégorie ?</p></div>';
-      }
-      break;
-
-    case 'setCompetencesInvisibles':
-      paramsModal.label = '';
-      paramsModal.nomCompetence = nomCompetence;
-      paramsModal.title = 'Rendre invisible la catégorie "' + nomCompetence + '" et ses sous-compétences';
-      paramsModal.body = '<div class="alert alert-warning" role="alert">' +
-        '<strong>Attention!</strong>' +
-        '<p>Rendre invisible cette catégorie va mettre invisible ' +
-        'toutes ses sous-catégories et compétences.</p>' +
-        '<p>Voulez-vous vraiment continuer et rendre invisible cette catégorie ?</p></div>';
-      break;
-  }
-
-  updateModal(paramsModal);
-
-  $buttonSubmit.on('click', function() {
-    var nouveauNomCompetence = $modal.find('.modal-body #nomCompetence').val();
-    $.getJSON('api/competences.php', {
-      type: type,
-      idCompetence: idCompetence,
-      nomCompetence: nouveauNomCompetence,
-    }).always(function(competences) {
-      if (competences) {
-
-        var genererLigneAjoutCompetences = function(competences) {
-          var longueur = $('#competence-' + idCompetence).find('ul').length;
-          var ouvert = $('#competence-' + idCompetence).find('i').hasClass('glyphicon-chevron-down');
-          if (longueur === 0) {
-            $('#competence-' + idCompetence).append('<ul>');
-          }
-
-          for (var competence of competences) {
-            if (competence.idCompetence !== -1) {
-              if (ouvert) {
-                $('#competence-' + idCompetence).find('ul').first().append(
-                  genererLigneCompetenceGestion(competence, 'display-normal'));
-              } else {
-                $('#competence-' + idCompetence).find('ul').first().append(
-                  genererLigneCompetenceGestion(competence, 'display-none'));
-              }
-            }
-          }
-
-          if (longueur === 0) {
-            $('#competence-' + idCompetence).append('</ul>');
-            actualiserBranche($('#competence-' + idCompetence));
-            $('#competence-' + idCompetence).find('i').removeClass('glyphicon-chevron-right');
-            $('#competence-' + idCompetence).find('i').addClass('glyphicon-chevron-down');
-          }
-        };
-
-        switch (type) {
-          case 'ajouterCompetence':
-            if (competences.idCompetence !== -1) {
-              genererLigneAjoutCompetences([competences]);
-            }
-            break;
-
-          case 'ajouterPlusieursCompetences':
-            genererLigneAjoutCompetences(competences);
-            break;
-
-          case 'modifierCompetence':
-            if (competences.retour) {
-              $('#competence-' + idCompetence).find('span.glyphicon-plus').first().attr('data-nom-competence', nouveauNomCompetence);
-              $('#competence-' + idCompetence).find('span.glyphicon-th-list').first().attr('data-nom-competence', nouveauNomCompetence);
-              $('#competence-' + idCompetence).find('span.glyphicon-pencil').first().attr('data-nom-competence', nouveauNomCompetence);
-              $('#competence-' + idCompetence).find('span.glyphicon-eye-close').first().attr('data-nom-competence', nouveauNomCompetence);
-              $('#competence-' + idCompetence).find('span.glyphicon-eye-open').first().attr('data-nom-competence', nouveauNomCompetence);
-              $('#competence-' + idCompetence).find('span.glyphicon-remove').first().attr('data-nom-competence', nouveauNomCompetence);
-              $('#competence-' + idCompetence).find('a').first().empty();
-              $('#competence-' + idCompetence).find('a').first().append(nouveauNomCompetence);
-            }
-            break;
-
-          case 'setCompetencesInvisibles':
-            setCompetencesVisibilite(competences, 'setCompetencesInvisibles');
-            break;
-
-          case 'supprimerCompetence':
-            $('#competence-' + idCompetence).remove();
-            break;
-
-          default:
-            $.getJSON('api/competences.php', {
-              type: typeAffichageCompetences,
-            }).always(function(competences) {
-              $('#arbreGestionCompetences').empty();
-              $('#arbreGestionCompetences').append('<li id="listeCompetences"><a href="#">Liste des compétences</a>');
-              $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'gestionCompetences'));
-              majArbre('#arbreGestionCompetences');
-              $('[data-toggle="modal"]').tooltip();
-            });
-        }
-      }
-    });
-  });
-});
-
 function majButtons(nouveauBouton) {
   'use strict';
 
@@ -263,3 +89,91 @@ $('#buttonCompetencesInvisibles').on('click', function() {
   'use strict';
   majArbreGestionCompetences('#buttonCompetencesInvisibles', 'getCompetencesInvisibles');
 });
+
+function buttonSubmitGestionCompetences(event) {
+  'use strict';
+
+  var idCompetence = event.data.idCompetence;
+  var type = event.data.type;
+
+  var nouveauNomCompetence = $('#genericModal').find('.modal-body #nomCompetence').val();
+  $.getJSON('api/competences.php', {
+    type: type,
+    idCompetence: idCompetence,
+    nomCompetence: nouveauNomCompetence,
+  }).always(function(competences) {
+    if (competences) {
+
+      var genererLigneAjoutCompetences = function(competences) {
+        var longueur = $('#competence-' + idCompetence).find('ul').length;
+        var ouvert = $('#competence-' + idCompetence).find('i').hasClass('glyphicon-chevron-down');
+        if (longueur === 0) {
+          $('#competence-' + idCompetence).append('<ul>');
+        }
+
+        for (var competence of competences) {
+          if (competence.idCompetence !== -1) {
+            if (ouvert) {
+              $('#competence-' + idCompetence).find('ul').first().append(
+                genererLigneCompetenceGestion(competence, 'display-normal'));
+            } else {
+              $('#competence-' + idCompetence).find('ul').first().append(
+                genererLigneCompetenceGestion(competence, 'display-none'));
+            }
+          }
+        }
+
+        if (longueur === 0) {
+          $('#competence-' + idCompetence).append('</ul>');
+          actualiserBranche($('#competence-' + idCompetence));
+          $('#competence-' + idCompetence).find('i').removeClass('glyphicon-chevron-right');
+          $('#competence-' + idCompetence).find('i').addClass('glyphicon-chevron-down');
+        }
+      };
+
+      switch (type) {
+        case 'ajouterCompetence':
+          if (competences.idCompetence !== -1) {
+            genererLigneAjoutCompetences([competences]);
+          }
+          break;
+
+        case 'ajouterPlusieursCompetences':
+          genererLigneAjoutCompetences(competences);
+          break;
+
+        case 'modifierCompetence':
+          if (competences.retour) {
+            $('#competence-' + idCompetence).find('span.glyphicon-plus').first().attr('data-nom-competence', nouveauNomCompetence);
+            $('#competence-' + idCompetence).find('span.glyphicon-th-list').first().attr('data-nom-competence', nouveauNomCompetence);
+            $('#competence-' + idCompetence).find('span.glyphicon-pencil').first().attr('data-nom-competence', nouveauNomCompetence);
+            $('#competence-' + idCompetence).find('span.glyphicon-eye-close').first().attr('data-nom-competence', nouveauNomCompetence);
+            $('#competence-' + idCompetence).find('span.glyphicon-eye-open').first().attr('data-nom-competence', nouveauNomCompetence);
+            $('#competence-' + idCompetence).find('span.glyphicon-remove').first().attr('data-nom-competence', nouveauNomCompetence);
+            $('#competence-' + idCompetence).find('a').first().empty();
+            $('#competence-' + idCompetence).find('a').first().append(nouveauNomCompetence);
+          }
+          break;
+
+        case 'setCompetencesInvisibles':
+          setCompetencesVisibilite(competences, 'setCompetencesInvisibles');
+          break;
+
+        case 'supprimerCompetence':
+          $('#competence-' + idCompetence).remove();
+          break;
+
+        default:
+          $.getJSON('api/competences.php', {
+            type: typeAffichageCompetences,
+          }).always(function(competences) {
+            $('#arbreGestionCompetences').empty();
+            $('#arbreGestionCompetences').append('<li id="listeCompetences"><a href="#">Liste des compétences</a>');
+            $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'gestionCompetences'));
+            majArbre('#arbreGestionCompetences');
+            $('[data-toggle="modal"]').tooltip();
+          });
+      }
+    }
+  });
+}

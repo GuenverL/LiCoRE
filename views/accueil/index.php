@@ -1,5 +1,5 @@
 <?php $titre = 'Accueil'; ?>
-<?php require(DOC_ROOT_PATH . '/views/accueil/competences-a-valider-modal.php'); ?>
+<?php require(DOC_ROOT_PATH . '/views/layout/generic-modal.php'); ?>
 
 <?php ob_start(); ?>
     <div id="col-liste-competences" class="col-md-4">

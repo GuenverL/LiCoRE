@@ -1,6 +1,6 @@
 <?php $titre = 'Gestion des compétences'; ?>
 
-<?php require(DOC_ROOT_PATH . '/views/tableau-de-bord/gestion-competences-modal.php'); ?>
+<?php require(DOC_ROOT_PATH . '/views/layout/generic-modal.php'); ?>
 
 <?php ob_start(); ?>
     <div class="col-md-12">
