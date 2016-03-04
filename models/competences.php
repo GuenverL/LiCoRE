@@ -389,14 +389,15 @@ function setCompetencesVisibles($idCompetence){
 function getUtilisateursCompetence($idCompetence) {
 	global $bdd;
 	$utilisateurs = array();
-	$querySelect = $bdd->prepare("Select idUtilisateur, nom, prenom From utilisateur Natural Join validation Where idTuteur is NULL");
+	$querySelect = $bdd->prepare("Select idUtilisateur, nom, prenom From utilisateur Natural Join validation Where idCompetence = :idCompetence and idTuteur is NULL");
+	$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$querySelect->execute();
 
 	while($row = $querySelect->fetch()){
        	$utilisateur = array(
             'idUtilisateur' => $row['idUtilisateur'],
             'prenom' => $row['prenom'],
-            'nom' => $row['nom'],
+            'nom' => $row['nom']
         );
 
         $utilisateurs[] = $utilisateur;
