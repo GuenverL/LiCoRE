@@ -22,6 +22,14 @@ function connexion() {
     require(DOC_ROOT_PATH . '/views/connexion.php');
 }
 
+function testConnexion(){
+	require(DOC_ROOT_PATH . '/models/connexion.php');
+}
+
+function deconnexion() {
+    require(DOC_ROOT_PATH . '/models/deconnexion.php');
+}
+
 // Affiche une erreur
 function erreur($msgErreur) {
     require(DOC_ROOT_PATH . '/views/erreur.php');

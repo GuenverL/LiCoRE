@@ -17,6 +17,12 @@ try {
     elseif ($_GET['action'] == 'connexion') {
         connexion();
     }
+    elseif ($_GET['action'] == 'test-connexion') {
+        testConnexion();
+    }
+    elseif ($_GET['action'] == 'deconnexion') {
+        deconnexion();
+    }
     else {
         throw new Exception("Action non valide");
     }

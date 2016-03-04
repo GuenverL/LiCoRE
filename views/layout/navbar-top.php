@@ -26,8 +26,15 @@
                     <li><a href="index.php?action=valider-competences-utilisateurs">Valider des compétences</a></li>
                 </ul>
             </div>
+            <?php 
+            if(!$_SESSION){ ?>
+                <a href="index.php?action=connexion"><button type="button" class="btn btn-default navbar-btn">Connexion</button></a>
+            <?php 
+            }else{ ?>
+                <a href="index.php?action=deconnexion"><button type="button" class="btn btn-default navbar-btn">Deconnexion</button></a>
 
-            <a href="index.php?action=connexion"><button type="button" class="btn btn-default navbar-btn">Connexion</button></a>
+            <?php } ?>
+
         </div>
 
     </div>

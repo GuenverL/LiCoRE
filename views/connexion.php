@@ -2,23 +2,12 @@
 
 <?php ob_start(); ?>
 
-  <?php
-    if(isset($_POST['btnConnexion'])){
-        $mail = $_POST['inputIdentifiant'];
-        $mdp = $_POST['inputMdp'];
-        $idUtilisateur =  estUnUtilisateur($mail, $mdp);
-        if($idUtilisateur != -1){
-          $_SESSION['idUtilisateur'] =  $idUtilisateur;
-          header('Location: index.php');
-        }
-    }
-  ?>
 
     <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-default">
           <div class="panel-heading">Connexion</div>
           <div class="panel-body">
-            <form class="form-horizontal" id="connexion" method="post" action="index.php?action=connexion">
+            <form class="form-horizontal" id="connexion" method="post" action="index.php?action=test-connexion">
               <div class="form-group">
                 <label for="inputIdentifiant" class="col-sm-2 control-label">Identifiant</label>
                 <div class="col-sm-10">
