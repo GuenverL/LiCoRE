@@ -451,4 +451,54 @@ function getCompetencesInvisibles(){
     return $competences;
 }
 
+function aUneDemandeDeValidation($idCompetence){
+	global $bdd;
+
+	if(estUnefeuille($idCompetence)){
+		$querySelect = $bdd->prepare("Select * From validation Where idCompetence = :idCompetence");
+		$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+    	$querySelect->execute();
+
+    	if($querySelect->fetch()){
+    		return true;
+    	}	
+	}
+	else{
+		$querySelect = $bdd->prepare("Select idCompetence From competence Where idPereCompetence = :idCompetence and visible = 1 ORDER BY nomCompetence ASC");
+		$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+    	$querySelect->execute();
+
+    	while($row = $querySelect->fetch()){
+    		if(aUneDemandeDeValidation($row['idCompetence'])){
+    			return true;
+    		}
+    	}
+	}
+
+	return false;
+}
+
+function getCompetencesValidation(){
+	global $bdd;
+    $competences = array();
+
+ 	$querySelect = $bdd->prepare("Select idCompetence, idPereCompetence, nomCompetence From competence Where visible = 1 ORDER BY nomCompetence ASC");
+    $querySelect->execute();
+
+    while($row = $querySelect->fetch()){
+    	if(aUneDemandeDeValidation($row['idCompetence'])){
+        	$competence = array(
+            	'idCompetence' => intval($row['idCompetence']),
+            	'idPereCompetence' => intval($row['idPereCompetence']),
+            	'nomCompetence' => $row['nomCompetence'],
+            	'feuille' => estUnefeuille($row['idCompetence'])
+        	);
+
+        	$competences[] = $competence;
+        }
+    }
+
+    return $competences;
+}
+
 ?>
