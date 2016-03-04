@@ -80,10 +80,11 @@ function estUneFeuille($idCompetence, $mode = 1){
 	return true;
 }
 
-function estCompetenceValide($idCompetence, $idUtilisateur = 0){
+function estCompetenceValide($idCompetence){
 	global $bdd;
+
 	$querySelect = $bdd->prepare("Select * From validation Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence");
-	$querySelect->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
+	$querySelect->bindParam(':idUtilisateur', $_SESSION['idUtilisateur'], PDO::PARAM_INT);
 	$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$querySelect->execute();
 
@@ -116,22 +117,22 @@ function getCompetencesFeuille($idPere){
 	return $competencesFeuille;
 }
 
-function validerCompetence($idCompetence, $idUtilisateur = 0){
+function validerCompetence($idCompetence){
 	global $bdd;
 	$date = date("Y-m-d");
 
 	$queryInsert = $bdd->prepare("Insert into validation (idUtilisateur, idCompetence, dateValidation) Values (:idUtilisateur, :idCompetence, :dateValidation)");
-	$queryInsert->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
+	$queryInsert->bindParam(':idUtilisateur', $_SESSION['idUtilisateur'], PDO::PARAM_INT);
 	$queryInsert->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$queryInsert->bindParam(':dateValidation', $date, PDO::PARAM_STR);
 	$queryInsert->execute();
 }
 
-function invaliderCompetence($idCompetence, $idUtilisateur = 0){
+function invaliderCompetence($idCompetence){
 	global $bdd;
 
 	$queryDelete = $bdd->prepare("Delete From validation Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence");
-	$queryDelete->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
+	$queryDelete->bindParam(':idUtilisateur', $_SESSION['idUtilisateur'], PDO::PARAM_INT);
 	$queryDelete->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$queryDelete->execute();
 }

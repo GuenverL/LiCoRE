@@ -7,11 +7,11 @@
     $querySelect->bindParam(':mdp', $mdp, PDO::PARAM_STR);
     $querySelect->execute();
 
-    if($querySelect->fetch()){
+    if($row = $querySelect->fetch()){
       return array(
-          'id' => $querySelect->fetchColumn(0),
-          'prenom' => $querySelect->fetchColumn(1),
-          'nom' => $querySelect->fetchColumn(2)
+          'id' => $row['idUtilisateur'],
+          'prenom' => $row['prenom'],
+          'nom' => $row['nom']
       );
     }
 
