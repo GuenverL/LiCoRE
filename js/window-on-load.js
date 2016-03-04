@@ -1,3 +1,5 @@
+var competencesValidees;
+
 $(window).on('load', function() {
   'use strict';
 
@@ -5,6 +7,7 @@ $(window).on('load', function() {
 
   if (!action) {
     $('#listeCompetences').empty();
+    $('#arbreListeCompetences').hide();
     $.getJSON('api/competences.php', {
       type: 'getCompetencesVisiblesSansFeuilles',
     }).always(function(competences) {
@@ -15,26 +18,34 @@ $(window).on('load', function() {
         var competenceObjet = {
           idCompetence: competence.idCompetence,
           nomCompetence: competence.nomCompetence,
+          type: 'sousCompetences',
         };
         $('#competence-' + competence.idCompetence).find('a').first().click(competenceObjet, afficherCompetence);
       }
+      $('#loader-competences').hide();
+      $('#arbreListeCompetences').show();
     });
 
     $('#listeCompetencesValidees').empty();
+    $('#arbreListeCompetencesValidees').hide();
     $.getJSON('api/competences.php', {
       type: 'getCompetencesValides',
-    }).always(function(competencesValidees) {
-      if (competencesValidees) {
+    }).always(function(competences) {
+      if (competences) {
+        competencesValidees = competences;
         $('#arbreListeCompetencesValidees').append('<li id="listeCompetencesValidees"><a href="#">Liste des compétences validées</a>');
-        $('#listeCompetencesValidees').append(genererListeCompetences(0, 0, competencesValidees, 'afficherCompetences'));
+        $('#listeCompetencesValidees').append(genererListeCompetences(0, 0, competences, 'afficherCompetences'));
       } else {
         $('#panel-body-competences-validees').append('<p>Aucunes compétences validées</p>');
       }
 
       majArbre('#arbreListeCompetencesValidees');
+      $('#loader-competences-validees').hide();
+      $('#arbreListeCompetencesValidees').show();
     });
   } else if (action === 'gestion-competences') {
     $('#arbreGestionCompetences').empty();
+    $('#arbreGestionCompetences').hide();
     $.getJSON('api/competences.php', {
       type: 'getToutesLesCompetences',
     }).always(function(competences) {
@@ -45,17 +56,25 @@ $(window).on('load', function() {
         $('[data-toggle="modal"]').tooltip();
 
         for (var competence of competences) {
-          if ((competence.visible !== undefined) && (!competence.visible)) {
+          if (((competence.visible !== undefined) && (!competence.visible)) || (competence.feuille && competence.visible)) {
+            var visibilite;
+            if (competence.feuille && competence.visible) {
+              visibilite = 'setCompetencesInvisibles';
+            } else {
+              visibilite = 'setCompetencesVisibles';
+            }
             var competenceObjet = {
               idCompetence: competence.idCompetence,
               nomCompetence: competence.nomCompetence,
-              visibilite: 'setCompetencesVisibles',
+              visibilite: visibilite,
             };
             $('#competence-' + competence.idCompetence + '-button-visibilite').off();
             $('#competence-' + competence.idCompetence + '-button-visibilite').click(competenceObjet, setCompetencesVisibiliteOnClick);
           }
         }
       }
+      $('#loader-competences').hide();
+      $('#arbreGestionCompetences').show();
     });
   } else if (action === 'valider-competences-utilisateurs') {
     $('#listeCompetences').empty();
@@ -65,6 +84,16 @@ $(window).on('load', function() {
       $('#listeCompetences').append('<a href="#">Liste des compétences</a>');
       $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'afficherCompetences'));
       majArbre('#arbreValidationCompetences');
+      for (var competence of competences) {
+        var competenceObjet = {
+          idCompetence: competence.idCompetence,
+          nomCompetence: competence.nomCompetence,
+          type: 'getUtilisateursCompetence',
+        };
+        $('#competence-' + competence.idCompetence).find('a').first().click(competenceObjet, afficherCompetence);
+      }
+      $('#loader-competences').hide();
+      $('#arbreListeCompetences').show();
     });
   }
 });

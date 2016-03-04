@@ -37,6 +37,8 @@ Couleurs
 .couleur-verte-bg {
   background-color: rgb(142, 188, 62);
 }
+
+/* #2244ee */
 .text-default {
   color: rgb(34, 68, 238);
 }
@@ -164,10 +166,20 @@ Autres
   user-select: none;
   cursor: pointer;
 }
+.center {
+  display: block;
+  margin: 0 auto;
+
+}
+.center-text-loader {
+  margin: 0 auto;
+  width: 210px;
+}
 
 /*
 Boutons
 */
+
 .btn-gestion-competences {
   color: #ffffff;
   background-color: #817571;

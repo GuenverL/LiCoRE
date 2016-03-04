@@ -19,6 +19,11 @@
   </div>
 
   <div id="panel-body-competences-validees" class="panel-body">
+    <div id="loader-competences-validees">
+      <img class="center" src="./images/loader.gif" alt="Chargement"/>
+      <p class="center-text-loader">Chargement des compétences ...</p>
+    </div>
+
     <ul id="arbreListeCompetencesValidees" class="treeview"></ul>
   </div>
 

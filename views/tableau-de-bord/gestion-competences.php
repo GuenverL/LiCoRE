@@ -18,6 +18,11 @@
               </div>
               <br/>
 
+              <div id="loader-competences">
+                <img class="center" src="./images/loader.gif" alt="Chargement"/>
+                <p class="center-text-loader">Chargement des compétences ...</p>
+              </div>
+
               <ul id="arbreGestionCompetences" class="treeview"></ul>
             </div>
 

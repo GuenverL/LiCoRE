@@ -62,6 +62,8 @@ function majArbreGestionCompetences(button, type) {
   if ($buttonSelectionne.selector !== $button.selector) {
     majButtons($button);
     $('#arbreGestionCompetences').empty();
+    $('#arbreGestionCompetences').hide();
+    $('#loader-competences').show();
     $.getJSON('api/competences.php', {
       type: type,
     }).always(function(competences) {
@@ -70,6 +72,8 @@ function majArbreGestionCompetences(button, type) {
         $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'gestionCompetences'));
         majArbre('#arbreGestionCompetences');
         $('[data-toggle="modal"]').tooltip();
+        $('#loader-competences').hide();
+        $('#arbreGestionCompetences').show();
       }
     });
   }

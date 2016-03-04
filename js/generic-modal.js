@@ -126,6 +126,36 @@ $('#genericModal').on('show.bs.modal', function(event) {
         '</p>' +
         '</div>';
       break;
+
+    case 'validationCompetencesUtilisateurs':
+      var nomUtilisateur = $button[0].dataset.nomUtilisateur;
+      paramsModal.label = '';
+      paramsModal.nomCompetence = '';
+      paramsModal.title = 'Valider la compétence "' + nomCompetence + '" pour "' + nomUtilisateur + '"';
+      paramsModal.body = '<div class="alert alert-warning" role="alert">' +
+        '<strong>' +
+        'Attention!' +
+        '</strong>' +
+        '<p>' +
+        'Vous allez valider cette compétence pour ' + nomUtilisateur + '. Voulez vous continuer ?' +
+        '</p>' +
+        '</div>';
+      break;
+
+    case 'invalidationCompetencesUtilisateurs':
+      var nomUtilisateur = $button[0].dataset.nomUtilisateur;
+      paramsModal.label = '';
+      paramsModal.nomCompetence = '';
+      paramsModal.title = 'Invalider la compétence "' + nomCompetence + '" pour "' + nomUtilisateur + '"';
+      paramsModal.body = '<div class="alert alert-warning" role="alert">' +
+        '<strong>' +
+        'Attention!' +
+        '</strong>' +
+        '<p>' +
+        'Vous allez invalider cette compétence pour ' + nomUtilisateur + '. Voulez vous continuer ?' +
+        '</p>' +
+        '</div>';
+      break;
   }
 
   updateModal(paramsModal);
@@ -135,6 +165,14 @@ $('#genericModal').on('show.bs.modal', function(event) {
     objet = {
       idCompetence: idCompetence,
       nomCompetence: nomCompetence,
+      type: type,
+    };
+    $buttonSubmit.click(objet, buttonSubmitValidation);
+  } else if ((type === 'validationCompetencesUtilisateurs') || (type === 'invalidationCompetencesUtilisateurs')) {
+    objet = {
+      idCompetence: idCompetence,
+      nomCompetence: nomCompetence,
+      idUtilisateur: $button[0].dataset.idUtilisateur,
       type: type,
     };
     $buttonSubmit.click(objet, buttonSubmitValidation);
