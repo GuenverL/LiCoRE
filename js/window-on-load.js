@@ -78,8 +78,9 @@ $(window).on('load', function() {
     });
   } else if (action === 'valider-competences-utilisateurs') {
     $('#listeCompetences').empty();
+    $('#arbreValidationCompetences').hide();
     $.getJSON('api/competences.php', {
-      type: 'getCompetencesVisibles',
+      type: 'getCompetencesValidation',
     }).always(function(competences) {
       $('#listeCompetences').append('<a href="#">Liste des compétences</a>');
       $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'afficherCompetences'));
@@ -93,7 +94,7 @@ $(window).on('load', function() {
         $('#competence-' + competence.idCompetence).find('a').first().click(competenceObjet, afficherCompetence);
       }
       $('#loader-competences').hide();
-      $('#arbreListeCompetences').show();
+      $('#arbreValidationCompetences').show();
     });
   }
 });
