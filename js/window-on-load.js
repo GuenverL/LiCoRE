@@ -86,12 +86,14 @@ $(window).on('load', function() {
       $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'afficherCompetences'));
       majArbre('#arbreValidationCompetences');
       for (var competence of competences) {
-        var competenceObjet = {
-          idCompetence: competence.idCompetence,
-          nomCompetence: competence.nomCompetence,
-          type: 'getUtilisateursCompetence',
-        };
-        $('#competence-' + competence.idCompetence).find('a').first().click(competenceObjet, afficherCompetence);
+        if (competence.feuille) {
+          var competenceObjet = {
+            idCompetence: competence.idCompetence,
+            nomCompetence: competence.nomCompetence,
+            type: 'getUtilisateursCompetence',
+          };
+          $('#competence-' + competence.idCompetence).find('a').first().click(competenceObjet, afficherCompetence);
+        }
       }
       $('#loader-competences').hide();
       $('#arbreValidationCompetences').show();

@@ -99,6 +99,24 @@ function estCompetenceValide($idCompetence){
 	return false;
 }
 
+function getEtatCompetence($idCompetence) {
+  global $bdd;
+
+  $querySelect = $bdd->prepare("Select * From validation Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence");
+  $querySelect->bindParam(':idUtilisateur', $_SESSION['idUtilisateur'], PDO::PARAM_INT);
+  $querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+  $querySelect->execute();
+
+  if($querySelect->rowCount() > 0) {
+    $row = $querySelect->fetch();
+    if($row['idTuteur'] == null) {
+      return "attente";
+    }
+    return "valide";
+  }
+  return "normal";
+}
+
 function getCompetencesFeuille($idPere){
 	global $bdd;
 	$querySelect = $bdd->prepare("Select idCompetence, nomCompetence From competence Where idPereCompetence = :idPere and visible = 1 ORDER BY nomCompetence ASC");
@@ -111,7 +129,7 @@ function getCompetencesFeuille($idPere){
 			$competence = array(
 				'idCompetence' => $row['idCompetence'],
 				'nomCompetence' => $row['nomCompetence'],
-				'valide' => estCompetenceValide($row['idCompetence'])
+				'etat' => getEtatCompetence($row['idCompetence'])
 			);
 
 			$competencesFeuille[] = $competence;
@@ -460,7 +478,7 @@ function aUneDemandeDeValidation($idCompetence){
 	global $bdd;
 
 	if(estUnefeuille($idCompetence)){
-		$querySelect = $bdd->prepare("Select * From validation Where idCompetence = :idCompetence");
+		$querySelect = $bdd->prepare("Select * From validation Where idCompetence = :idCompetence and idTuteur is NULL");
 		$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
     	$querySelect->execute();
 

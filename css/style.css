@@ -127,25 +127,25 @@ Tooltip
 */
 
 .tooltip.top > .tooltip-inner {
-  background-color: #846b60;
-  color: #ffffff;
+  background-color: #e7e0d2;
+  color: black;
 }
 .tooltip.top > .tooltip-arrow {
-  border-top-color: #846b60;
+  border-top-color: #e7e0d2;
 }
 .tooltip.bottom > .tooltip-inner {
-  background-color: #846b60;
-  color: #ffffff;
+  background-color: #e7e0d2;
+  color: black;
 }
 .tooltip.bottom > .tooltip-arrow {
-  border-bottom-color: #846b60;
+  border-bottom-color: #e7e0d2;
 }
 .tooltip.right > .tooltip-inner {
-  background-color: #846b60;
-  color: #ffffff;
+  background-color: #e7e0d2;
+  color: black;
 }
 .tooltip.right > .tooltip-arrow {
-  border-right-color: #846b60;
+  border-right-color: #e7e0d2;
 }
 .tooltip.in {
   opacity: 1;
