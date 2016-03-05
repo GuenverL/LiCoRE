@@ -93,6 +93,9 @@ Barre de navigation
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
   color: rgb(232, 85, 36);
 }
+.navbar-right {
+  line-height: 50px;
+}
 
 /*
 Panel
@@ -169,7 +172,6 @@ Autres
 .center {
   display: block;
   margin: 0 auto;
-
 }
 .center-text-loader {
   margin: 0 auto;

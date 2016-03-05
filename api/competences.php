@@ -46,10 +46,10 @@ switch ($type) {
   	invaliderCompetence($idCompetence);
   	break;
 
-  case 'validationCompetencesUtilisateurs':
+  case 'validationCompetenceParTuteur':
     $idCompetence = $_GET["idCompetence"];
     $idUtilisateur = $_GET["idUtilisateur"];
-    validerCompetence($idCompetence,$idUtilisateur);
+    validationCompetenceParTuteur($idCompetence,$idUtilisateur);
     break;
   case 'invalidationCompetencesUtilisateurs':
     $idCompetence = $_GET["idCompetence"];

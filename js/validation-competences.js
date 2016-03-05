@@ -5,7 +5,7 @@ function genererListGroupItem(objet, couleurbg, type, classGlyphicon) {
   var id;
   var nom;
 
-  if ((type === 'validationCompetencesUtilisateurs') || (type === 'invalidationCompetencesUtilisateurs')) {
+  if ((type === 'validationCompetenceParTuteur') || (type === 'invalidationCompetencesUtilisateurs')) {
     id = objet.idUtilisateur;
     nom = objet.prenomUtilisateur + ' ' + objet.nomUtilisateur;
   } else {
@@ -18,7 +18,7 @@ function genererListGroupItem(objet, couleurbg, type, classGlyphicon) {
     '-bg" data-toggle="modal" data-target="#genericModal" data-type="' + type +
     '" data-id-competence="' + objet.idCompetence + '" data-nom-competence="' + objet.nomCompetence;
 
-  if (type === 'validationCompetencesUtilisateurs') {
+  if (type === 'validationCompetenceParTuteur') {
     html += '" data-nom-utilisateur="' + nom +
       '" data-id-utilisateur="' + id;
   }
@@ -45,7 +45,7 @@ function buttonSubmitValidation(event) {
   var type = event.data.type;
   var idUtilisateur;
 
-  if ((type === 'validationCompetencesUtilisateurs') || (type === 'invalidationCompetencesUtilisateurs')) {
+  if ((type === 'validationCompetenceParTuteur') || (type === 'invalidationCompetencesUtilisateurs')) {
     idUtilisateur = event.data.idUtilisateur;
   }
 
@@ -63,9 +63,9 @@ function buttonSubmitValidation(event) {
       idCompetence: idCompetence,
     });
     $listGroupItemCompetence.attr('data-type', 'validerCompetence');
-  } else if (type === 'validationCompetencesUtilisateurs') {
+  } else if (type === 'validationCompetenceParTuteur') {
     $.getJSON('api/competences.php', {
-      type: 'validationCompetencesUtilisateurs',
+      type: 'validationCompetenceParTuteur',
       idCompetence: idCompetence,
       idUtilisateur: idUtilisateur,
     });
@@ -76,7 +76,7 @@ function buttonSubmitValidation(event) {
       idCompetence: idCompetence,
       idUtilisateur: idUtilisateur,
     });
-    $listGroupItemCompetence.attr('data-type', 'validationCompetencesUtilisateurs');
+    $listGroupItemCompetence.attr('data-type', 'validationCompetenceParTuteur');
   }
 
   $listGroupItemCompetence.toggleClass('couleur-jaune-bg');
@@ -158,7 +158,7 @@ function afficherCompetence(event) {
             nomUtilisateur: utilisateur.nom,
           };
           $('#utilisateurs-a-valider').append(
-            genererListGroupItem(params, 'blanc', 'validationCompetencesUtilisateurs', 'glyphicon-hourglass')
+            genererListGroupItem(params, 'blanc', 'validationCompetenceParTuteur', 'glyphicon-hourglass')
           );
         }
       }

@@ -127,7 +127,7 @@ $('#genericModal').on('show.bs.modal', function(event) {
         '</div>';
       break;
 
-    case 'validationCompetencesUtilisateurs':
+    case 'validationCompetenceParTuteur':
       var nomUtilisateur = $button[0].dataset.nomUtilisateur;
       paramsModal.label = '';
       paramsModal.nomCompetence = '';
@@ -168,7 +168,7 @@ $('#genericModal').on('show.bs.modal', function(event) {
       type: type,
     };
     $buttonSubmit.click(objet, buttonSubmitValidation);
-  } else if ((type === 'validationCompetencesUtilisateurs') || (type === 'invalidationCompetencesUtilisateurs')) {
+  } else if ((type === 'validationCompetenceParTuteur') || (type === 'invalidationCompetencesUtilisateurs')) {
     objet = {
       idCompetence: idCompetence,
       nomCompetence: nomCompetence,

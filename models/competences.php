@@ -1,5 +1,9 @@
 <?php
 
+if (session_status() !== PHP_SESSION_ACTIVE) {
+  session_start();
+}
+
 function getCompetencesVisibles(){
     global $bdd;
     $competences = array();
@@ -137,7 +141,7 @@ function invaliderCompetence($idCompetence){
 	$queryDelete->execute();
 }
 
-/*function validationCompetenceParTuteur($idCompetence, $idUtilisateur){
+function validationCompetenceParTuteur($idCompetence, $idUtilisateur){
 	global $bdd;
 	$idTuteur = $_SESSION['idUtilisateur'];
 	$date = date("Y-m-d");
@@ -148,7 +152,7 @@ function invaliderCompetence($idCompetence){
 	$queryUpdate->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
 	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$queryUpdate->execute();
-} */
+}
 
 function auMoinsUneCompetenceEstValide($idPere){
 	global $bdd;
@@ -462,7 +466,7 @@ function aUneDemandeDeValidation($idCompetence){
 
     	if($querySelect->fetch()){
     		return true;
-    	}	
+    	}
 	}
 	else{
 		$querySelect = $bdd->prepare("Select idCompetence From competence Where idPereCompetence = :idCompetence and visible = 1 ORDER BY nomCompetence ASC");

@@ -1,6 +1,7 @@
 <?php
 
 require(DOC_ROOT_PATH . '/models/competences.php');
+require(DOC_ROOT_PATH . '/models/session.php');
 require(DOC_ROOT_PATH . '/views/credits-modal.php');
 
 // Affiche l'accueil du site
@@ -19,11 +20,8 @@ function validerCompetencesUtilisateurs() {
 }
 
 function connexion() {
+    require(DOC_ROOT_PATH . '/models/connexion.php');
     require(DOC_ROOT_PATH . '/views/connexion.php');
-}
-
-function testConnexion(){
-	require(DOC_ROOT_PATH . '/models/connexion.php');
 }
 
 function deconnexion() {

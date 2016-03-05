@@ -8,23 +8,20 @@ include_once(DOC_ROOT_PATH . '/controllers/main-controller.php');
 
 try {
   if (isset($_GET['action'])) {
-    if ($_GET['action'] == 'gestion-competences') {
+    if (($_GET['action'] == 'gestion-competences') && (estConnecte())) {
         gestionCompetences();
     }
-    elseif ($_GET['action'] == 'valider-competences-utilisateurs') {
+    elseif (($_GET['action'] == 'valider-competences-utilisateurs') && (estConnecte())) {
         validerCompetencesUtilisateurs();
     }
     elseif ($_GET['action'] == 'connexion') {
         connexion();
     }
-    elseif ($_GET['action'] == 'test-connexion') {
-        testConnexion();
-    }
     elseif ($_GET['action'] == 'deconnexion') {
         deconnexion();
     }
     else {
-        throw new Exception("Action non valide");
+        throw new Exception("Erreur 503 : Accès refusé, vos droits d'accès ne permettent pas d'accéder à cette ressource");
     }
   }
   else {
