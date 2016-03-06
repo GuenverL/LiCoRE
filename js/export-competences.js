@@ -1,6 +1,6 @@
 // JavaScript Document
 
-window.onload = function() {
+/*window.onload = function() {
     var arbre = '<?xml version = "1.0" encoding="UTF-8" standalone="yes" ?>\n<arbre>\n';
        $.getJSON('api/competences.php',{
                     type: 'getCompetencesValides'
@@ -22,4 +22,4 @@ window.onload = function() {
         + encodeURIComponent(arbre);
     };
     console.log(arbre)
-};
+};*/

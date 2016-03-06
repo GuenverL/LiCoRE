@@ -19,19 +19,21 @@
 
     <div class="navbar-right">
 
-      <?php if (estConnecte()) { ?>
+      <?php if ((estAccessible('gestion-competences')) || (estAccessible('valider-competences-utilisateurs'))) { ?>
         <div class="btn-group">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Tableau de bord
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-            <li>
-              <a href="index.php?action=gestion-competences">Gestion des compétences</a>
-            </li>
-            <li>
-              <a href="index.php?action=valider-competences-utilisateurs">Valider des compétences</a>
-            </li>
+            <?php
+              if (estAccessible('gestion-competences')) {
+                echo '<li><a href="index.php?action=gestion-competences">Gestion des compétences</a></li>';
+              }
+              if (estAccessible('valider-competences-utilisateurs')) {
+                echo '<li><a href="index.php?action=valider-competences-utilisateurs">Valider des compétences</a></li>';
+              }
+            ?>
           </ul>
         </div>
       <?php } ?>

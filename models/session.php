@@ -16,4 +16,13 @@ function getNomUtilisateur() {
   return $_SESSION['nom'];
 }
 
+function estAccessible($page) {
+  if(estConnecte()) {
+    if((isset($_SESSION['acces']) && (in_array($page, $_SESSION['acces'])))) {
+      return true;
+    }
+  }
+  return false;
+}
+
 ?>

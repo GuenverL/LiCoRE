@@ -8,10 +8,10 @@ include_once(DOC_ROOT_PATH . '/controllers/main-controller.php');
 
 try {
   if (isset($_GET['action'])) {
-    if (($_GET['action'] == 'gestion-competences') && (estConnecte())) {
+    if (($_GET['action'] == 'gestion-competences') && (estAccessible('gestion-competences'))) {
         gestionCompetences();
     }
-    elseif (($_GET['action'] == 'valider-competences-utilisateurs') && (estConnecte())) {
+    elseif (($_GET['action'] == 'valider-competences-utilisateurs') && (estAccessible('valider-competences-utilisateurs'))) {
         validerCompetencesUtilisateurs();
     }
     elseif ($_GET['action'] == 'connexion') {

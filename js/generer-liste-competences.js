@@ -78,9 +78,9 @@ function genererListeCompetences(parent, niveau, competences, typeAffichage) {
       } else {
         html += '<li id="competence-' + competence.idCompetence + '"';
         if (competence.valide) {
-          html += ' class="text-validated">';
+          html += ' class="couleur-text-valide">';
         } else {
-          html += ' class="text-default">';
+          html += ' class="couleur-text-lien">';
         }
         html += '<a href="#">' + competence.nomCompetence + '</a>';
       }
