@@ -5,7 +5,7 @@
     <title>Projet Licore -
       <?= $titre ?></title>
     <link href="./css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="./css/style.css" rel="stylesheet"/>
+    <link href="./dist/style.css" rel="stylesheet"/>
   </head>
 
   <body>

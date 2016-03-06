@@ -4,7 +4,8 @@ var typeAffichageCompetences = 'getToutesLesCompetences';
 function setCompetencesVisibilite(competences, visibilite) {
   'use strict';
 
-  for (var competence of competences) {
+  for (var i = 0, len = competences.length; i < len; ++i) {
+    var competence = competences[i];
     if (visibilite === 'setCompetencesInvisibles') {
       $('#competence-' + competence.idCompetence).addClass('couleur-grise');
       $('#competence-' + competence.idCompetence).find('span.glyphicon-eye-close').remove();
@@ -33,7 +34,6 @@ function setCompetencesVisibiliteOnClick(event) {
   'use strict';
 
   var idCompetence = event.data.idCompetence;
-  var nomCompetence = event.data.nomCompetence;
   var visibilite = event.data.visibilite;
 
   $.getJSON('api/competences.php', {
@@ -115,7 +115,8 @@ function buttonSubmitGestionCompetences(event) {
           $('#competence-' + idCompetence).append('<ul>');
         }
 
-        for (var competence of competences) {
+        for (var i = 0, len = competences.length; i < len; ++i) {
+          var competence = competences[i];
           if (competence.idCompetence !== -1) {
             if (ouvert) {
               $('#competence-' + idCompetence).find('ul').first().append(

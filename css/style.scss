@@ -1,4 +1,14 @@
 /*
+Variables couleurs
+*/
+$couleur-primaire: rgb(231, 224, 210);
+$couleur-secondaire: rgb(132, 107, 96);
+
+$couleur-selection: rgb(232, 85, 36);
+$couleur-valide: rgb(142, 188, 62);
+$couleur-lien: rgb(34, 68, 238);
+
+/*
 Elements par défaut
 */
 
@@ -21,7 +31,7 @@ footer {
   bottom: 0;
   width: 100%;
   height: 100px;
-  background-color: #e7e0d2;
+  background-color: $couleur-primaire;
 }
 
 /*
@@ -29,18 +39,17 @@ Couleurs
 */
 
 .text-selected, .couleur-rouge {
-  color: rgb(232, 85, 36);
+  color: $couleur-selection;
 }
 .text-validated, .couleur-verte {
-  color: rgb(142, 188, 62);
+  color: $couleur-valide;
 }
 .couleur-verte-bg {
-  background-color: rgb(142, 188, 62);
+  background-color: $couleur-valide;
 }
 
-/* #2244ee */
 .text-default {
-  color: rgb(34, 68, 238);
+  color: $couleur-lien;
 }
 .couleur-jaune {
   color: rgb(243, 148, 0);
@@ -77,21 +86,21 @@ Barre de navigation
 */
 
 .navbar {
-  background-color: #e7e0d2;
+  background-color: $couleur-primaire;
   margin: 0;
 }
 .navbar-inverse {
-  border-color: #e7e0d2;
+  border-color: $couleur-primaire;
 }
 .navbar-default .navbar-brand {
-  color: #846b60;
+  color: $couleur-secondaire;
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
   color: #ffffff;
-  background-color: rgb(232, 85, 36);
+  background-color: $couleur-selection;
 }
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
-  color: rgb(232, 85, 36);
+  color: $couleur-selection;
 }
 .navbar-right {
   line-height: 50px;
@@ -106,12 +115,12 @@ Panel
 }
 .panel-default > .panel-heading {
   color: #ffffff;
-  background-color: #846b60;
+  background-color: $couleur-secondaire;
   font-variant: small-caps;
 }
 .heading {
   color: #ffffff;
-  background-color: #846b60;
+  background-color: $couleur-secondaire;
 }
 
 /*
@@ -127,25 +136,25 @@ Tooltip
 */
 
 .tooltip.top > .tooltip-inner {
-  background-color: #e7e0d2;
+  background-color: $couleur-primaire;
   color: black;
 }
 .tooltip.top > .tooltip-arrow {
-  border-top-color: #e7e0d2;
+  border-top-color: $couleur-primaire;
 }
 .tooltip.bottom > .tooltip-inner {
-  background-color: #e7e0d2;
+  background-color: $couleur-primaire;
   color: black;
 }
 .tooltip.bottom > .tooltip-arrow {
-  border-bottom-color: #e7e0d2;
+  border-bottom-color: $couleur-primaire;
 }
 .tooltip.right > .tooltip-inner {
-  background-color: #e7e0d2;
+  background-color: $couleur-primaire;
   color: black;
 }
 .tooltip.right > .tooltip-arrow {
-  border-right-color: #e7e0d2;
+  border-right-color: $couleur-primaire;
 }
 .tooltip.in {
   opacity: 1;
@@ -195,7 +204,7 @@ Boutons
 .btn-gestion-competences.btn.active, .btn:active {
   color: #ffffff;
   background-image: none;
-  background-color: rgb(232, 85, 36);
+  background-color: $couleur-selection;
   border-color: #ffffff;
   outline: 0;
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
@@ -216,7 +225,7 @@ div.treeview {
   overflow: auto;
   padding: 4px;
   margin-bottom: 20px;
-  color: #2244ee;
+  color: $couleur-lien;
   border: solid 1px;
   border-radius: 4px;
 }
@@ -227,7 +236,7 @@ div.treeview ul:first-child:before {
   margin: 0;
   padding: 0;
   list-style: none;
-  color: #2244ee;
+  color: $couleur-lien;
 }
 .treeview ul {
   margin-left: 1em;

@@ -6,7 +6,8 @@ window.onload = function() {
                     type: 'getCompetencesValides'
                 },
                 function(competences){
-                    for(competence of competences){
+                  for (var i = 0, len = competences.length; i < len; ++i) {
+                    var competence = competences[i];
                         arbre = arbre + ('  <competence>\n' +
                         '       <id>' + competence.idCompetence + '</id>\n' +
                         '       <nom>' + competence.nomCompetence + '</nom>\n' +

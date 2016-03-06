@@ -14,7 +14,9 @@ $(window).on('load', function() {
       $('#listeCompetences').append('<a href="#">Liste des compétences</a>');
       $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'afficherCompetences'));
       majArbre('#arbreListeCompetences');
-      for (var competence of competences) {
+
+      for (var i = 0, len = competences.length; i < len; ++i) {
+        var competence = competences[i];
         var competenceObjet = {
           idCompetence: competence.idCompetence,
           nomCompetence: competence.nomCompetence,
@@ -55,7 +57,8 @@ $(window).on('load', function() {
         majArbre('#arbreGestionCompetences');
         $('[data-toggle="modal"]').tooltip();
 
-        for (var competence of competences) {
+        for (var i = 0, len = competences.length; i < len; ++i) {
+          var competence = competences[i];
           if (((competence.visible !== undefined) && (!competence.visible)) || (competence.feuille && competence.visible)) {
             var visibilite;
             if (competence.feuille && competence.visible) {
@@ -85,7 +88,9 @@ $(window).on('load', function() {
       $('#listeCompetences').append('<a href="#">Liste des compétences</a>');
       $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'afficherCompetences'));
       majArbre('#arbreValidationCompetences');
-      for (var competence of competences) {
+
+      for (var i = 0, len = competences.length; i < len; ++i) {
+        var competence = competences[i];
         if (competence.feuille) {
           var competenceObjet = {
             idCompetence: competence.idCompetence,

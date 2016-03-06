@@ -50,7 +50,7 @@ function genererLigneCompetenceGestion(competence, display) {
   return html;
 }
 
-function genererListeCompetences(parent, niveau, competencesJson, typeAffichage) {
+function genererListeCompetences(parent, niveau, competences, typeAffichage) {
   'use strict';
 
   var html = '';
@@ -60,7 +60,8 @@ function genererListeCompetences(parent, niveau, competencesJson, typeAffichage)
     html += '\n<ul>\n';
   }
 
-  for (var competence of competencesJson) {
+  for (var i = 0, len = competences.length; i < len; ++i) {
+    var competence = competences[i];
     if (parent === competence.idPereCompetence) {
       if (niveauPrecedent < niveau) {
         html += '\n<ul>\n';
@@ -85,7 +86,7 @@ function genererListeCompetences(parent, niveau, competencesJson, typeAffichage)
       }
 
       niveauPrecedent = niveau;
-      html += genererListeCompetences(competence.idCompetence, (niveau + 1), competencesJson, typeAffichage);
+      html += genererListeCompetences(competence.idCompetence, (niveau + 1), competences, typeAffichage);
     }
   }
 

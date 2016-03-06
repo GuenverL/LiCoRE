@@ -147,7 +147,8 @@ function afficherCompetence(event) {
           '<div id="competences-a-valider" class="list-group">' +
           '</div>');
 
-        for (var competence of competences) {
+        for (var i = 0, len = competences.length; i < len; ++i) {
+          var competence = competences[i];
           if (competence.etat === 'attente') {
             $('#competences-a-valider').append(
               genererListGroupItem(competence, 'jaune', 'invaliderCompetenceTemporaire', 'Compétence en attente de validation', 'glyphicon-hourglass')
@@ -181,7 +182,8 @@ function afficherCompetence(event) {
           '<div id="utilisateurs-a-valider" class="list-group">' +
           '</div>');
 
-        for (var utilisateur of utilisateurs) {
+        for (var i = 0, len = utilisateurs.length; i < len; ++i) {
+          var utilisateur = utilisateurs[i];
           var params = {
             idCompetence: idCompetence,
             nomCompetence: nomCompetence,
