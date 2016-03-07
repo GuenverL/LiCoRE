@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Ven 04 Mars 2016 à 17:00
+-- Généré le :  Lun 07 Mars 2016 à 18:13
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -36,12 +36,9 @@ CREATE TABLE IF NOT EXISTS `acces` (
 --
 
 INSERT INTO `acces` (`idRole`, `idPage`) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
-(2, 1),
 (2, 3),
-(3, 1);
+(1, 3),
+(1, 2);
 
 -- --------------------------------------------------------
 
@@ -109,9 +106,8 @@ CREATE TABLE IF NOT EXISTS `page` (
 --
 
 INSERT INTO `page` (`idPage`, `nomPage`) VALUES
-(1, 'Accueil'),
-(2, 'Gestion'),
-(3, 'Validation');
+(2, 'gestion-competences'),
+(3, 'valider-competences-utilisateurs');
 
 -- --------------------------------------------------------
 
