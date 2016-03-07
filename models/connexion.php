@@ -31,7 +31,7 @@
       $_SESSION['idUtilisateur'] =  $utilisateur['id'];
       $_SESSION['prenom'] =  $utilisateur['prenom'];
       $_SESSION['nom'] =  $utilisateur['nom'];
-      $_SESSION['acces'] = array('valider-competences-utilisateurs');
+      $_SESSION['acces'] = array('valider-competences-utilisateurs','gestion-competences');
       header('Location: index.php');
     }
     else {
