@@ -87,7 +87,7 @@ function estUneFeuille($idCompetence, $mode = 1){
 function estCompetenceValide($idCompetence){
 	global $bdd;
 
-	$querySelect = $bdd->prepare("Select * From validation Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence");
+	$querySelect = $bdd->prepare("Select * From validation Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence and idTuteur is not NULL");
 	$querySelect->bindParam(':idUtilisateur', $_SESSION['idUtilisateur'], PDO::PARAM_INT);
 	$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$querySelect->execute();
