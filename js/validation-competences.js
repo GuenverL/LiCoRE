@@ -1,4 +1,4 @@
-function genererListGroupItem(objet, couleurbg, type, title, classGlyphicon) {
+function genererListGroupItem(objet, couleurbg, type, title, classGlyphicon, estConnecte) {
   'use strict';
 
   var html = '';
@@ -15,8 +15,14 @@ function genererListGroupItem(objet, couleurbg, type, title, classGlyphicon) {
 
   html = '<div id="list-group-item-' + id + '"' +
     ' class="list-group-item cursor-pointer couleur-' + couleurbg +
-    '-bg" data-toggle="modal" data-target="#genericModal" data-type="' + type +
-    '" data-id-competence="' + objet.idCompetence + '" data-nom-competence="' + objet.nomCompetence;
+    '-bg" data-toggle="modal" ';
+
+  if (estConnecte) {
+    html += 'data-target="#genericModal" data-type="' + type +
+      '" data-id-competence="' + objet.idCompetence + '" data-nom-competence="' + objet.nomCompetence;
+  } else {
+    html += 'data-target="#connexionModal"';
+  }
 
   if (type === 'validationCompetenceParTuteur') {
     html += '" data-nom-utilisateur="' + nom +
@@ -125,6 +131,7 @@ function afficherCompetence(event) {
   var idCompetence = event.data.idCompetence;
   var nomCompetence = event.data.nomCompetence;
   var type = event.data.type;
+  var estConnecte;
 
   if ($lienPrecedent !== null) {
     $lienPrecedent.toggleClass('couleur-text-selection');
@@ -133,6 +140,13 @@ function afficherCompetence(event) {
   $lienPrecedent = $('#competence-' + idCompetence);
   $lienPrecedent.toggleClass('couleur-text-lien');
   $lienPrecedent.toggleClass('couleur-text-selection');
+
+  $.getJSON('api/competences.php', {
+      type: 'estConnecte',
+    },
+    function(connexion) {
+      estConnecte = connexion.estConnecte;
+    });
 
   if (type === 'sousCompetences') {
     $.getJSON('api/competences.php', {
@@ -151,15 +165,15 @@ function afficherCompetence(event) {
           var competence = competences[i];
           if (competence.etat === 'attente') {
             $('#competences-a-valider').append(
-              genererListGroupItem(competence, 'attente', 'invaliderCompetenceTemporaire', 'Compétence en attente de validation', 'glyphicon-hourglass')
+              genererListGroupItem(competence, 'attente', 'invaliderCompetenceTemporaire', 'Compétence en attente de validation', 'glyphicon-hourglass', estConnecte)
             );
           } else if (competence.etat === 'valide') {
             $('#competences-a-valider').append(
-              genererListGroupItem(competence, 'valide', 'invaliderCompetence', 'Invalider la compétence', 'glyphicon-remove')
+              genererListGroupItem(competence, 'valide', 'invaliderCompetence', 'Invalider la compétence', 'glyphicon-remove', estConnecte)
             );
           } else {
             $('#competences-a-valider').append(
-              genererListGroupItem(competence, '', 'validerCompetence', 'Valider la compétence', 'glyphicon-ok')
+              genererListGroupItem(competence, '', 'validerCompetence', 'Valider la compétence', 'glyphicon-ok', estConnecte)
             );
           }
         }
@@ -192,7 +206,7 @@ function afficherCompetence(event) {
             nomUtilisateur: utilisateur.nom,
           };
           $('#utilisateurs-a-valider').append(
-            genererListGroupItem(params, 'attente', 'validationCompetenceParTuteur', 'Valider l\'étudiant', 'glyphicon-hourglass')
+            genererListGroupItem(params, 'attente', 'validationCompetenceParTuteur', 'Valider l\'étudiant', 'glyphicon-hourglass', true)
           );
         }
         $('[data-toggle="modal"]').tooltip();

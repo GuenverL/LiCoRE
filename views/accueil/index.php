@@ -1,5 +1,4 @@
 <?php $titre = 'Accueil'; ?>
-<?php require(DOC_ROOT_PATH . '/views/layout/generic-modal.php'); ?>
 
 <?php ob_start(); ?>
     <div id="col-liste-competences" class="col-md-4">
@@ -15,6 +14,8 @@
     </div>
 <?php $contenu = ob_get_clean(); ?>
 
+<?php require(DOC_ROOT_PATH . '/views/layout/generic-modal.php'); ?>
+<?php require(DOC_ROOT_PATH . '/views/accueil/connexion-modal.php'); ?>
 <?php require(DOC_ROOT_PATH . '/views/layout/main.php'); ?>
 
 <?= $scripts ?>

@@ -86,6 +86,14 @@ switch ($type) {
     supprimerCompetence($idCompetence, $nomCompetence);
     break;
 
+  case 'estConnecte':
+    if(isset($_SESSION['idUtilisateur'])) {
+      $json = json_encode(array('estConnecte' => true));
+    } else {
+      $json = json_encode(array('estConnecte' => false));
+    }
+    break;
+
   default:
     $json = erreurApi("Il faut renseigner le type");
     break;

@@ -1,3 +1,5 @@
+<?php include(DOC_ROOT_PATH . '/views/credits-modal.php'); ?>
+
 <footer>
   <div class="container-fluid">
     <p class="text-muted">
