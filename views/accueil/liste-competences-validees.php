@@ -11,7 +11,7 @@
                     <a id="linkXML" download="tree.xml" href="#">XML</a>
                 </li>
                 <li>
-                    <a id="btnPDF" target="_blank" href="views/pdf.php">PDF</a>
+                    <a id="linkPDF"  href="#">PDF</a>
                 </li>
             </ul>
         </div>

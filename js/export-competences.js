@@ -8,9 +8,7 @@ $('#btnExport').click(function (){
                     '       <idPere>' + competence.idPereCompetence + '</idPere>\n');
     }
     arbre += '</arbre>';
-    console.log(arbre);
     $('#linkXML').click(function(){
-        console.log(arbre);
         this.href = 'data:application/xml;charset=utf-8,' + encodeURIComponent(arbre);
     });
 });
