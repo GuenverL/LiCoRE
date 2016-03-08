@@ -11,33 +11,22 @@
       <a class="navbar-brand" href="index.php">Projet Licore</a>
     </div>
 
-    <ul class="nav navbar-nav">
-      <li class="active">
-        <a href="index.php">Accueil</a>
+    <ul id="navbar-ul" class="nav navbar-nav">
+      <li id="navbar-mes-competences">
+        <a href="index.php">Mes compétences</a>
       </li>
+      <?php
+        if (estAccessible('valider-competences-utilisateurs')) {
+          echo '<li id="navbar-valider-competences-utilisateurs"><a href="index.php?action=valider-competences-utilisateurs">Valider des compétences</a></li>';
+        }
+        if (estAccessible('gestion-competences')) {
+          echo '<li id="navbar-gestion-competences"><a href="index.php?action=gestion-competences">Gestion des compétences</a></li>';
+        }
+        ?>
+      </ul>
     </ul>
 
     <div class="navbar-right">
-
-      <?php if ((estAccessible('gestion-competences')) || (estAccessible('valider-competences-utilisateurs'))) { ?>
-        <div class="btn-group">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Tableau de bord
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <?php
-              if (estAccessible('gestion-competences')) {
-                echo '<li><a href="index.php?action=gestion-competences">Gestion des compétences</a></li>';
-              }
-              if (estAccessible('valider-competences-utilisateurs')) {
-                echo '<li><a href="index.php?action=valider-competences-utilisateurs">Valider des compétences</a></li>';
-              }
-            ?>
-          </ul>
-        </div>
-      <?php } ?>
-
       <?php
         if (estConnecte()) {
           echo 'Connecté sous le nom « ' . getPrenomUtilisateur() . ' ' . getNomUtilisateur() . ' » ';
@@ -46,7 +35,6 @@
           echo '<a href="index.php?action=connexion"><button type="button" class="btn btn-default navbar-btn">Connexion</button></a>';
         }
       ?>
-
     </div>
 
   </div>

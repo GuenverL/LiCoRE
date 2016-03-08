@@ -1,11 +1,17 @@
 var competencesValidees;
 
+function changerNavActive(action) {
+  $('#navbar-ul').removeClass('active');
+  $('#navbar-' + action).addClass('active');
+}
+
 $(window).on('load', function() {
   'use strict';
 
   var action = location.search.split('action=')[1];
 
   if (!action) {
+    changerNavActive('mes-competences');
     $('#listeCompetences').empty();
     $('#arbreListeCompetences').hide();
     $.getJSON('api/competences.php', {
@@ -46,6 +52,7 @@ $(window).on('load', function() {
       $('#arbreListeCompetencesValidees').show();
     });
   } else if (action === 'gestion-competences') {
+    changerNavActive(action);
     $('#arbreGestionCompetences').empty();
     $('#arbreGestionCompetences').hide();
     $.getJSON('api/competences.php', {
@@ -80,6 +87,7 @@ $(window).on('load', function() {
       $('#arbreGestionCompetences').show();
     });
   } else if (action === 'valider-competences-utilisateurs') {
+    changerNavActive(action);
     $('#listeCompetences').empty();
     $('#arbreValidationCompetences').hide();
     $.getJSON('api/competences.php', {
