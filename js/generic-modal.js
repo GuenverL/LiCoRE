@@ -39,7 +39,7 @@ $('#genericModal').on('show.bs.modal', function(event) {
         '<label for="nom-competence" class="control-label" id="label"></label>' +
         '<textarea rows="20" class="form-control" id="nomCompetence"></textarea>' +
         '</div>';
-      paramsModal.label = 'Nom des nouvelles compétences (séparée par un retour à la ligne) :';
+      paramsModal.label = 'Nom des nouvelles compétences (séparées par un retour à la ligne) :';
       paramsModal.nomCompetence = '';
       break;
 
