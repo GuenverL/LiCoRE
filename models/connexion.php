@@ -36,6 +36,17 @@
     return $pages;
   }
 
+  function getRole($idRole){
+    global $bdd;
+
+    $querySelect = $bdd->prepare("Select nomRole From role Where idRole = :idRole");
+    $querySelect->bindParam(':idRole', $idRole, PDO::PARAM_INT);
+    $querySelect->execute();
+
+    return $querySelect->fetchColumn();
+
+  }
+
   if (isset($_POST['btnConnexion'])) {
     $identifiant = $_POST['inputIdentifiant'];
     $mdp = $_POST['inputMdp'];
@@ -48,6 +59,7 @@
       $_SESSION['prenom'] =  $utilisateur['prenom'];
       $_SESSION['nom'] =  $utilisateur['nom'];
       $_SESSION['acces'] = pagesAccessibles($utilisateur['idRole']);
+      $_SESSION['role'] = getRole($utilisateur['idRole']);
       header('Location: index.php');
     }
     else {
