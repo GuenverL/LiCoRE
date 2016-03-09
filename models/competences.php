@@ -117,6 +117,26 @@ function getEtatCompetence($idCompetence) {
   return "normal";
 }
 
+function getInformationValidation($idCompetence, $info){
+	global $bdd;
+
+    $querySelect = $bdd->prepare("Select dateValidation, nom, prenom From validation Inner Join utilisateur On validation.idTuteur = utilisateur.idUtilisateur Where idCompetence = :idCompetence and validation.idUtilisateur = :idUtilisateur");
+    $querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+    $querySelect->bindParam(':idUtilisateur', $_SESSION['idUtilisateur'], PDO::PARAM_INT);
+    $querySelect->execute();
+
+    $row = $querySelect->fetch();
+
+    if(strcmp($info, "date") == 0){
+    	return $row['dateValidation'];
+    }
+    elseif(strcmp($info, "nom") == 0){
+    	return $row['nom'];
+    }
+
+    return $row['prenom'];
+}
+
 function getCompetencesFeuille($idPere){
 	global $bdd;
 	$querySelect = $bdd->prepare("Select idCompetence, nomCompetence From competence Where idPereCompetence = :idPere and visible = 1 ORDER BY nomCompetence ASC");
@@ -129,7 +149,10 @@ function getCompetencesFeuille($idPere){
 			$competence = array(
 				'idCompetence' => $row['idCompetence'],
 				'nomCompetence' => $row['nomCompetence'],
-				'etat' => getEtatCompetence($row['idCompetence'])
+				'etat' => getEtatCompetence($row['idCompetence']),
+				'dateValidation' => date('d/m/Y', strtotime(str_replace('-', '/', getInformationValidation($row['idCompetence'], "date")))),
+                'prenomTuteur' => getInformationValidation($row['idCompetence'], "prenom"),
+                'nomTuteur' => getInformationValidation($row['idCompetence'], "nom")
 			);
 
 			$competencesFeuille[] = $competence;
