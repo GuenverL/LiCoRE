@@ -39,7 +39,8 @@ switch ($type) {
 
   case 'validation':
   	$idCompetence = $_GET["idCompetence"];
-  	validerCompetence($idCompetence);
+    $explications = $_GET["explications"];
+  	validerCompetence($idCompetence, $explications);
   	break;
   case 'invalidation':
   	$idCompetence = $_GET["idCompetence"];

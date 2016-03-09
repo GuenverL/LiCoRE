@@ -12,7 +12,7 @@ function genererBoutonGestion(competence, dataType, title, classGlyphicon) {
 
   html += ' data-placement="top"' +
     ' data-original-title="' + title +
-    '" class="glyphicon cursor-pointer ' + classGlyphicon +
+    '" class="glyphicon glyphicon-gestion cursor-pointer ' + classGlyphicon +
     '" aria-hidden="true"></span>';
 
   return html;

@@ -1,4 +1,4 @@
-$('#genericModal').on('show.bs.modal', function(event) {
+$('#genericModal').on('shown.bs.modal', function(event) {
   'use strict';
   var $buttonSubmit = $('#buttonSubmit');
 
@@ -86,7 +86,7 @@ $('#genericModal').on('show.bs.modal', function(event) {
       break;
 
     case 'validerCompetence':
-      paramsModal.label = '';
+      paramsModal.label = 'Explications pour justifier la validation de cette compétence (facultatif mais vivement recommandé) :';
       paramsModal.nomCompetence = nomCompetence;
       paramsModal.title = 'Validation de la compétence "' + nomCompetence + '"';
       paramsModal.body = '<div class="alert alert-warning" role="alert">' +
@@ -96,6 +96,10 @@ $('#genericModal').on('show.bs.modal', function(event) {
         '<p>' +
         'Vous allez valider une compétence et celle ci sera donc mise en attente de validation par un tuteur. Voulez vous continuer ?' +
         '</p>' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label for="explications-validation" class="control-label" id="label"></label>' +
+        '<textarea rows="10" class="form-control" id="explicationsValidation"></textarea>' +
         '</div>';
       break;
 
@@ -183,4 +187,5 @@ $('#genericModal').on('show.bs.modal', function(event) {
     };
     $buttonSubmit.click(objet, buttonSubmitGestionCompetences);
   }
+  $buttonSubmit.focus();
 });

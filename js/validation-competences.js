@@ -31,20 +31,26 @@ function genererListGroupItem(objet, couleurbg, type, title, classGlyphicon, est
 
   html += '"><div class="media">' +
     '<div class="media-body">' +
-    nom +
-    '</div>' +
-    '<div class="media-right media-middle">';
+    nom;
+
+  if (couleurbg === 'valide') {
+    html += '<hr class="separation-competence-valide">' +
+      'Validée par ' + objet.prenomTuteur + ' ' + objet.nomTuteur + ' le ' + objet.dateValidation;
+  }
+
+  html += '</div><div class="media-right media-middle">';
 
   if ((type === 'validationCompetenceParTuteur') || (type === 'invalidationCompetencesUtilisateurs')) {
     html += ' <span id="utilisateur-';
   } else {
     html += ' <span id="competence-';
   }
+
   html += id + '" data-toggle="modal"' +
     ' data-placement="top"' +
     ' data-original-title="' + title +
     '" class="glyphicon cursor-pointer ' + classGlyphicon +
-    '" aria-hidden="true"></span></div></div></div>';
+    '" aria-hidden="true"></span></div></div>';
 
   return html;
 }
@@ -78,6 +84,7 @@ function buttonSubmitValidation(event) {
     $.getJSON('api/competences.php', {
       type: 'validation',
       idCompetence: idCompetence,
+      explications: $('#genericModal').find('.modal-body #explicationsValidation').val(),
     });
     $listGroupItemCompetence.attr('data-type', 'invaliderCompetenceTemporaire');
     $listGroupItemCompetence.toggleClass('couleur-attente-bg');
