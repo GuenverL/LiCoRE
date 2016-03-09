@@ -7,6 +7,8 @@ $couleur-secondaire: rgb(132, 107, 96);
 $couleur-selection: rgb(232, 85, 36);
 $couleur-attente: rgb(243, 186, 97);
 $couleur-valide: rgb(142, 188, 62);
+$couleur-invalide: rgb(232, 85, 36);
+$couleur-text-invalide: white;
 $couleur-lien: rgb(34, 68, 238);
 
 /*
@@ -64,6 +66,9 @@ Couleurs des textes
 .couleur-text-valide {
   color: $couleur-valide;
 }
+.couleur-text-invalide {
+  color: $couleur-text-invalide;
+}
 .couleur-text-lien {
   color: $couleur-lien;
 }
@@ -76,6 +81,9 @@ Couleurs des background
 }
 .couleur-attente-bg {
   background-color: $couleur-attente;
+}
+.couleur-invalide-bg {
+  background-color: $couleur-invalide;
 }
 
 /*

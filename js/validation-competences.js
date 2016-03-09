@@ -1,3 +1,62 @@
+$('#validationUtilisateursModal').on('shown.bs.modal', function(event) {
+  'use strict';
+  var $buttonAccepter = $('#buttonAccepter');
+  var $buttonRefuser = $('#buttonRefuser');
+
+  $(this).removeData('modal');
+
+  $buttonAccepter.off();
+  $buttonRefuser.off();
+
+  var $button = $(event.relatedTarget);
+  var idCompetence = $button[0].dataset.idCompetence;
+  var nomCompetence = $button[0].dataset.nomCompetence;
+  var idUtilisateur = $button[0].dataset.idUtilisateur;
+  var nomUtilisateur = $button[0].dataset.nomUtilisateur;
+  var explicationsUtilisateur;
+
+  $.getJSON('api/competences.php', {
+      type: 'getExplications',
+      idCompetence: idCompetence,
+      idUtilisateur: idUtilisateur,
+    },
+    function(explications) {
+      explicationsUtilisateur = explications;
+    });
+
+  var $modal = $(this);
+
+  var body;
+
+  if (explicationsUtilisateur) {
+    body += '<div class="alert alert-info" role="alert">...</div>';
+  }
+  body += '<div class="form-group">' +
+    '<label for="explications-validation" class="control-label" id="label"></label>' +
+    '<textarea rows="10" class="form-control" id="explicationsValidation"></textarea>' +
+    '</div>';
+
+  $modal.find('.modal-body #validationUtilisateursModalForm').empty();
+  $modal.find('.modal-title').text('Valider la compétence "' + nomCompetence + '" pour "' + nomUtilisateur + '"');
+  $modal.find('.modal-body #validationUtilisateursModalForm').append(body);
+  $modal.find('.modal-body #label').text('En cas de refus, expliquez la raison pour que l\'étudiant puisse savoir ce qu\'il doit améliorer :');
+
+  var objetAccepter = {
+    idCompetence: idCompetence,
+    nomCompetence: nomCompetence,
+    idUtilisateur: idUtilisateur,
+    type: 'accepterValidation',
+  };
+  $buttonAccepter.click(objetAccepter, buttonSubmitValidation);
+  var objetRefuser = {
+    idCompetence: idCompetence,
+    nomCompetence: nomCompetence,
+    idUtilisateur: idUtilisateur,
+    type: 'refuserValidation',
+  };
+  $buttonRefuser.click(objetRefuser, buttonSubmitValidation);
+});
+
 function genererListGroupItem(objet, couleurbg, type, title, classGlyphicon, estConnecte) {
   'use strict';
 
@@ -18,7 +77,12 @@ function genererListGroupItem(objet, couleurbg, type, title, classGlyphicon, est
     '-bg" data-toggle="modal" ';
 
   if (estConnecte) {
-    html += 'data-target="#genericModal" data-type="' + type +
+    if (type === 'validationCompetenceParTuteur') {
+      html += 'data-target="#validationUtilisateursModal"';
+    } else {
+      html += 'data-target="#genericModal"';
+    }
+    html += ' data-type="' + type +
       '" data-id-competence="' + objet.idCompetence + '" data-nom-competence="' + objet.nomCompetence;
   } else {
     html += 'data-target="#connexionModal"';
@@ -64,7 +128,7 @@ function buttonSubmitValidation(event) {
   var idUtilisateur;
   var $listGroupItemCompetence;
 
-  if ((type === 'validationCompetenceParTuteur') || (type === 'invalidationCompetencesUtilisateurs')) {
+  if ((type === 'accepterValidation') || (type === 'refuserValidation')) {
     idUtilisateur = event.data.idUtilisateur;
     $listGroupItemCompetence = $('#list-group-item-' + idUtilisateur);
   } else {
@@ -73,11 +137,17 @@ function buttonSubmitValidation(event) {
 
   $('.tooltip').remove();
 
-  if ((type === 'validationCompetenceParTuteur') || (type === 'invalidationCompetencesUtilisateurs')) {
-    $listGroupItemCompetence.toggleClass('couleur-valide-bg');
-    $listGroupItemCompetence.toggleClass('couleur-attente-bg');
-    $listGroupItemCompetence.find('span.glyphicon').first().toggleClass('glyphicon-remove');
-    $listGroupItemCompetence.find('span.glyphicon').first().toggleClass('glyphicon-hourglass');
+  var clearData = function() {
+    $listGroupItemCompetence.removeAttr('data-target');
+    $listGroupItemCompetence.removeAttr('data-toggle');
+    $listGroupItemCompetence.removeAttr('data-original-title');
+    $listGroupItemCompetence.removeAttr('data-id-utilisateur');
+    $listGroupItemCompetence.removeAttr('data-nom-utilisateur');
+    $listGroupItemCompetence.removeAttr('data-id-competence');
+    $listGroupItemCompetence.removeAttr('data-nom-competence');
+    $listGroupItemCompetence.removeAttr('data-type');
+    $listGroupItemCompetence.removeAttr('title');
+    $listGroupItemCompetence.find('span.glyphicon').first().remove();
   }
 
   if (type === 'validerCompetence') {
@@ -111,22 +181,26 @@ function buttonSubmitValidation(event) {
     $listGroupItemCompetence.find('span.glyphicon').first().toggleClass('glyphicon-ok');
     $listGroupItemCompetence.find('span.glyphicon').first().toggleClass('glyphicon-remove');
     $listGroupItemCompetence.find('span.glyphicon-ok').first().attr('data-original-title', 'Valider la compétence');
-  } else if (type === 'validationCompetenceParTuteur') {
+  } else if (type === 'accepterValidation') {
     $.getJSON('api/competences.php', {
-      type: 'validationCompetenceParTuteur',
+      type: 'accepterValidation',
       idCompetence: idCompetence,
       idUtilisateur: idUtilisateur,
     });
-    $listGroupItemCompetence.attr('data-type', 'invalidationCompetencesUtilisateurs');
-    $listGroupItemCompetence.find('span.glyphicon-remove').first().attr('data-original-title', 'Invalider l\'étudiant');
-  } else if (type === 'invalidationCompetencesUtilisateurs') {
+    clearData();
+    $listGroupItemCompetence.toggleClass('couleur-attente-bg');
+    $listGroupItemCompetence.toggleClass('couleur-valide-bg');
+  } else if (type === 'refuserValidation') {
     $.getJSON('api/competences.php', {
-      type: 'invalidationCompetencesUtilisateurs',
+      type: 'refuserValidation',
       idCompetence: idCompetence,
       idUtilisateur: idUtilisateur,
+      explications: $('#genericModal').find('.modal-body #validationUtilisateursModal').val(),
     });
-    $listGroupItemCompetence.attr('data-type', 'validationCompetenceParTuteur');
-    $listGroupItemCompetence.find('span.glyphicon-hourglass').first().attr('data-original-title', 'Valider l\'étudiant');
+    clearData();
+    $listGroupItemCompetence.toggleClass('couleur-attente-bg');
+    $listGroupItemCompetence.toggleClass('couleur-invalide-bg');
+    $listGroupItemCompetence.toggleClass('couleur-text-invalide');
   }
 }
 

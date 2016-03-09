@@ -1,6 +1,6 @@
 <?php $titre = 'Valider des compétences'; ?>
 
-<?php require(DOC_ROOT_PATH . '/views/layout/generic-modal.php'); ?>
+<?php require(DOC_ROOT_PATH . '/views/tableau-de-bord/validation-utilisateurs-modal.php'); ?>
 
 <?php ob_start(); ?>
     <div class="col-md-8">

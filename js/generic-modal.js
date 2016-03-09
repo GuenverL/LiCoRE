@@ -131,21 +131,6 @@ $('#genericModal').on('shown.bs.modal', function(event) {
         '</div>';
       break;
 
-    case 'validationCompetenceParTuteur':
-      var nomUtilisateur = $button[0].dataset.nomUtilisateur;
-      paramsModal.label = '';
-      paramsModal.nomCompetence = '';
-      paramsModal.title = 'Valider la compétence "' + nomCompetence + '" pour "' + nomUtilisateur + '"';
-      paramsModal.body = '<div class="alert alert-warning" role="alert">' +
-        '<strong>' +
-        'Attention!' +
-        '</strong>' +
-        '<p>' +
-        'Vous allez valider cette compétence pour ' + nomUtilisateur + '. Voulez vous continuer ?' +
-        '</p>' +
-        '</div>';
-      break;
-
     case 'invalidationCompetencesUtilisateurs':
       var nomUtilisateur = $button[0].dataset.nomUtilisateur;
       paramsModal.label = '';
@@ -172,14 +157,6 @@ $('#genericModal').on('shown.bs.modal', function(event) {
       type: type,
     };
     $buttonSubmit.click(objet, buttonSubmitValidation);
-  } else if ((type === 'validationCompetenceParTuteur') || (type === 'invalidationCompetencesUtilisateurs')) {
-    objet = {
-      idCompetence: idCompetence,
-      nomCompetence: nomCompetence,
-      idUtilisateur: $button[0].dataset.idUtilisateur,
-      type: type,
-    };
-    $buttonSubmit.click(objet, buttonSubmitValidation);
   } else {
     objet = {
       idCompetence: idCompetence,
@@ -187,5 +164,4 @@ $('#genericModal').on('shown.bs.modal', function(event) {
     };
     $buttonSubmit.click(objet, buttonSubmitGestionCompetences);
   }
-  $buttonSubmit.focus();
 });

@@ -47,15 +47,21 @@ switch ($type) {
   	invaliderCompetence($idCompetence);
   	break;
 
-  case 'validationCompetenceParTuteur':
+  case 'getExplications':
+    $idCompetence = $_GET["idCompetence"];
+    $idUtilisateur = $_GET["idUtilisateur"];
+    $json = getExplications($idCompetence,$idUtilisateur);
+    break;
+  case 'accepterValidation':
     $idCompetence = $_GET["idCompetence"];
     $idUtilisateur = $_GET["idUtilisateur"];
     validationCompetenceParTuteur($idCompetence,$idUtilisateur);
     break;
-  case 'invalidationCompetencesUtilisateurs':
+  case 'refuserValidation':
     $idCompetence = $_GET["idCompetence"];
     $idUtilisateur = $_GET["idUtilisateur"];
-    invaliderCompetence($idCompetence,$idUtilisateur);
+    $explications = $_GET["explications"];
+    refuserValidationCompetenceParTuteur($idCompetence,$idUtilisateur,$explications);
     break;
 
   case 'ajouterCompetence':
