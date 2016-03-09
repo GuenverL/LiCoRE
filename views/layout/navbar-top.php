@@ -29,7 +29,7 @@
     <div class="navbar-right">
       <?php
         if (estConnecte()) {
-          echo 'Connecté sous le nom « ' . getPrenomUtilisateur() . ' ' . getNomUtilisateur() . ' » ';
+          echo 'Connecté sous le nom « ' . getPrenomUtilisateur() . ' ' . getNomUtilisateur() . ' » Rôle ' . getRoleUtilisateur() . ' ';
           echo '(<a href="index.php?action=deconnexion">Déconnexion</a>)';
         } else {
           echo '<a href="index.php?action=connexion"><button type="button" class="btn btn-default navbar-btn">Connexion</button></a>';

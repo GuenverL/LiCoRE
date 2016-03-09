@@ -16,6 +16,10 @@ function getNomUtilisateur() {
   return $_SESSION['nom'];
 }
 
+function getRoleUtilisateur() {
+  return $_SESSION['role'];
+}
+
 function estAccessible($page) {
   if(estConnecte()) {
     if((isset($_SESSION['acces']) && (in_array($page, $_SESSION['acces'])))) {
