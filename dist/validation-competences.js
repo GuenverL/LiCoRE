@@ -13,7 +13,8 @@ $('#validationUtilisateursModal').on('shown.bs.modal', function(event) {
   var nomCompetence = $button[0].dataset.nomCompetence;
   var idUtilisateur = $button[0].dataset.idUtilisateur;
   var nomUtilisateur = $button[0].dataset.nomUtilisateur;
-  var explicationsUtilisateur;
+
+  var $modal = $(this);
 
   $.getJSON('api/competences.php', {
       type: 'getExplications',
@@ -21,25 +22,24 @@ $('#validationUtilisateursModal').on('shown.bs.modal', function(event) {
       idUtilisateur: idUtilisateur,
     },
     function(explications) {
-      explicationsUtilisateur = explications;
+      var body = '';
+
+      if (explications.explication !== '') {
+        body += '<div class="panel panel-default"><div class="panel-heading">' +
+        '<h3 class="panel-title">Explications de l\'étudiant pour justifier la validation de cette compétence</h3></div>' +
+        '<div class="panel-body">' + explications.explication + '</div></div>';
+      }
+
+      body += '<div class="form-group">' +
+        '<label for="explications-validation" class="control-label" id="label"></label>' +
+        '<textarea rows="10" class="form-control" id="explicationsValidation"></textarea>' +
+        '</div>';
+
+      $modal.find('.modal-body #validationUtilisateursModalForm').empty();
+      $modal.find('.modal-title').text('Valider la compétence "' + nomCompetence + '" pour "' + nomUtilisateur + '"');
+      $modal.find('.modal-body #validationUtilisateursModalForm').append(body);
+      $modal.find('.modal-body #label').text('En cas de refus, expliquez la raison pour que l\'étudiant puisse savoir ce qu\'il doit améliorer :');
     });
-
-  var $modal = $(this);
-
-  var body;
-
-  if (explicationsUtilisateur) {
-    body += '<div class="alert alert-info" role="alert">...</div>';
-  }
-  body += '<div class="form-group">' +
-    '<label for="explications-validation" class="control-label" id="label"></label>' +
-    '<textarea rows="10" class="form-control" id="explicationsValidation"></textarea>' +
-    '</div>';
-
-  $modal.find('.modal-body #validationUtilisateursModalForm').empty();
-  $modal.find('.modal-title').text('Valider la compétence "' + nomCompetence + '" pour "' + nomUtilisateur + '"');
-  $modal.find('.modal-body #validationUtilisateursModalForm').append(body);
-  $modal.find('.modal-body #label').text('En cas de refus, expliquez la raison pour que l\'étudiant puisse savoir ce qu\'il doit améliorer :');
 
   var objetAccepter = {
     idCompetence: idCompetence,
@@ -98,7 +98,10 @@ function genererListGroupItem(objet, couleurbg, type, title, classGlyphicon, est
     nom;
 
   if (couleurbg === 'valide') {
-    html += '<hr class="separation-competence-valide">' +
+    html += '<hr class="separation-competence">' +
+      'Validée par ' + objet.prenomTuteur + ' ' + objet.nomTuteur + ' le ' + objet.dateValidation;
+  } else if (couleurbg === 'invalide') {
+    html += '<hr class="separation-competence">' +
       'Validée par ' + objet.prenomTuteur + ' ' + objet.nomTuteur + ' le ' + objet.dateValidation;
   }
 
@@ -147,6 +150,7 @@ function buttonSubmitValidation(event) {
     $listGroupItemCompetence.removeAttr('data-nom-competence');
     $listGroupItemCompetence.removeAttr('data-type');
     $listGroupItemCompetence.removeAttr('title');
+    $listGroupItemCompetence.removeClass('cursor-pointer');
     $listGroupItemCompetence.find('span.glyphicon').first().remove();
   }
 
@@ -195,7 +199,7 @@ function buttonSubmitValidation(event) {
       type: 'refuserValidation',
       idCompetence: idCompetence,
       idUtilisateur: idUtilisateur,
-      explications: $('#genericModal').find('.modal-body #validationUtilisateursModal').val(),
+      explications: $('#validationUtilisateursModal').find('.modal-body #explicationsValidation').val(),
     });
     clearData();
     $listGroupItemCompetence.toggleClass('couleur-attente-bg');
@@ -251,6 +255,10 @@ function afficherCompetence(event) {
           } else if (competence.etat === 'valide') {
             $('#competences-a-valider').append(
               genererListGroupItem(competence, 'valide', 'invaliderCompetence', 'Invalider la compétence', 'glyphicon-remove', estConnecte)
+            );
+          } else if (competence.etat === 'invalide') {
+            $('#competences-a-valider').append(
+              genererListGroupItem(competence, 'invalide', 'validerCompetence', 'Valider la compétence', 'glyphicon-ok', estConnecte)
             );
           } else {
             $('#competences-a-valider').append(
