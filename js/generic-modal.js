@@ -86,21 +86,37 @@ $('#genericModal').on('shown.bs.modal', function(event) {
       break;
 
     case 'validerCompetence':
-      paramsModal.label = 'Explications pour justifier la validation de cette compétence (facultatif mais vivement recommandé) :';
-      paramsModal.nomCompetence = nomCompetence;
-      paramsModal.title = 'Validation de la compétence "' + nomCompetence + '"';
-      paramsModal.body = '<div class="alert alert-warning" role="alert">' +
-        '<strong>' +
-        'Attention!' +
-        '</strong>' +
-        '<p>' +
-        'Vous allez valider une compétence et celle ci sera donc mise en attente de validation par un tuteur. Voulez vous continuer ?' +
-        '</p>' +
-        '</div>' +
-        '<div class="form-group">' +
-        '<label for="explications-validation" class="control-label" id="label"></label>' +
-        '<textarea rows="10" class="form-control" id="explicationsValidation"></textarea>' +
-        '</div>';
+      paramsModal.body = '';
+      $.getJSON('api/competences.php', {
+          type: 'getExplications',
+          idCompetence: idCompetence,
+        },
+        function(explications) {
+          if (explications.explicationTuteur) {
+            paramsModal.body = '<div class="panel panel-default"><div class="panel-heading">' +
+              '<h3 class="panel-title">Explications du tuteur concernant le refus de validation de cette compétence</h3></div>' +
+              '<div class="panel-body">' + explications.explicationTuteur + '</div></div>';
+          }
+          paramsModal.label = 'Explications pour justifier la validation de cette compétence (facultatif mais vivement recommandé) :';
+          paramsModal.nomCompetence = nomCompetence;
+          paramsModal.title = 'Validation de la compétence "' + nomCompetence + '"';
+          paramsModal.body += '<div class="alert alert-warning" role="alert">' +
+            '<strong>' +
+            'Attention!' +
+            '</strong>' +
+            '<p>' +
+            'Vous allez valider une compétence et celle ci sera donc mise en attente de validation par un tuteur. Voulez vous continuer ?' +
+            '</p>' +
+            '</div>' +
+            '<div class="form-group">' +
+            '<label for="explications-validation" class="control-label" id="label"></label>' +
+            '<textarea rows="10" class="form-control" id="explicationsValidation"></textarea>' +
+            '</div>';
+          updateModal(paramsModal);
+          if (explications.explicationUtilisateur) {
+            $('#explicationsValidation').val(explications.explicationUtilisateur);
+          }
+        });
       break;
 
     case 'invaliderCompetence':

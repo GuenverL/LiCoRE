@@ -77,7 +77,7 @@ function genererListeCompetences(parent, niveau, competences, typeAffichage) {
         html += genererLigneCompetenceGestion(competenceObject, 'display-normal');
       } else {
         html += '<li id="competence-' + competence.idCompetence + '"';
-        if (competence.valide) {
+        if (competence.etat === 'valide') {
           html += ' class="couleur-text-valide">';
         } else {
           html += ' class="couleur-text-lien">';

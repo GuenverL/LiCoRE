@@ -47,10 +47,14 @@ switch ($type) {
   	invaliderCompetence($idCompetence);
   	break;
 
-  case 'getExplications':
+  case 'getExplicationsEtudiant':
     $idCompetence = $_GET["idCompetence"];
     $idUtilisateur = $_GET["idUtilisateur"];
-    $json = json_encode(getExplications($idCompetence,$idUtilisateur));
+    $json = json_encode(getExplicationsEtudiant($idCompetence,$idUtilisateur));
+    break;
+  case 'getExplications':
+    $idCompetence = $_GET["idCompetence"];
+    $json = json_encode(getExplications($idCompetence));
     break;
   case 'accepterValidation':
     $idCompetence = $_GET["idCompetence"];
