@@ -102,7 +102,7 @@ function genererListGroupItem(objet, couleurbg, type, title, classGlyphicon, est
       'Validée par ' + objet.prenomTuteur + ' ' + objet.nomTuteur + ' le ' + objet.dateValidation;
   } else if (couleurbg === 'invalide') {
     html += '<hr class="separation-competence">' +
-      'Validée par ' + objet.prenomTuteur + ' ' + objet.nomTuteur + ' le ' + objet.dateValidation;
+      'Invalidée par ' + objet.prenomTuteur + ' ' + objet.nomTuteur + ' le ' + objet.dateValidation;
   }
 
   html += '</div><div class="media-right media-middle">';
