@@ -576,23 +576,32 @@ function getCompetencesValidation(){
     return $competences;
 }
 
-function getExplications($idCompetence,$idUtilisateur){
+function getExplicationsEtudiant($idCompetence,$idUtilisateur){
 	global $bdd;
-	$querySelect = $bdd->prepare("Select explicationUtilisateur, explicationTuteur From validation Where idCompetence = :idCompetence and idUtilisateur = :idUtilisateur");
+	$querySelect = $bdd->prepare("Select explicationUtilisateur From validation Where idCompetence = :idCompetence and idUtilisateur = :idUtilisateur");
 	$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$querySelect->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
     $querySelect->execute();
 
     $row = $querySelect->fetch();
 
-	if(!is_null($row['explicationTuteur'])){
-		return array(
-			'explication' => $row['explicationTuteur']
-		);
-	}
-
 	return array(
 		'explication' => $row['explicationUtilisateur']
+	);
+}
+
+function getExplications($idCompetence){
+	global $bdd;
+	$querySelect = $bdd->prepare("Select explicationUtilisateur, explicationTuteur From validation Where idCompetence = :idCompetence and idUtilisateur = :idUtilisateur");
+	$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+	$querySelect->bindParam(':idUtilisateur', $_SESSION['idUtilisateur'], PDO::PARAM_INT);
+    $querySelect->execute();
+
+    $row = $querySelect->fetch();
+
+	return array(
+		'explicationUtilisateur' => $row['explicationUtilisateur'],
+		'explicationTuteur' => $row['explicationTuteur']
 	);
 }
 
