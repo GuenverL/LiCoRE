@@ -98,12 +98,12 @@ function genererListGroupItem(objet, couleur, type, title, classGlyphicon, estCo
     nom;
 
   if (objet.etat === 'valide') {
-    html += '<hr class="separation-competence">' +
-      'Validée par ' + objet.prenomTuteur + ' ' + objet.nomTuteur + ' le ' + objet.dateValidation;
+    html += '<div><hr class="separation-competence">' +
+      'Validée par ' + objet.prenomTuteur + ' ' + objet.nomTuteur + ' le ' + objet.dateValidation + '</div>';
   } else if (objet.etat === 'invalide') {
-    html += '<hr class="separation-competence">' +
+    html += '<div><hr class="separation-competence">' +
       '<p>Validation refusée par ' + objet.prenomTuteur + ' ' + objet.nomTuteur + ' le ' + objet.dateValidation + '</p>' +
-      '<p>Cliquez sur la compétence pour afficher l\'explication';
+      '<p>Cliquez sur la compétence pour afficher l\'explication</p></div>';
   }
 
   html += '</div><div class="media-right media-middle">';
@@ -168,6 +168,7 @@ function buttonSubmitValidation(event) {
     $listGroupItemCompetence.find('span.glyphicon').first().toggleClass('glyphicon-ok');
     $listGroupItemCompetence.find('span.glyphicon').first().toggleClass('glyphicon-hourglass');
     $listGroupItemCompetence.find('span.glyphicon-hourglass').first().attr('data-original-title', 'Compétence en attente de validation');
+    $listGroupItemCompetence.find('div.media-body').find('div').first().remove();
   } else if (type === 'invaliderCompetenceTemporaire') {
     $.getJSON('api/competences.php', {
       type: 'invalidation',
@@ -188,6 +189,7 @@ function buttonSubmitValidation(event) {
     $listGroupItemCompetence.find('span.glyphicon').first().toggleClass('glyphicon-ok');
     $listGroupItemCompetence.find('span.glyphicon').first().toggleClass('glyphicon-remove');
     $listGroupItemCompetence.find('span.glyphicon-ok').first().attr('data-original-title', 'Valider la compétence');
+    $listGroupItemCompetence.find('div.media-body').find('div').first().remove();
   } else if (type === 'accepterValidation') {
     $.getJSON('api/competences.php', {
       type: 'accepterValidation',
@@ -298,7 +300,7 @@ function afficherCompetence(event) {
             nomUtilisateur: utilisateur.nom,
           };
           $('#utilisateurs-a-valider').append(
-            genererListGroupItem(params, 'attente', 'validationCompetenceParTuteur', 'Valider l\'étudiant', 'glyphicon-hourglass', true)
+            genererListGroupItem(params, 'couleur-attente-bg', 'validationCompetenceParTuteur', 'Valider l\'étudiant', 'glyphicon-hourglass', true)
           );
         }
         $('[data-toggle="modal"]').tooltip();
