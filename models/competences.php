@@ -87,7 +87,7 @@ function estUneFeuille($idCompetence, $mode = 1){
 function estCompetenceValide($idCompetence){
 	global $bdd;
 
-	$querySelect = $bdd->prepare("Select * From validation Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence and idTuteur is not NULL");
+	$querySelect = $bdd->prepare("Select * From validation Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence and idTuteur is not NULL and explicationTuteur is NULL");
 	$querySelect->bindParam(':idUtilisateur', $_SESSION['idUtilisateur'], PDO::PARAM_INT);
 	$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$querySelect->execute();
@@ -162,14 +162,15 @@ function getCompetencesFeuille($idPere){
 	return $competencesFeuille;
 }
 
-function validerCompetence($idCompetence){
+function validerCompetence($idCompetence, $explication){
 	global $bdd;
 	$date = date("Y-m-d");
 
-	$queryInsert = $bdd->prepare("Insert into validation (idUtilisateur, idCompetence, dateValidation) Values (:idUtilisateur, :idCompetence, :dateValidation)");
+	$queryInsert = $bdd->prepare("Insert into validation (idUtilisateur, idCompetence, dateValidation, explicationUtilisateur) Values (:idUtilisateur, :idCompetence, :dateValidation, :explication)");
 	$queryInsert->bindParam(':idUtilisateur', $_SESSION['idUtilisateur'], PDO::PARAM_INT);
 	$queryInsert->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$queryInsert->bindParam(':dateValidation', $date, PDO::PARAM_STR);
+	$queryInsert->bindParam(':explication', $explication, PDO::PARAM_STR);
 	$queryInsert->execute();
 }
 
@@ -190,6 +191,20 @@ function validationCompetenceParTuteur($idCompetence, $idUtilisateur){
 	$queryUpdate = $bdd->prepare("Update validation Set idTuteur = :idTuteur, dateValidation = :dateValidation Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence");
 	$queryUpdate->bindParam(':idTuteur', $idTuteur, PDO::PARAM_INT);
 	$queryUpdate->bindParam(':dateValidation', $date, PDO::PARAM_STR);
+	$queryUpdate->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
+	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+	$queryUpdate->execute();
+}
+
+function refuserValidationCompetenceParTuteur($idCompetence,$idUtilisateur,$explication){
+	global $bdd;
+	$idTuteur = $_SESSION['idUtilisateur'];
+	$date = date("Y-m-d");
+
+	$queryUpdate = $bdd->prepare("Update validation Set idTuteur = :idTuteur, dateValidation = :dateValidation, explicationTuteur = :explication Where idUtilisateur = :idUtilisateur and idCompetence = :idCompetence");
+	$queryUpdate->bindParam(':idTuteur', $idTuteur, PDO::PARAM_INT);
+	$queryUpdate->bindParam(':dateValidation', $date, PDO::PARAM_STR);
+	$queryUpdate->bindParam(':explication', $explication, PDO::PARAM_STR);
 	$queryUpdate->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
 	$queryUpdate->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
 	$queryUpdate->execute();
@@ -545,6 +560,26 @@ function getCompetencesValidation(){
     }
 
     return $competences;
+}
+
+function getExplications($idCompetence,$idUtilisateur){
+	global $bdd;
+	$querySelect = $bdd->prepare("Select explicationUtilisateur, explicationTuteur From validation Where idCompetence = :idCompetence and idUtilisateur = :idUtilisateur");
+	$querySelect->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
+	$querySelect->bindParam(':idUtilisateur', $idUtilisateur, PDO::PARAM_INT);
+    $querySelect->execute();
+
+    $row = $querySelect->fetch();
+
+	if(!is_null($row['explicationTuteur'])){
+		return array(
+			'explication' => $row['explicationTuteur']
+		);
+	}
+
+	return array(
+		'explication' => $row['explicationUtilisateur']
+	);
 }
 
 ?>
