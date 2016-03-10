@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 07 Mars 2016 à 18:13
+-- Généré le :  Jeu 10 Mars 2016 à 13:22
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -165,16 +165,11 @@ CREATE TABLE IF NOT EXISTS `validation` (
   `idUtilisateur` int(11) NOT NULL,
   `idCompetence` int(11) NOT NULL,
   `dateValidation` date NOT NULL,
+  `explicationUtilisateur` text,
   `idTuteur` int(11) DEFAULT NULL,
+  `explicationTuteur` text,
   PRIMARY KEY (`idCompetence`,`idUtilisateur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Contenu de la table `validation`
---
-
-INSERT INTO `validation` (`idUtilisateur`, `idCompetence`, `dateValidation`, `idTuteur`) VALUES
-(1, 13, '0000-00-00', NULL);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
