@@ -1,4 +1,4 @@
-$('#validationUtilisateursModal').on('shown.bs.modal', function(event) {
+$('#validationUtilisateursModal').on('show.bs.modal', function(event) {
   'use strict';
   var $buttonAccepter = $('#buttonAccepter');
   var $buttonRefuser = $('#buttonRefuser');

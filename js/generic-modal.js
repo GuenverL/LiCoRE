@@ -1,4 +1,4 @@
-$('#genericModal').on('shown.bs.modal', function(event) {
+$('#genericModal').on('show.bs.modal', function(event) {
   'use strict';
   var $buttonSubmit = $('#buttonSubmit');
 
