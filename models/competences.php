@@ -169,7 +169,7 @@ function validerCompetence($idCompetence, $explication){
 	global $bdd;
 	$date = date("Y-m-d");
 
-	if(strcmp(getEtatCompetence("$idCompetence", "normal")) == 0){
+	if(strcmp(getEtatCompetence($idCompetence), "normal") == 0){
 		$queryInsert = $bdd->prepare("Insert into validation (idUtilisateur, idCompetence, dateValidation, explicationUtilisateur) Values (:idUtilisateur, :idCompetence, :dateValidation, :explication)");
 		$queryInsert->bindParam(':idUtilisateur', $_SESSION['idUtilisateur'], PDO::PARAM_INT);
 		$queryInsert->bindParam(':idCompetence', $idCompetence, PDO::PARAM_INT);
