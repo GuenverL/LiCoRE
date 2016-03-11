@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        Liste des compétences
+        <div class="text-small-caps">Liste des compétences</div>
     </div>
 
     <div class="panel-body">

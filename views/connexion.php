@@ -4,7 +4,9 @@
 
   <div class="col-md-6 col-md-offset-3">
     <div class="panel panel-default">
-      <div class="panel-heading">Connexion</div>
+      <div class="panel-heading">
+        <div class="text-small-caps">Connexion</div>
+      </div>
       <div class="panel-body">
         <form class="form-horizontal" id="connexion" method="post" action="index.php?action=connexion">
           <div class="form-group">
