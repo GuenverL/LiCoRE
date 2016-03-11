@@ -1,44 +1,43 @@
 <div class="panel panel-default">
-    <div class="panel-heading">
-      <span class="text-small-caps">Arbre des compétences validées</span>
+  <div class="panel-heading">
+    <span class="text-small-caps">Arbre des compétences validées</span>
 
-      <?php if (estConnecte()) { ?>
+    <?php if (estConnecte()) { ?>
       <div class="btn-group">
-          <button type="button" id="btnExport" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">          export
-              <span class="caret">
-              </span>
-          </button>
-          <ul class="dropdown-menu">
-              <li>
-                  <a id="linkXML" download="tree.xml" href="#">XML</a>
-              </li>
-              <li>
-                  <a id="linkPDF"  href="#">PDF</a>
-              </li>
-          </ul>
-      </div>
-      <span id="toggleFullscreenCompetencesValidees" class=" glyphicon glyphicon-resize-full cursor-pointer"       data-toggle="tooltip" data-placement="top" title="Mettre la colonne des compétences validées en plein écran" aria-hidden="true">
-      </span>
-      <?php } ?>
-
-    </div>
-    <div id="panel-body-competences-validees" class="panel-body">
-        <?php if (estConnecte()) { ?>
-        <div id="loader-competences-validees">
-            <img class="center" src="./images/loader.gif" alt="Chargement"/>
-            <p class="center-text-loader">Chargement des compétences ...
-            </p>
-        </div>
-        <ul id="arbreListeCompetencesValidees" class="treeview">
+        <button type="button" id="btnExport" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          export
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <a id="linkXML" download="tree.xml" href="#">XML</a>
+          </li>
+          <li>
+            <a id="linkPDF" href="#">PDF</a>
+          </li>
         </ul>
-<?php }
+      </div>
+      <span id="toggleFullscreenCompetencesValidees" class=" glyphicon glyphicon-resize-full cursor-pointer" data-toggle="tooltip" data-placement="top" title="Mettre la colonne des compétences validées en plein écran" aria-hidden="true"></span>
+    <?php } ?>
+  </div>
+
+  <div id="panel-body-competences-validees" class="panel-body">
+    <?php if (estConnecte()) { ?>
+      <div id="loader-competences-validees">
+        <img class="center" src="./images/loader.gif" alt="Chargement"/>
+        <p class="center-text-loader">Chargement des compétences ...
+        </p>
+      </div>
+      <ul id="arbreListeCompetencesValidees" class="treeview"></ul>
+    <?php }
       else {
         echo '<p>Vous devez être connecté pour pouvoir visualiser votre arbre des compétences validées.</p>';
       }
-            ?>
-    </div>
+    ?>
+  </div>
 </div>
 <?php ob_start(); ?>
+
 <script>
   $('#toggleFullscreenCompetencesValidees').click(function () {
     if ($('#col-competences-validees').hasClass('col-md-4')) {

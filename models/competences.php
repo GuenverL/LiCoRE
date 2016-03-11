@@ -157,7 +157,7 @@ function getCompetencesFeuille($idPere){
                 'prenomTuteur' => getInformationValidation($row['idCompetence'], "prenom"),
                 'nomTuteur' => getInformationValidation($row['idCompetence'], "nom")
 			);
-		
+
 			$competencesFeuille[] = $competence;
 		}
 	}

@@ -34,23 +34,31 @@ $(window).on('load', function() {
       $('#arbreListeCompetences').show();
     });
 
-    $('#listeCompetencesValidees').empty();
-    $('#arbreListeCompetencesValidees').hide();
     $.getJSON('api/competences.php', {
-      type: 'getCompetencesValides',
-    }).always(function(competences) {
-      if (competences.length > 0) {
-        competencesValidees = competences;
-        $('#arbreListeCompetencesValidees').append('<li id="listeCompetencesValidees"><a href="#">Liste des compétences validées</a>');
-        $('#listeCompetencesValidees').append(genererListeCompetences(0, 0, competences, 'afficherCompetences'));
-        majArbre('#arbreListeCompetencesValidees');
-      } else {
-        $('#panel-body-competences-validees').append('<p>Aucunes compétences validées</p>');
-      }
+        type: 'estConnecte',
+      },
+      function(connexion) {
+        var estConnecte = connexion.estConnecte;
+        if (estConnecte) {
+          $('#listeCompetencesValidees').empty();
+          $('#arbreListeCompetencesValidees').hide();
+          $.getJSON('api/competences.php', {
+            type: 'getCompetencesValides',
+          }).always(function(competences) {
+            if (competences.length > 0) {
+              competencesValidees = competences;
+              $('#arbreListeCompetencesValidees').append('<li id="listeCompetencesValidees"><a href="#">Liste des compétences validées</a>');
+              $('#listeCompetencesValidees').append(genererListeCompetences(0, 0, competences, 'afficherCompetences'));
+              majArbre('#arbreListeCompetencesValidees');
+            } else {
+              $('#panel-body-competences-validees').append('<p>Aucunes compétences validées</p>');
+            }
 
-      $('#loader-competences-validees').hide();
-      $('#arbreListeCompetencesValidees').show();
-    });
+            $('#loader-competences-validees').hide();
+            $('#arbreListeCompetencesValidees').show();
+          });
+        }
+      });
   } else if (action === 'gestion-competences') {
     changerNavActive(action);
     $('#arbreGestionCompetences').empty();
