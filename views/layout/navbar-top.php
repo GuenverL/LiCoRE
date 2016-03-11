@@ -17,7 +17,7 @@
       </li>
       <?php
         if (estAccessible('valider-competences-utilisateurs')) {
-          echo '<li id="navbar-valider-competences-utilisateurs"><a href="index.php?action=valider-competences-utilisateurs">Valider des compétences</a></li>';
+          echo '<li id="navbar-valider-competences-utilisateurs"><a href="index.php?action=valider-competences-utilisateurs">Validation des compétences</a></li>';
         }
         if (estAccessible('gestion-competences')) {
           echo '<li id="navbar-gestion-competences"><a href="index.php?action=gestion-competences">Gestion des compétences</a></li>';

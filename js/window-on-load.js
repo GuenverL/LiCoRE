@@ -39,15 +39,15 @@ $(window).on('load', function() {
     $.getJSON('api/competences.php', {
       type: 'getCompetencesValides',
     }).always(function(competences) {
-      if (competences) {
+      if (competences.length > 0) {
         competencesValidees = competences;
         $('#arbreListeCompetencesValidees').append('<li id="listeCompetencesValidees"><a href="#">Liste des compétences validées</a>');
         $('#listeCompetencesValidees').append(genererListeCompetences(0, 0, competences, 'afficherCompetences'));
+        majArbre('#arbreListeCompetencesValidees');
       } else {
         $('#panel-body-competences-validees').append('<p>Aucunes compétences validées</p>');
       }
 
-      majArbre('#arbreListeCompetencesValidees');
       $('#loader-competences-validees').hide();
       $('#arbreListeCompetencesValidees').show();
     });
@@ -93,20 +93,24 @@ $(window).on('load', function() {
     $.getJSON('api/competences.php', {
       type: 'getCompetencesValidation',
     }).always(function(competences) {
-      $('#listeCompetences').append('<a href="#">Liste des compétences</a>');
-      $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'afficherCompetences'));
-      majArbre('#arbreValidationCompetences');
+      if (competences.length > 0) {
+        $('#listeCompetences').append('<a href="#">Liste des compétences</a>');
+        $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'afficherCompetences'));
+        majArbre('#arbreValidationCompetences');
 
-      for (var i = 0, len = competences.length; i < len; ++i) {
-        var competence = competences[i];
-        if (competence.feuille) {
-          var competenceObjet = {
-            idCompetence: competence.idCompetence,
-            nomCompetence: competence.nomCompetence,
-            type: 'getUtilisateursCompetence',
-          };
-          $('#competence-' + competence.idCompetence).find('a').first().click(competenceObjet, afficherCompetence);
+        for (var i = 0, len = competences.length; i < len; ++i) {
+          var competence = competences[i];
+          if (competence.feuille) {
+            var competenceObjet = {
+              idCompetence: competence.idCompetence,
+              nomCompetence: competence.nomCompetence,
+              type: 'getUtilisateursCompetence',
+            };
+            $('#competence-' + competence.idCompetence).find('a').first().click(competenceObjet, afficherCompetence);
+          }
         }
+      } else {
+        $('#loader-competences').after('Aucuns étudiants à valider');
       }
       $('#loader-competences').hide();
       $('#arbreValidationCompetences').show();

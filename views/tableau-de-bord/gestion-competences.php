@@ -7,7 +7,7 @@
         <div class="panel panel-default">
 
             <div class="panel-heading">
-                Gestion des compétences
+              <div class="text-small-caps">Gestion des compétences</div>
             </div>
 
             <div class="panel-body">

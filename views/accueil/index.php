@@ -1,4 +1,4 @@
-<?php $titre = 'Accueil'; ?>
+<?php $titre = 'Mes compétences'; ?>
 
 <?php ob_start(); ?>
     <div id="col-liste-competences" class="col-md-4">

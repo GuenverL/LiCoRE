@@ -138,7 +138,6 @@ Panel
 .panel-default > .panel-heading {
   color: #ffffff;
   background-color: $couleur-secondaire;
-  font-variant: small-caps;
 }
 .heading {
   color: #ffffff;
@@ -216,6 +215,9 @@ Autres
 .separation-competence {
   margin: 5px 0;
   border-top: 1px solid black;
+}
+.text-small-caps {
+  font-variant: small-caps;
 }
 
 /*
