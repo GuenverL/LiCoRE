@@ -5,6 +5,7 @@ Projet de Master 1  : sujet 6
 Gulp est utilisé pour :
 * compiler le SASS en CSS
 * concatener et minifier les fichiers JS
+* construire une archive contenant seulement les fichiers nécessaires au site
 
 ## Prérequis
 * Installez nodeJS : https://nodejs.org/en/
@@ -14,8 +15,14 @@ Gulp est utilisé pour :
 npm install
 ```
 ## Utilisation
-Entrez la commande suivante pour executer les tâches gulp :
+Entrez la commande suivante pour executer les tâches gulp pour compiler le SASS en CSS et concatener+minifier les fichiers JS:
 ```
 npm run gulp
 ```
 Les fichiers générés se trouvent dans le dossier "dist".
+
+Entrez la commande suivante pour executer la construction de l'archive contenant seulement les fichiers nécessaires au site:
+```
+npm run build
+```
+Les fichiers générés se trouvent dans le dossier "build".

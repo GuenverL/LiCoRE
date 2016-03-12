@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <title>Projet Licore -
       <?= $titre ?></title>
-    <link href="./css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="./dist/bootstrap.min.css" rel="stylesheet"/>
     <link href="./dist/style.css" rel="stylesheet"/>
   </head>
 
