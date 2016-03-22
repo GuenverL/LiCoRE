@@ -86,7 +86,6 @@ $(window).on('load', function() {
               nomCompetence: competence.nomCompetence,
               visibilite: visibilite,
             };
-            $('#competence-' + competence.idCompetence + '-button-visibilite').off();
             $('#competence-' + competence.idCompetence + '-button-visibilite').click(competenceObjet, setCompetencesVisibiliteOnClick);
           }
         }

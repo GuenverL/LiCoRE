@@ -7,7 +7,7 @@ function setCompetencesVisibilite(competences, visibilite) {
   for (var i = 0, len = competences.length; i < len; ++i) {
     var competence = competences[i];
     if (visibilite === 'setCompetencesInvisibles') {
-      $('#competence-' + competence.idCompetence).addClass('couleur-grise');
+      $('#competence-' + competence.idCompetence).toggleClass('couleur-grise');
       $('#competence-' + competence.idCompetence).find('span.glyphicon-eye-close').remove();
       $('#competence-' + competence.idCompetence).find('span.glyphicon-eye-open').remove();
       $('#competence-' + competence.idCompetence).find('span.glyphicon-pencil').after(
@@ -72,6 +72,25 @@ function majArbreGestionCompetences(button, type) {
         $('#listeCompetences').append(genererListeCompetences(0, 0, competences, 'gestionCompetences'));
         majArbre('#arbreGestionCompetences');
         $('[data-toggle="modal"]').tooltip();
+
+        for (var i = 0, len = competences.length; i < len; ++i) {
+          var competence = competences[i];
+          if (competence.feuille) {
+            var visibilite;
+            if (competence.visible || competence.visible === undefined) {
+              visibilite = 'setCompetencesInvisibles';
+            } else {
+              visibilite = 'setCompetencesVisibles';
+            }
+            var competenceObjet = {
+              idCompetence: competence.idCompetence,
+              nomCompetence: competence.nomCompetence,
+              visibilite: visibilite,
+            };
+            $('#competence-' + competence.idCompetence + '-button-visibilite').click(competenceObjet, setCompetencesVisibiliteOnClick);
+          }
+        }
+
         $('#loader-competences').hide();
         $('#arbreGestionCompetences').show();
       }
@@ -125,6 +144,21 @@ function buttonSubmitGestionCompetences(event) {
               $('#competence-' + idCompetence).find('ul').first().append(
                 genererLigneCompetenceGestion(competence, 'display-none'));
             }
+
+            var visibilite;
+            if (competence.visible) {
+              visibilite = 'setCompetencesInvisibles';
+            } else {
+              visibilite = 'setCompetencesVisibles';
+            }
+
+            var competenceObjet = {
+              idCompetence: competence.idCompetence,
+              nomCompetence: competence.nomCompetence,
+              visibilite: visibilite,
+            };
+            $('#competence-' + competence.idCompetence + '-button-visibilite').off();
+            $('#competence-' + competence.idCompetence + '-button-visibilite').click(competenceObjet, setCompetencesVisibiliteOnClick);
           }
         }
 
